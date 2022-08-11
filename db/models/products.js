@@ -18,7 +18,7 @@ async function createProductsTable() {
             condition VARCHAR(7) NOT NULL CHECK(condition IN ('New','Used')),
             album_name VARCHAR(255),
             artist VARCHAR(255),
-            description VARCHAR(255) NOT NULL,
+            description TEXT NOT NULL,
             genre VARCHAR(255)
         );
         `) 
@@ -55,33 +55,35 @@ async function createProduct ({ name,
     }
 }
 
-// async function getAllRecords() {
-//     try {
-//         console.log("Getting all records...")
-//         const { rows: records } = await client.query(`
-//             SELECT *
-//             FROM records;
-//         `)
+async function getAllRecords() {
+    try {
+        console.log("Getting all records...")
+        const { rows: records } = await client.query(`
+            SELECT *
+            FROM products
+            WHERE category= Record;
+        `)
+        console.log("These are all the records: ", records);
+        return records;
+    } catch(error) {
+        console.log("Error getting all records!")
+        throw error;
+    }
+}
 
-//         return records;
-//     } catch(error) {
-//         console.log("Error getting all records!")
-//         throw error;
-//     }
-// }
-
-// async function getRecordById(id) {
-//     try{
-//         const { rows: [record ] } = await client.query(`
-//             SELECT * FROM records
-//             WHERE id=$1;
-//         `, [id]);
-//         return record;
-//     } catch(error){
-//         console.log("Error in getRecordById!")
-//         throw error;
-//     }
-// }
+async function getProductById(id) {
+    try{
+        const { rows: [product] } = await client.query(`
+            SELECT * FROM products
+            WHERE id=$1;
+        `, [id]);
+        console.log("getProductById: ", product)
+        return product;
+    } catch(error){
+        console.log("Error in getRecordById!")
+        throw error;
+    }
+}
 
 // async function updateRecord({id, ...fields}) {
 //     const setString = Object.keys(fields).map(
@@ -114,7 +116,7 @@ async function createProduct ({ name,
 module.exports = {
     createProductsTable,
     createProduct,
-    // getAllRecords,
+    getAllRecords,
     // getRecordById,
     // getRecordByName,
     // getRecordByArtist,
