@@ -55,20 +55,21 @@ async function createProduct ({ name,
     }
 }
 
-// async function getAllRecords() {
-//     try {
-//         console.log("Getting all records...")
-//         const { rows: records } = await client.query(`
-//             SELECT *
-//             FROM records;
-//         `)
 
-//         return records;
-//     } catch(error) {
-//         console.log("Error getting all records!")
-//         throw error;
-//     }
-// }
+async function getAllProducts() {
+    try {
+        console.log("Getting all products...")
+        const { rows: products } = await client.query(`
+            SELECT *
+            FROM products;
+        `)
+
+        return products;
+    } catch(error) {
+        console.log("Error getting all products!")
+        throw error;
+    }
+}
 
 // async function getRecordById(id) {
 //     try{
@@ -114,7 +115,7 @@ async function createProduct ({ name,
 module.exports = {
     createProductsTable,
     createProduct,
-    // getAllRecords,
+    getAllProducts,
     // getRecordById,
     // getRecordByName,
     // getRecordByArtist,
