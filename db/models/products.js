@@ -47,7 +47,6 @@ async function createProduct ({ name,
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             RETURNING *;
         `, [name, price, category, quantity, img_url, condition, album_name, artist, description, genre])
-        console.log("Created Product: ", product)
         return product;
     } catch (error) {
         console.log("Error creating product!");
@@ -73,13 +72,30 @@ async function getAllProducts() {
     }
 }
 
+
+async function getProductsByCategory(category) {
+    try {
+        console.log("Getting all records...")
+        const { rows } = await client.query(`
+            SELECT *
+            FROM products
+            WHERE category= $1;
+        `, [category]);
+
+        return rows;
+    } catch(error) {
+        console.log("Error getting all records!")
+        throw error;
+    }
+}
+
+
 async function getProductById(id) {
     try{
         const { rows: [product] } = await client.query(`
             SELECT * FROM products
             WHERE id=$1;
         `, [id]);
-        console.log("getProductById: ", product)
         return product;
     } catch(error){
         console.log("Error in getRecordById!")
@@ -119,7 +135,9 @@ module.exports = {
     createProductsTable,
     createProduct,
     getAllProducts,
-    // getRecordById,
+    getProductsByCategory,
+    // getAllRecords,
+    getProductById,
     // getRecordByName,
     // getRecordByArtist,
     // getRecordByGenre,
