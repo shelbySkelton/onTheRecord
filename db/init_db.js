@@ -3,7 +3,7 @@ const {
   // declare your model imports here
   // for example, User
 } = require('./');
-const { createProductsTable, createProduct, getAllRecords, getProductById } = require('./models/products')
+const { createProductsTable, createProduct, getProductsByCategory, getProductById, getAllProducts } = require('./models/products')
 
 async function dropTables() {
   await client.query(`
@@ -138,13 +138,37 @@ async function createInitialProducts() {
         img_url: "https://m.media-amazon.com/images/I/61K2QykmDZL._AC_SL1500_.jpg",
         condition: "New",
         description: "Vinyl Cleaning Carbon Fiber Anti-Static Record Brush",
+      },
+      {
+        name: "HIStory - Past, Present And Future - Book I",
+        price: "30.99",
+        category: "Record",
+        quantity: "1",
+        img_url: "https://i.discogs.com/pTwrG7KuVpRZ_XKoZJF15yk_RLYM5QIwetgz1LGpySA/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ0NjI3/My0xNjU1MDUzNDc0/LTU1ODYuanBlZw.jpeg",
+        condition: "New",
+        album_name: "HIStory - Past, Present And Future - Book I",
+        artist: "Michael Jackson",
+        description: "HIStory: Past, Present and Future, Book I is the ninth studio album by the American singer Michael Jackson, released on June 20, 1995. It was Jackson's fifth album released through Epic Records, and the first on his label MJJ Productions. The album includes appearances by Janet Jackson, Shaquille O'Neal, Slash, and the Notorious B.I.G. The genres span R&B, pop, hip hop, elements of hard rock and funk rock. The themes include environmental awareness, isolation, greed, suicide, injustice, and Jackson's conflicts and common-ground with the media.",
+        genre: "Pop",
+      },
+      {
+        name: "Anti",
+        price: "24.99",
+        category: "Record",
+        quantity: "2",
+        img_url: "https://i.discogs.com/Vaudr6-YbiBZTL5g1F4AUM3Ho4Q2uPiutd3PsI0UXBg/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgwNzc5/OTAtMTQ1NDcxMDgw/OC0zODA0LmpwZWc.jpeg",
+        condition: "New",
+        album_name: "ANTI",
+        artist: "Rihanna",
+        description: "Anti (stylised in all caps) is the eighth studio album by Barbadian singer Rihanna. She started recording in 2014 after ending her contract with Def Jam Recordings, who had released all of her albums since her debut in 2005. As executive producer, Rihanna recorded Anti with producers including Jeff Bhasker, Boi-1da, DJ Mustard, Hit-Boy, Brian Kennedy, Timbaland and No I.D., at studios in Canada, the United States and France. SZA and Drake contribute guest vocals.",
+        genre: "Pop",
       }
     ]      
 
     const products = await Promise.all(
       productsToCreate.map((product) => createProduct(product))
     )
-    console.log("Products Created: ", products)
+
     console.log("Finished creating initial products!")
   } catch (error) {
     console.error("Error creating initial products!")
@@ -171,56 +195,25 @@ async function populateInitialData() {
      
 
 
+async function testDB() {
+  try {
+    console.log("Starting to test database...");
 
-//             
-//             {
-//                 name: "",
-//                 artist: "",
-//                 condition: "Used",
-//                 description: "",
-//                 genre: "soul",
-//                 price: "49.99",
-//                 img_link: "",
-//             }
-//             {
-//                 name: "",
-//                 artist: "",
-//                 condition: "Used",
-//                 description: "",
-//                 genre: "soul",
-//                 price: "49.99",
-//                 img_link: "",
-//             }
-//             {
-//                 name: "",
-//                 artist: "",
-//                 condition: "Used",
-//                 description: "",
-//                 genre: "soul",
-//                 price: "49.99",
-//                 img_link: "",
-//             }                               
-//         
+    // console.log("Calling getAllProducts...")
+    // const allProducts = await getAllProducts();
+    // console.log("getAllProducts: ", allProducts)
 
-// async function testDB() {
-//   try {
-//     console.log("Starting to test database...");
+    console.log("Calling getProductsByCategory(Record)...");
+    const records = await getProductsByCategory("Record");
+    console.log("getProductsByCategory(Record): ", records);
 
-//     console.log("Calling getAllProducts...")
-//     const allProducts = await getAllProducts();
-//     console.log("getAllProducts: ", getAllProducts)
+    console.log("Calling getProductsByCategory(Accessories)...");
+    const accessories = await getProductsByCategory("Accessory");
+    console.log("getProductsByCategory(Accessories): ", accessories);
 
-//     console.log("Calling getAllRecords...");
-//     const records = await getAllRecords();
-//     console.log("getAllRecords: ", records);
-
-//     console.log("Calling getAllAccessories...");
-//     const accessories = await getAllAccessories();
-//     console.log("getAllAccessories: ", accessories);
-
-//     console.log("Calling getProductById... on id: 3");
-//     const product = await getProductById(3);
-//     console.log("getProductById: ", product);
+    console.log("Calling getProductById... on id: 3");
+    const product = await getProductById(3);
+    console.log("getProductById: ", product);
 
 //     console.log("Calling updateProducts on product[0]...");
 //     const updateProductResult = await updateProduct(product[0].id, {
@@ -230,16 +223,17 @@ async function populateInitialData() {
 //     console.log("updateProductResult: ", updateProductResult);
 
 
-//   } catch (error) {
-//     console.error("Error testing database!");
-//     throw error;
-//   }
+  } catch (error) {
+    console.error("Error testing database!");
+    throw error;
+  }
 
-// }
+}
 
 
 
 buildTables()
   .then(populateInitialData)
+  .then(testDB)
   .catch(console.error)
   .finally(() => client.end());
