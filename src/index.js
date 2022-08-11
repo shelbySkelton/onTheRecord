@@ -5,4 +5,8 @@ import { App } from './components';
 // place them in the src/style directory, and import them like this:
 import './style/index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+const appElement = document.getElementById('root')
+const root = ReactDOM.createRoot(appElement)
+root.render(<App />)
+
