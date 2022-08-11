@@ -18,7 +18,7 @@ async function createProductsTable() {
             condition VARCHAR(7) NOT NULL CHECK(condition IN ('New','Used')),
             album_name VARCHAR(255),
             artist VARCHAR(255),
-            description VARCHAR(255) NOT NULL,
+            description TEXT NOT NULL,
             genre VARCHAR(255)
         );
         `) 
@@ -56,6 +56,7 @@ async function createProduct ({ name,
 }
 
 
+
 async function getAllProducts() {
     try {
         console.log("Getting all products...")
@@ -67,22 +68,24 @@ async function getAllProducts() {
         return products;
     } catch(error) {
         console.log("Error getting all products!")
+
         throw error;
     }
 }
 
-// async function getRecordById(id) {
-//     try{
-//         const { rows: [record ] } = await client.query(`
-//             SELECT * FROM records
-//             WHERE id=$1;
-//         `, [id]);
-//         return record;
-//     } catch(error){
-//         console.log("Error in getRecordById!")
-//         throw error;
-//     }
-// }
+async function getProductById(id) {
+    try{
+        const { rows: [product] } = await client.query(`
+            SELECT * FROM products
+            WHERE id=$1;
+        `, [id]);
+        console.log("getProductById: ", product)
+        return product;
+    } catch(error){
+        console.log("Error in getRecordById!")
+        throw error;
+    }
+}
 
 // async function updateRecord({id, ...fields}) {
 //     const setString = Object.keys(fields).map(
