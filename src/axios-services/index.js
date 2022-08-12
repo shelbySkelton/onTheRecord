@@ -6,6 +6,7 @@ import axios from 'axios';
 
 // for example, if we need to display a list of users
 // we'd probably want to define a getUsers service like this:
+export const API_URL = `localhost:4000/api`
 
 /* 
   export async function getUsers() {
