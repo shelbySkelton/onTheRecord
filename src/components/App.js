@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from '../axios-services';
-import { Home, Products } from './index'
+import { Home, Products, Records } from './index'
 import {
   BrowserRouter as Router,
   Routes,
@@ -32,9 +32,20 @@ const App = () => {
   return (
     <div className="app-container">
       <Router>
+        <header>
+          <img src='https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80' width='200' height='150' />
+        </header>
+        <navbar>
+        <Link to="/home">Home</Link>
+        <Link to="/products/records">Records</Link>
+        <Link to="/products/Accessories">Accessories</Link>
+        </navbar>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/products/all" element={<Products />} /> 
+          <Route path="/products/records" element={<Records />} /> 
+
+
         </Routes>
       </Router>
     </div>

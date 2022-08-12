@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllProducts } from '../axios-services/products';
-import { Grid, Item } from '@mui/material/Grid';
+// import { Grid, Item } from '@mui/material/Grid';
 
 const Products = (props) => {
   const [allProducts, setAllProducts] = useState([]);
@@ -26,7 +26,7 @@ const Products = (props) => {
                   <img src={product.img_url} alt="album-cover" width="150" height="150"></img><br></br>
                 </span>
                 <span>{product.name}</span><br></br>
-                <span>{product.price}</span><br></br>
+                <span>${product.price}</span><br></br>
               </section>
             )
           })

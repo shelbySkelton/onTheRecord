@@ -198,7 +198,6 @@ async function populateInitialData() {
 async function testDB() {
   try {
     console.log("Starting to test database...");
-)
 
     console.log("Calling getProductsByCategory(Record)...");
     const records = await getProductsByCategory("Record");

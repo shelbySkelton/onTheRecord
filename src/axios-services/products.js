@@ -10,3 +10,13 @@ export async function getAllProducts() {
     console.error(err);
   }
 }
+
+export async function getAllRecords() {
+  try {
+    const { data } = await axios.get(`/api/products/records`);
+    return data;
+    // console.log(data)
+  } catch (err) {
+    console.error(err);
+  }
+}
