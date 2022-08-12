@@ -9,7 +9,7 @@ module.exports = {
   createUser
 };
 
-async function createUsersTable(){
+async function createUsersTable() {
   // hash passwords using bcrypt
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
@@ -35,13 +35,13 @@ async function createUsersTable(){
   }
 }
 
-async function createUser({ email, password, first_name, last_name }){
+async function createUser({ email, password, first_name, last_name }) {
   try {
-    const { rows: [ user ]} = await client.query(`
+    const { rows: [user] } = await client.query(`
       INSERT INTO users(email, password, first_name, last_name)
       VALUES ($1, $2, $3, $4)
       RETURNING email, first_name, last_name;
-    `,[ email, hashedPassword, first_name, last_name])
+    `, [email, hashedPassword, first_name, last_name])
 
     return user;
   } catch (error) {
@@ -49,13 +49,13 @@ async function createUser({ email, password, first_name, last_name }){
   }
 }
 
-async function createAdmin({ email, password, first_name, last_name, isAdmin = true}){
+async function createAdmin({ email, password, first_name, last_name, isAdmin = true }) {
   try {
-    const { rows: [ admin ]} = await client.query(`
+    const { rows: [admin] } = await client.query(`
       INSERT INTO users(email, password, first_name, last_name, isAdmin)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING email, first_name, last_name;
-    `,[ email, hashedPassword, first_name, last_name, isAdmin])
+    `, [email, hashedPassword, first_name, last_name, isAdmin])
 
     return admin;
   } catch (error) {
@@ -63,10 +63,10 @@ async function createAdmin({ email, password, first_name, last_name, isAdmin = t
   }
 }
 
-async function createInitialAdmin(){
+async function createInitialAdmin() {
   console.log("Trying to create initial administrator");
   try {
-    const adminToCreate = 
+    const adminToCreate =
     {
       email: "admin@example.com",
       password: "superduperlongandimpossibletocrackadministratorpasswordforthepurposesoftestingourdatabase",
@@ -82,13 +82,13 @@ async function createInitialAdmin(){
   }
 }
 
-async function createInitialUsers(){
+async function createInitialUsers() {
   console.log("Starting to create users . . .")
   try {
     const usersToCreate = [
-      { email: "albert@example.com", password: "bertie99", first_name: "Al", last_name: "Bert"}, 
-      { email: "sandra@example.com", password: "sandra123", first_name: "Sandra", last_name: "Ardnas"},
-      { email: "glamgal@example.com", password: "glamgal123", first_name: "Glamorous", last_name: "Gal"},
+      { email: "albert@example.com", password: "bertie99", first_name: "Al", last_name: "Bert" },
+      { email: "sandra@example.com", password: "sandra123", first_name: "Sandra", last_name: "Ardnas" },
+      { email: "glamgal@example.com", password: "glamgal123", first_name: "Glamorous", last_name: "Gal" },
     ]
 
     const users = await Promise.all(usersToCreate.map(createUser))
@@ -113,6 +113,6 @@ async function getAllUsers() {
 
     return users;
   } catch (error) {
-    
+
   }
 }
