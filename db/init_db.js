@@ -4,10 +4,12 @@ const {
   // for example, User
 } = require('./');
 const { createProductsTable, createProduct, getProductsByCategory, getProductById, getAllProducts } = require('./models/products')
+const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser } = require('./models/user')
 
 async function dropTables() {
   await client.query(`
     DROP TABLE IF EXISTS products;
+    DROP TABLE IF EXISTS users;
   `)
 }
 
@@ -20,6 +22,7 @@ async function buildTables() {
 
     // build tables in correct order
     await createProductsTable();
+    await createUsersTable();
 
   } catch (error) {
     console.log("Error building tables!")
@@ -184,6 +187,7 @@ async function populateInitialData() {
     // const user1 = await User.createUser({ ...user info goes here... })
     // createInitialRecords FOR OUR populateInitalData() in init_db.js
     await createInitialProducts();
+    await createInitialUsers();
 
   } catch (error) {
     console.log("Error populating initial data!")
@@ -211,14 +215,18 @@ async function testDB() {
     const product = await getProductById(3);
     console.log("getProductById: ", product);
 
+    console.log("Calling getAllUsers");
+    const users = await getAllUsers();
+    console.log("getAllUsers: ", users)
 
-
+    console.log("Calling getUser");
+    const glamgal = await getUser({email: "glamgal@example.com", password: "glamgal123"})
+    console.log("Glamgal: ", glamgal)
 
   } catch (error) {
     console.error("Error testing database!");
     throw error;
   }
-
 }
 
 

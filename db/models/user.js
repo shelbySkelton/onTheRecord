@@ -2,17 +2,9 @@
 const client = require('../client');
 const bcrypt = require('bcrypt')
 
-module.exports = {
-  // add your database adapter fns here
-  getAllUsers,
-  createUsersTable,
-  createUser
-};
+
 
 async function createUsersTable() {
-  // hash passwords using bcrypt
-  const SALT_COUNT = 10;
-  const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
 
   try {
     console.log("Starting to build users table");
@@ -36,11 +28,13 @@ async function createUsersTable() {
 }
 
 async function createUser({ email, password, first_name, last_name }) {
+  const SALT_COUNT = 10;
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
   try {
     const { rows: [user] } = await client.query(`
       INSERT INTO users(email, password, first_name, last_name)
       VALUES ($1, $2, $3, $4)
-      RETURNING email, first_name, last_name;
+      RETURNING id, email, first_name, last_name;
     `, [email, hashedPassword, first_name, last_name])
 
     return user;
@@ -69,7 +63,7 @@ async function createInitialAdmin() {
     const adminToCreate =
     {
       email: "admin@example.com",
-      password: "superduperlongandimpossibletocrackadministratorpasswordforthepurposesoftestingourdatabase",
+      password: "secretpassword",
       first_name: "Admiral",
       last_name: "Ministrator",
       isAdmin: true
@@ -102,6 +96,41 @@ async function createInitialUsers() {
   }
 }
 
+async function getUserByEmail(email) {
+  try {
+    const { rows: [user] } = await client.query(`
+      SELECT *
+      FROM users
+      WHERE email= $1;
+    `, [email])
+    return user;
+  } catch (error) {
+    console.log("Error with getUserByEmail")
+    throw error;    
+  }
+}
+
+async function getUser({ email, password }) {
+  const user = await getUserByEmail(email);
+  const hashedPassword = user.password;
+  const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+  
+  if (passwordsMatch) {
+      try {
+        const { rows: [user] } = await client.query(`
+          SELECT id, email, first_name, last_name
+          FROM users
+          WHERE email = $1 and password = $2;
+        `, [email, hashedPassword])
+
+        return user;
+      } catch (error) {
+        console.log('Error in the getUser')
+        throw error;
+      }
+  }
+}
+
 async function getAllUsers() {
   try {
     console.log("Getting all users");
@@ -113,6 +142,16 @@ async function getAllUsers() {
 
     return users;
   } catch (error) {
-
+    throw error;
   }
 }
+
+module.exports = {
+  // add your database adapter fns here
+  getAllUsers,
+  createUsersTable,
+  createUser,
+  createInitialUsers,
+  getUser,
+  getUserByEmail
+};
