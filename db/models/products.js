@@ -88,7 +88,6 @@ async function getProductsByCategory(category) {
     }
 }
 
-
 async function getProductById(id) {
     try {
         const { rows: [product] } = await client.query(`

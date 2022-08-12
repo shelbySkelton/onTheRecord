@@ -1,11 +1,11 @@
-.app-container {
+/* .app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
-}
+} */
 
 .app-container h1 {
   color: var(--green);
@@ -28,4 +28,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.header-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.logo-image {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.products-nav {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }
