@@ -20,3 +20,12 @@ export async function getAllRecords() {
     console.error(err);
   }
 }
+
+export async function getAllAccessories() {
+  try {
+    const { data } = await axios.get(`/api/products/accessories`);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}

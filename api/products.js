@@ -27,4 +27,14 @@ productsRouter.get('/records', async (req, res, next) => {
   }
 })
 
+productsRouter.get('/accessories', async (req, res, next) => {
+  try {
+    const accessories = await getProductsByCategory('Accessory')
+    res.send(accessories);
+    next();
+  } catch (error) {
+    next(error);
+  }
+})
+
 module.exports = productsRouter;
