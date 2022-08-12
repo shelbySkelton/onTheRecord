@@ -111,7 +111,7 @@ async function createInitialProducts() {
         price: "24.99",
         category: "Record",
         quantity: "1",
-        img_url:"https://i.discogs.com/_Wf9CWXMMUWvMOXwK7Pkwj5erJ0SZgyLp5NsyX_1IlQ/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk4OTU4/Ny0xNTkwODYzNzM4/LTQ1MDAuanBlZw.jpeg",
+        img_url: "https://i.discogs.com/_Wf9CWXMMUWvMOXwK7Pkwj5erJ0SZgyLp5NsyX_1IlQ/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk4OTU4/Ny0xNTkwODYzNzM4/LTQ1MDAuanBlZw.jpeg",
         condition: "New",
         album_name: "Marc Anthony",
         artist: "Marc Anthony",
@@ -163,7 +163,7 @@ async function createInitialProducts() {
         description: "Anti (stylised in all caps) is the eighth studio album by Barbadian singer Rihanna. She started recording in 2014 after ending her contract with Def Jam Recordings, who had released all of her albums since her debut in 2005. As executive producer, Rihanna recorded Anti with producers including Jeff Bhasker, Boi-1da, DJ Mustard, Hit-Boy, Brian Kennedy, Timbaland and No I.D., at studios in Canada, the United States and France. SZA and Drake contribute guest vocals.",
         genre: "Pop",
       }
-    ]      
+    ]
 
     const products = await Promise.all(
       productsToCreate.map((product) => createProduct(product))
@@ -192,35 +192,27 @@ async function populateInitialData() {
 
 }
 
-     
+
 
 
 async function testDB() {
   try {
     console.log("Starting to test database...");
-
-    // console.log("Calling getAllProducts...")
-    // const allProducts = await getAllProducts();
-    // console.log("getAllProducts: ", allProducts)
+)
 
     console.log("Calling getProductsByCategory(Record)...");
     const records = await getProductsByCategory("Record");
     console.log("getProductsByCategory(Record): ", records);
 
-    console.log("Calling getProductsByCategory(Accessories)...");
+    console.log("Calling getProductsByCategory(Accessory)...");
     const accessories = await getProductsByCategory("Accessory");
-    console.log("getProductsByCategory(Accessories): ", accessories);
+    console.log("getProductsByCategory(Accessory): ", accessories);
 
     console.log("Calling getProductById... on id: 3");
     const product = await getProductById(3);
     console.log("getProductById: ", product);
 
-//     console.log("Calling updateProducts on product[0]...");
-//     const updateProductResult = await updateProduct(product[0].id, {
-//       price: "10.00",
-//       quantity: "100"
-//     });
-//     console.log("updateProductResult: ", updateProductResult);
+
 
 
   } catch (error) {
