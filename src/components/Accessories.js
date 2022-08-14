@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllAccessories } from '../axios-services/products';
-
+import { Link } from 'react-router-dom'
 
 const Accessories = () => {
     const [allAccessories, setAllAccessories] = useState([])
@@ -25,7 +25,7 @@ const Accessories = () => {
                 <span className="product-img">
                   <img src={accessory.img_url} alt="album-cover" width="150" height="150"></img><br></br>
                 </span>
-                <span>{accessory.name}</span><br></br>
+                <Link className="product-link" to={`/products/${accessory.id}`} >{accessory.name}</Link><br></br>
                 <span>${accessory.price}</span><br></br>
               </section>
             )
