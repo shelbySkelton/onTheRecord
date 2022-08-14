@@ -18,7 +18,7 @@ export async function loginUser({ email, password }){
 // Register
 export async function registerUser({ email, password, first_name, last_name }){
   try {
-    const { data } = await axios.post('/api/users/resgister', {
+    const { data } = await axios.post('/api/users/register', {
       email,
       password,
       first_name,

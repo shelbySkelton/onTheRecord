@@ -4,14 +4,9 @@ const express = require("express");
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env;
 
-const { getUserByEmail, getUser, createUser } = require("../db/models/user");
+const { getUserByEmail, getUser, createUser, getAllUsers } = require("../db/models/user");
 
 const usersRouter = express.Router();
-
-usersRouter.use('/', (req, res, next) => {
-  console.log("A request is being made to /users");
-  next();
-});
 
 usersRouter.post('/register', async (req, res, next) => {
   const { email, password, first_name, last_name } = req.body;

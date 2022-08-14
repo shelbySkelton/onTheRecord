@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Home = (props) => {
+const Home = () => {
   return(
     <h1>Placeholder</h1>
   )
