@@ -5,3 +5,5 @@ export { default as Records } from './Records';
 export { default as Accessories } from './Accessories';
 export { default as Login } from './Login';
 export { default as Register } from './Register';
+export { default as SingleProduct } from './SingleProduct';
+
