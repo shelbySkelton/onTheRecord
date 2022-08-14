@@ -29,3 +29,13 @@ export async function getAllAccessories() {
     console.error(err);
   }
 }
+
+export async function getProductById(productId) {
+  try {
+    const { data } = await axios.get(`/api/products/${productId}`);
+    return data;
+  } catch (err) {
+    console.error(err)    
+  }
+}
+
