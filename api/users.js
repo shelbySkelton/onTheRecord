@@ -3,7 +3,7 @@ const express = require("express");
 
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env;
-
+const { requireUser, requireAdmin } = require('./utils')
 const { getUserByEmail, getUser, createUser, getAllUsers } = require("../db/models/user");
 
 const usersRouter = express.Router();
@@ -85,4 +85,17 @@ usersRouter.post('/login', async (req, res, next) => {
   }
 });
 
+
+usersRouter.get('/me', requireUser, async (req, res, next) => {
+  try {
+      res.send(req.user)
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
+
 module.exports = usersRouter;
+
+
+
+

@@ -3,8 +3,16 @@ import React, { useState, useEffect } from 'react';
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from '../axios-services';
+import { testMe } from '../axios-services/users';
 
-import { Home, Products, Records, Accessories, Login, Register, SingleProduct } from './index'
+import { Home, 
+        Products, 
+        Records, 
+        Accessories, 
+        Login, 
+        Register, 
+        SingleProduct
+        } from './index'
 
 import {
   BrowserRouter as Router,
@@ -14,13 +22,17 @@ import {
 } from 'react-router-dom';
 import '../style/App.css';
 
+
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState({});
 
   useEffect(() => {
+
     // follow this pattern inside your useEffect calls:
     // first, create an async function that will wrap your axios service adapter
     // invoke the adapter, await the response, and set the data
+
     const getAPIStatus = async () => {
       const { healthy } = await getAPIHealth();
       setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
@@ -28,6 +40,12 @@ const App = () => {
 
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
+    testMe()
+      .then(isLoggedIn => {
+        console.log("isLoggedIn: ", isLoggedIn)
+        setIsLoggedIn(isLoggedIn)
+        console.log("isLoggedIn: ", isLoggedIn)
+      })
     getAPIStatus();
   }, []);
 
@@ -36,6 +54,14 @@ const App = () => {
       <Router>
         <navbar className='header-nav'>
 
+          {/* <Link to='/home'
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  localStorage.removeItem('token');
+                  setIsLoggedIn({})
+                }}> Log Out
+          </Link> */}
+  
           <Link to="/login">Log in</Link>
           <Link to="/register">Register</Link>
           <Link to="/myAccount">My Account</Link>
@@ -57,7 +83,7 @@ const App = () => {
           <Route path="/products/all" element={<Products />} />
           <Route path="/products/records" element={<Records />} />
           <Route path="/products/accessories" element={<Accessories />} />
-          <Route path="/products/:productId" element={<SingleProduct/>} />
+          <Route path="/products/:productId" element={<SingleProduct />} />
 
         </Routes>
       </Router>

@@ -30,3 +30,17 @@ export async function registerUser({ email, password, first_name, last_name }){
     throw error;
   }
 }
+
+//User Test
+export async function testMe() {
+  try {
+      const { data } = await axios.get(`/api/users/me`, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.token}`
+          }});
+          return data;
+  } catch (error) {
+    throw error;
+  }
+}

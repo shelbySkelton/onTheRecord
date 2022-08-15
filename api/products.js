@@ -1,6 +1,10 @@
 const express = require('express');
 const productsRouter = express.Router();
-const { getAllProducts, getProductsByCategory, getProductById, updateProduct } = require('../db/models')
+const { requireUser, requireAdmin } = require('./utils.js')
+const { getAllProducts,
+        getProductsByCategory, 
+        getProductById, 
+        updateProduct } = require('../db/models')
 
 
 productsRouter.use((req, res, next) => {
@@ -50,7 +54,7 @@ productsRouter.get('/:productId', async (req, res, next) => {
 })
 
 // THIS WILL REQUIRE A 'requireAdmin' middleware!***
-productsRouter.patch('/:productId', async (req, res, next) => {
+productsRouter.patch('/:productId', requireAdmin, async (req, res, next) => {
   const { productId } = req.params;
   const { name, 
           price, 
