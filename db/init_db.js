@@ -88,8 +88,8 @@ async function testDB() {
     console.log("Glamgal: ", glamgal)
 
     console.log("Calling getUserById");
-    const user1 = await getUserById(1);
-    console.log("User1: ", user1);
+    const user1 = await getUserById(4);
+    console.log("User4: ", user1);
 
   } catch (error) {
     console.error("Error testing database!");

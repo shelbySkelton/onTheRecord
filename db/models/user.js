@@ -48,7 +48,7 @@ async function createAdmin({ email, password, first_name, last_name, isAdmin }) 
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
   try {
     const { rows: [admin] } = await client.query(`
-      INSERT INTO users(email, password, first_name, last_name, isAdmin)
+      INSERT INTO users(email, password, first_name, last_name, "isAdmin")
       VALUES ($1, $2, $3, $4, $5)
       RETURNING email, first_name, last_name;
     `, [email, hashedPassword, first_name, last_name, isAdmin])
@@ -63,17 +63,17 @@ async function createInitialAdmin() {
   console.log("Trying to create initial administrator");
   try {
     const adminToCreate =
-    {
+    [{
       email: "admin@example.com",
       password: "secretpassword",
       first_name: "Admiral",
       last_name: "Ministrator",
       isAdmin: true
-    }
-    const admin = await createAdmin(adminToCreate);
+    }]
+    const admin = await Promise.all(adminToCreate.map(createAdmin))
     return admin;
   } catch (error) {
-    console.log("Error creating administrator password");
+    console.log("Error creating administrator");
     throw error;
   }
 }
@@ -101,7 +101,7 @@ async function createInitialUsers() {
 async function getUserByEmail(email) {
   try {
     const { rows: [user] } = await client.query(`
-      SELECT *
+      SELECT id, email, password, first_name, last_name
       FROM users
       WHERE email= $1;
     `, [email])
@@ -165,7 +165,7 @@ async function getAllUsers() {
     console.log("Getting all users");
 
     const { rows: users } = await client.query(`
-      SELECT id, email, first_name, last_name 
+      SELECT id, email, first_name, last_name, "isAdmin"
       FROM users;
     `)
 
