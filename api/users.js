@@ -60,10 +60,11 @@ usersRouter.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    next({
+    res.send({
       name: "MissingCredentialsError",
       message: "Please supply both a username and password"
     });
+    next();
   }
 
   try {
@@ -72,12 +73,13 @@ usersRouter.post('/login', async (req, res, next) => {
     if (user) {
       const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
       res.send({ user, message: "you're logged in!", token });
-
+      next();
     } else {
-      next({
+      res.send({
         name: 'IncorrectCredentialsError',
         message: 'Email or password is incorrect'
       });
+      next();
     }
   } catch ({ name, message }) {
     next({ name, message });
