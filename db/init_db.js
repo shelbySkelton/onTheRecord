@@ -5,7 +5,7 @@ const {
 } = require('./');
 
 const { createProductsTable, createInitialProducts, createProduct, getProductsByCategory, getProductById, getAllProducts, updateProduct } = require('./models/products')
-const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser } = require('./models/user')
+const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser, getUserById, createInitialAdmin } = require('./models/user')
 
 
 async function dropTables() {
@@ -45,7 +45,7 @@ async function populateInitialData() {
     // createInitialRecords FOR OUR populateInitalData() in init_db.js
     await createInitialProducts();
     await createInitialUsers();
-
+    await createInitialAdmin();
   } catch (error) {
     console.log("Error populating initial data!")
     throw error;
@@ -86,6 +86,10 @@ async function testDB() {
     console.log("Calling getUser");
     const glamgal = await getUser({email: "glamgal@example.com", password: "glamgal123"})
     console.log("Glamgal: ", glamgal)
+
+    console.log("Calling getUserById");
+    const user1 = await getUserById(1);
+    console.log("User1: ", user1);
 
   } catch (error) {
     console.error("Error testing database!");

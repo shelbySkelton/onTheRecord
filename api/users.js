@@ -88,9 +88,12 @@ usersRouter.post('/login', async (req, res, next) => {
 
 usersRouter.get('/me', requireUser, async (req, res, next) => {
   try {
+      console.log("This is req: ", req)
+      console.log("This is /me req.user: ", req.user)
       res.send(req.user)
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    console.log(error);
+    next(error);
   }
 })
 

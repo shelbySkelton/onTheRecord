@@ -42,8 +42,8 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     testMe()
       .then(isLoggedIn => {
-        console.log("isLoggedIn: ", isLoggedIn)
-        setIsLoggedIn(isLoggedIn)
+        
+        setIsLoggedIn(isLoggedIn);
         console.log("isLoggedIn: ", isLoggedIn)
       })
     getAPIStatus();
@@ -53,7 +53,6 @@ const App = () => {
     <div className="app-container">
       <Router>
         <navbar className='header-nav'>
-
           {/* <Link to='/home'
                 onClick={(evt) => {
                   evt.preventDefault();
@@ -77,9 +76,15 @@ const App = () => {
           <Link to="/products/Accessories">Accessories</Link>
         </navbar>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login 
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+          />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<Home 
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+          />} />
           <Route path="/products/all" element={<Products />} />
           <Route path="/products/records" element={<Records />} />
           <Route path="/products/accessories" element={<Accessories />} />

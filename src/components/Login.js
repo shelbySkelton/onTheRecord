@@ -5,7 +5,8 @@ import { loginUser } from '../axios-services/users';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, setToken] = useState('')
+    const [token, setToken] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState({})
 
     const navigate = useNavigate();
 
@@ -21,6 +22,7 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         setToken(data.token);
         navigate("/home");
+        setIsLoggedIn(data)
     }
     return (
         <div id="login">
