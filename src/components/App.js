@@ -68,7 +68,8 @@ const App = () => {
 
         </navbar>
         <div className='logo-image'>
-          <img src='https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80' width='200' height='150' />
+          {/* <img className='logo' src='https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80' width='200' height='150' /> */}
+          <img className='logo' src="https://i.imgur.com/cZV1cx1.png" alt='logo'  />
         </div>
         <navbar className='products-nav'>
           <Link to="/home">Home</Link>
