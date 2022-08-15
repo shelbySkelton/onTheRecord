@@ -79,9 +79,8 @@ usersRouter.post('/login', async (req, res, next) => {
         message: 'Email or password is incorrect'
       });
     }
-  } catch (error) {
-    console.log(error);
-    next(error);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 

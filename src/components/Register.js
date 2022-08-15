@@ -8,6 +8,9 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [token, setToken] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [newPw1, setNewPw1] = useState('');
+    const [newPw2, setNewPw2] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,6 +24,7 @@ const Register = () => {
         console.log('This is my registered data', data);
         localStorage.setItem('token', data.token);
         setToken(data.token);
+        setErrorMessage(data.message);
     }
 
     return (
@@ -29,7 +33,7 @@ const Register = () => {
             <form onSubmit={handleSubmit}>
                 <label>
                     Email:
-                    <input className="text-box" type="text" name="username" onChange={(event) => {
+                    <input className="text-box" type="text" name="email" onChange={(event) => {
                         setEmail(event.target.value);
                     }} /><br></br>
                 </label>
@@ -47,18 +51,27 @@ const Register = () => {
                 </label>
                 <label>
                     Password:
-                    <input className="text-box" type="text" name="password" onChange={(event) => {
-                        setPassword(event.target.value);
+                    <input value={newPw1} minLength="8" className="text-box" type="password" name="password" onChange={(event) => {
+                        setNewPw1(event.target.value);
                     }} /><br></br>
 
                 </label>
                 <label>
                     Confirm Password:
-                    <input className="text-box" type="text" name="confirmPassword" onChange={(event) => {
-                        setConfirmPassword(event.target.value);
-                    }} /><br></br>
+                    <input value={newPw2} className="text-box" type="password" name="confirmPassword"
+                        onChange={(event) => {
+                            setNewPw2(event.target.value);
+                        }}
+                        onInput={(event) => {
+                            setPassword(event.target.value)
+                        }}
+                    /><br></br>
                 </label>
-                <button className="button" type="submit">Register</button>
+                <button className="button" type="submit"
+                    disabled={(newPw1 === newPw2) ? false : true}
+                >Register</button>
+                <p>{errorMessage}</p>
+                <p>{(newPw1 === newPw2) ? null : "Passwords must be matching"}</p>
             </form>
         </div>
     );
