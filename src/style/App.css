@@ -144,10 +144,31 @@
 
 .add-to-cart-button {
   width: 100px;
-  justify-content: ;
+  justify-content: 
 }
 
 .product-link {
   text-decoration: none;
 }
 
+.logo {
+  width: 30%;
+  height: 30%;
+  margin: 12px;
+  padding: 12px;
+}
+
+.logo:hover {
+  animation-name: spin;
+  animation-duration: 1800ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
+  
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  } to {
+    transform:rotate(360deg);
+    }
+}
