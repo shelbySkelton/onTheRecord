@@ -43,7 +43,9 @@ async function createUser({ email, password, first_name, last_name }) {
   }
 }
 
-async function createAdmin({ email, password, first_name, last_name, isAdmin = true }) {
+async function createAdmin({ email, password, first_name, last_name, isAdmin }) {
+  const SALT_COUNT = 10;
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
   try {
     const { rows: [admin] } = await client.query(`
       INSERT INTO users(email, password, first_name, last_name, isAdmin)
@@ -122,12 +124,39 @@ async function getUser({ email, password }) {
           FROM users
           WHERE email = $1 and password = $2;
         `, [email, hashedPassword])
-
+        console.log("This is user: ", user)
         return user;
       } catch (error) {
         console.log('Error in the getUser')
         throw error;
       }
+  }
+}
+
+async function getUserById(userId){
+  try {
+    const { rows: [ user ] } = await client.query(`
+      SELECT id, email, first_name, last_name, "isAdmin"
+      FROM users
+      WHERE id=$1;
+    `, [userId]);
+
+    if (!user){
+      return null;
+    } else {
+      // get their cart (use getCartByUser)
+      // let userCart = await getCartByUser(userId);
+
+      // then add the cart to the user object with key 'cart'
+      // user.cart = userCart
+
+      // return the user object
+      return user;
+
+    }
+  } catch (error) {
+    console.log("Error in getUserById");
+    throw error;
   }
 }
 
@@ -153,5 +182,7 @@ module.exports = {
   createUser,
   createInitialUsers,
   getUser,
-  getUserByEmail
+  getUserByEmail,
+  getUserById,
+  createInitialAdmin
 };

@@ -3,7 +3,7 @@ const express = require("express");
 
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env;
-
+const { requireUser, requireAdmin } = require('./utils')
 const { getUserByEmail, getUser, createUser, getAllUsers } = require("../db/models/user");
 
 const usersRouter = express.Router();
@@ -79,10 +79,25 @@ usersRouter.post('/login', async (req, res, next) => {
         message: 'Email or password is incorrect'
       });
     }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+
+usersRouter.get('/me', requireUser, async (req, res, next) => {
+  try {
+      console.log("This is req: ", req)
+      console.log("This is /me req.user: ", req.user)
+      res.send(req.user)
   } catch (error) {
     console.log(error);
     next(error);
   }
-});
+})
 
 module.exports = usersRouter;
+
+
+
+

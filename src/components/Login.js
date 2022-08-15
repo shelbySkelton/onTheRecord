@@ -5,7 +5,9 @@ import { loginUser } from '../axios-services/users';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [token, setToken] = useState('')
+    const [token, setToken] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
 
@@ -21,6 +23,8 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         setToken(data.token);
         navigate("/home");
+        setIsLoggedIn(data);
+        setErrorMessage(data.message);
     }
     return (
         <div id="login">
@@ -34,11 +38,12 @@ const Login = () => {
                 </label><br></br>
                 <label>
                     Password:
-                    <input className="text-box" type="text" name="password" onChange={(event) => {
+                    <input className="text-box" type="password" name="password" onChange={(event) => {
                         setPassword(event.target.value);
                     }} />
                 </label><br></br>
                 <button className="button" type="submit">Login</button>
+                <p>{errorMessage}</p>
             </form>
         </div>
     );
