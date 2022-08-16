@@ -72,7 +72,7 @@ usersRouter.post('/login', async (req, res, next) => {
 
     if (user) {
       const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
-      res.send({ user, message: "you're logged in!", token });
+      res.send({ success: true, user, message: "you're logged in!", token });
       next();
     } else {
       res.send({
@@ -89,12 +89,11 @@ usersRouter.post('/login', async (req, res, next) => {
 
 usersRouter.get('/me', requireUser, async (req, res, next) => {
   try {
-      console.log("This is req: ", req)
       console.log("This is /me req.user: ", req.user)
       res.send(req.user)
-  } catch (error) {
-    console.log(error);
-    next(error);
+  } catch ({name, message}) {
+    // console.log(error);
+    next({name, message});
   }
 })
 
