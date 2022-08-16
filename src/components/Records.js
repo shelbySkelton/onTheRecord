@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { getAllRecords } from '../axios-services/products';
 import { Link, Navigate } from 'react-router-dom'
 
-const Records = () => {
+const Records = ({user, isLoggedIn}) => {
     const [allRecords, setAllRecords] = useState([])
 
     useEffect(() => {
         getAllRecords()
           .then(allRecords => {
-            console.log(allRecords)
             setAllRecords(allRecords)
           })
       }, [])
@@ -16,6 +15,7 @@ const Records = () => {
      return(
         <div>
       <h1>Records Page</h1>
+      <p>{isLoggedIn ? `You're Logged In as ${user.first_name}`: `You are not logged in`}</p>
       <div className='products-container'>
 
         {

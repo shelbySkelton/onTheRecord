@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 
 
-const SingleProduct = () => {
+const SingleProduct = ({ isLoggedIn, user }) => {
 
 
     const { productId } = useParams();
@@ -15,7 +15,6 @@ const SingleProduct = () => {
     useEffect(() => {
         getProductById(productId)
             .then(productDetails => {
-                console.log(productDetails)
                 setProductDetails(productDetails)
             })
 
@@ -25,6 +24,7 @@ const SingleProduct = () => {
 
     return (
         <div>
+            <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <div className='single-product-container'>
 
                 <div className='product-view'>
@@ -36,9 +36,9 @@ const SingleProduct = () => {
                 <div className='product-details'>
                     <span hidden={productDetails.artist ? false : true}
                     ><span className="detail-label">Artist: </span><span>{productDetails.artist}</span></span>
-                    <span hidden = {productDetails.album_name ? false : true }
+                    <span hidden={productDetails.album_name ? false : true}
                     ><span className="detail-label">Album: </span><span>{productDetails.album_name}</span></span>
-                    <span  hidden = {productDetails.genre ? false : true }
+                    <span hidden={productDetails.genre ? false : true}
                     ><span className="detail-label">Genre: </span><span>{productDetails.genre}</span></span>
                     <span>{productDetails.description}</span>
                     <span>${productDetails.price}</span>
