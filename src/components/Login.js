@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../axios-services/users';
 
-const Login = () => {
+const Login = ({ isLoggedIn, setIsLoggedIn, user, setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState({});
+    // const [isLoggedIn, setIsLoggedIn] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
 
     const navigate = useNavigate();
@@ -21,14 +21,21 @@ const Login = () => {
         const data = await loginUser(user);
         console.log('This is my registered data', data);
         localStorage.setItem('token', data.token);
-        setToken(data.token);
-        navigate("/home");
-        setIsLoggedIn(data);
-        setErrorMessage(data.message);
+        console.log('data back from login: ', data)
+        //IF STATEMENT FOR DATA SUCCESS
+        if (data.success) {
+            setToken(data.token);
+            navigate("/home");
+            setUser(data);
+            setIsLoggedIn(true);;
+        }
+        setErrorMessage(data.message)
     }
     return (
         <div id="login">
+
             <h1>Login</h1>
+            <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <form onSubmit={handleSubmit}>
                 <label>
                     Email:

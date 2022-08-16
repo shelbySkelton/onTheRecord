@@ -3,7 +3,7 @@ import { getAllProducts } from '../axios-services/products';
 import { Link, Navigate } from 'react-router-dom'
 // import { Grid, Item } from '@mui/material/Grid';
 
-const Products = (props) => {
+const Products = ({ isLoggedIn, user }) => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
@@ -16,6 +16,8 @@ const Products = (props) => {
 
   return (
     <div>
+      <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
+
       <h1>Products Page</h1>
       <div className='products-container'>
 

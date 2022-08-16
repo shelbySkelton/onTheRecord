@@ -42,6 +42,7 @@ export async function testMe() {
           console.log("This is testMe: ", data)
           return data;
   } catch (error) {
+    console.log("testMe did not pass//No logged in user")
     throw error;
   }
 }

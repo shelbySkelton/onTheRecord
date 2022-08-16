@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from '../axios-services/users';
 
-const Register = () => {
+const Register = ({ isLoggedIn, user }) => {
     const [email, setEmail] = useState('');
     const [first_name, setFirst_name] = useState('');
     const [last_name, setLast_name] = useState('');
@@ -29,6 +29,7 @@ const Register = () => {
 
     return (
         <div id="register">
+            <p>{isLoggedIn ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
                 <label>

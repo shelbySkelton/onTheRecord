@@ -5,14 +5,15 @@ import React, { useState, useEffect } from 'react';
 import { getAPIHealth } from '../axios-services';
 import { testMe } from '../axios-services/users';
 
-import { Home, 
-        Products, 
-        Records, 
-        Accessories, 
-        Login, 
-        Register, 
-        SingleProduct
-        } from './index'
+import {
+  Home,
+  Products,
+  Records,
+  Accessories,
+  Login,
+  Register,
+  SingleProduct
+} from './index'
 
 import {
   BrowserRouter as Router,
@@ -25,7 +26,9 @@ import '../style/App.css';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState({})
 
   useEffect(() => {
 
@@ -41,54 +44,83 @@ const App = () => {
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     testMe()
-      .then(isLoggedIn => {
-        
-        setIsLoggedIn(isLoggedIn);
-        console.log("isLoggedIn: ", isLoggedIn)
+      .then(user => {
+        setUser(user);
+        console.log("user: ", user)
       })
     getAPIStatus();
   }, []);
+
 
   return (
     <div className="app-container">
       <Router>
         <navbar className='header-nav'>
-          {/* <Link to='/home'
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  localStorage.removeItem('token');
-                  setIsLoggedIn({})
-                }}> Log Out
-          </Link> */}
-  
-          <Link to="/login">Log in</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/myAccount">My Account</Link>
+          <Link to='/home'
+            hidden={isLoggedIn ? false : true}
+            onClick={(evt) => {
+              localStorage.removeItem('token');
+              setIsLoggedIn(false);
+              setUser({});
+            }}> Log Out
+          </Link>
+
+          <Link to="/login"
+            hidden={isLoggedIn ? true : false}
+          >Log in</Link>
+          <Link to="/register"
+            hidden={isLoggedIn ? true : false}
+
+          >Register</Link>
+          <Link
+            hidden={isLoggedIn ? false : true}
+            to="/myAccount">{user.first_name}'s Account</Link>
           <Link to="/cart">My Cart</Link>
 
         </navbar>
         <div className='logo-image'>
-          <img src='https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80' width='200' height='150' />
+          {/* <img className='logo' src='https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80' width='200' height='150' /> */}
+          <img className='logo' src="https://i.imgur.com/cZV1cx1.png" alt='logo' />
         </div>
         <navbar className='products-nav'>
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
+          <p>{isLoggedIn ? `You're Logged In, ${user.first_name}` : "You're Not Logged In"}</p>
         </navbar>
         <Routes>
-          <Route path="/login" element={<Login 
+          <Route path="/login" element={<Login
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
+            user={user}
+            setUser={setUser}
           />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home 
+          <Route path="/register" element={<Register
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
+            user={user} />} />
+          <Route path="/home" element={<Home
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            setUser={setUser}
+            user={user}
           />} />
-          <Route path="/products/all" element={<Products />} />
-          <Route path="/products/records" element={<Records />} />
-          <Route path="/products/accessories" element={<Accessories />} />
-          <Route path="/products/:productId" element={<SingleProduct />} />
+          <Route path="/products/all" element={<Products
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} />} />
+          <Route path="/products/records" element={<Records
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} />} />
+          <Route path="/products/accessories" element={<Accessories
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} />} />
+          <Route path="/products/:productId" element={<SingleProduct
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} />} />
 
         </Routes>
       </Router>

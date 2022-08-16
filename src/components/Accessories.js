@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { getAllAccessories } from '../axios-services/products';
 import { Link } from 'react-router-dom'
 
-const Accessories = () => {
-    const [allAccessories, setAllAccessories] = useState([])
+const Accessories = ({ user, isLoggedIn }) => {
+  const [allAccessories, setAllAccessories] = useState([])
 
-    useEffect(() => {
-        getAllAccessories()
-          .then(allAccessories => {
-            console.log(allAccessories)
-            setAllAccessories(allAccessories)
-          })
-      }, [])
+  useEffect(() => {
+    getAllAccessories()
+      .then(allAccessories => {
+        console.log(allAccessories)
+        setAllAccessories(allAccessories)
+      })
+  }, [])
 
-     return(
-        <div>
+  return (
+    <div>
+      <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
       <h1>Accessories Page</h1>
       <div className='products-container'>
 
@@ -33,7 +34,7 @@ const Accessories = () => {
         }
       </div>
     </div>
-     ) 
+  )
 }
 
 export default Accessories;
