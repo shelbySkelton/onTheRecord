@@ -6,7 +6,7 @@ const Register = () => {
     const [first_name, setFirst_name] = useState('');
     const [last_name, setLast_name] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    // const [confirmPassword, setConfirmPassword] = useState('');
     const [token, setToken] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [newPw1, setNewPw1] = useState('');
