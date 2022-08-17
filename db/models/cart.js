@@ -158,14 +158,6 @@ async function createInitialCartItems(){
 async function joinProductsInfoWithCartItems() {
   // This function will be used to get relevant product info (name, img)
   // and join it with individual_cart_items at product_id=products(id)
-
-}
-
-async function getActiveCartByUserId( user_id ){
-  const { rows: [ cart ]} = await client.query(`
-    SELECT * FROM cart_orders
-    WHERE user_id = $1 and order_status='active';
-  `, [user_id])
 }
 
 async function getMyCartWithItems(user_id){
@@ -201,7 +193,6 @@ async function getMyOrdersWithItems(user_id){
     const { rows: carts } = await client.query(`
       SELECT * 
       FROM cart_orders
-      JOIN carted_items ON cart_orders.id = carted_items.cart_id
       WHERE cart_orders.user_id=$1;
     `, [user_id])
 
@@ -224,10 +215,14 @@ async function getMyOrdersWithItems(user_id){
   }
 }
 
+async function deleteItemFromCart(product_id){
+  
+}
 
 async function checkOut(id){
   // change order_status to pending
   // create a new active cart for the user
+  // query: UPDATE
 }
 
 // Admin functions
