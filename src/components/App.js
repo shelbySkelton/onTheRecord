@@ -12,7 +12,8 @@ import {
   Accessories,
   Login,
   Register,
-  SingleProduct
+  SingleProduct,
+  Admin
 } from './index'
 
 import {
@@ -94,6 +95,8 @@ const App = () => {
             setIsLoggedIn={setIsLoggedIn}
             user={user}
             setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
           />} />
           <Route path="/register" element={<Register
             isLoggedIn={isLoggedIn}
@@ -104,23 +107,36 @@ const App = () => {
             setIsLoggedIn={setIsLoggedIn}
             setUser={setUser}
             user={user}
+            isAdmin={isAdmin}
           />} />
           <Route path="/products/all" element={<Products
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
           <Route path="/products/records" element={<Records
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
           <Route path="/products/accessories" element={<Accessories
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
           <Route path="/products/:productId" element={<SingleProduct
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
+          <Route path="/admin" element={<Admin
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
 
         </Routes>
       </Router>

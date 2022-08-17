@@ -73,23 +73,27 @@ async function testDB() {
     console.log("getProductById: ", product);
 
 
-    // console.log("Calling updateProduct on product 2...")
-    // const updatedProduct = await updatedProduct(req)
-    // console.log("Finished updating product:", updatedProduct)
+    console.log("Calling updateProduct on product 2...")
+    const updates = {
+      id: 2,
+      description: "UPDATED WORKED!!!!"
+    }
+    const updatedProduct = await updateProduct(updates)
+    console.log("Finished updating product:", updatedProduct)
 
 
-    console.log("Calling getAllUsers");
-    const users = await getAllUsers();
-    console.log("getAllUsers: ", users)
+    // console.log("Calling getAllUsers");
+    // const users = await getAllUsers();
+    // console.log("getAllUsers: ", users)
 
 
-    console.log("Calling getUser");
-    const glamgal = await getUser({email: "glamgal@example.com", password: "glamgal123"})
-    console.log("Glamgal: ", glamgal)
+    // console.log("Calling getUser");
+    // const glamgal = await getUser({email: "glamgal@example.com", password: "glamgal123"})
+    // console.log("Glamgal: ", glamgal)
 
-    console.log("Calling getUserById");
-    const user1 = await getUserById(4);
-    console.log("User4: ", user1);
+    // console.log("Calling getUserById");
+    // const user1 = await getUserById(4);
+    // console.log("User4: ", user1);
 
   } catch (error) {
     console.error("Error testing database!");
