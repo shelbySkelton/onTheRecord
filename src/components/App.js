@@ -13,7 +13,8 @@ import {
   Login,
   Register,
   SingleProduct,
-  Admin
+  Admin,
+  Cart
 } from './index'
 
 import {
@@ -130,6 +131,14 @@ const App = () => {
             user={user} />}
             isAdmin={isAdmin} />
           <Route path="/admin" element={<Admin
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/cart" element={<Cart
             setIsLoggedIn={setIsLoggedIn}
             isLoggedIn={isLoggedIn}
             user={user}

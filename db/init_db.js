@@ -13,7 +13,8 @@ const {
   createInitialCarts,
   createInitialCartItems,
   getMyCartWithItems,
-  getMyOrdersWithItems
+  getMyOrdersWithItems,
+  deleteItemFromCart
 } = require('./models/cart')
 
 
@@ -118,6 +119,13 @@ async function testDB() {
     const cart1 = await getMyCartWithItems(1);
     console.log("cart1: ", cart1)
 
+    console.log("Deleting item 2 from cart 1")
+    const deletedItem = await deleteItemFromCart(2)
+    console.log("Our deleted item: ", deletedItem)
+
+    console.log("getMyCartWithItems for user 1 AFTER deleting")
+    const newcart = await getMyCartWithItems(1);
+    console.log("cart1 after deleting item: ", newcart)
     // console.log("Calling getUserById");
     // const user1 = await getUserById(4);
     // console.log("User4: ", user1);
