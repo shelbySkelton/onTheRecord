@@ -1,10 +1,10 @@
 const express = require('express');
 const productsRouter = express.Router();
-const { requireUser, requireAdmin } = require('./utils.js')
+const { requireUser } = require('./utils.js')
 const { getAllProducts,
         getProductsByCategory, 
         getProductById, 
-        updateProduct } = require('../db/models')
+         } = require('../db/models')
 
 
 productsRouter.use((req, res, next) => {
@@ -53,60 +53,7 @@ productsRouter.get('/:productId', async (req, res, next) => {
   }
 })
 
-// THIS WILL REQUIRE A 'requireAdmin' middleware!***
-productsRouter.patch('/:productId', requireAdmin, async (req, res, next) => {
-  const { productId } = req.params;
-  const { name, 
-          price, 
-          category, 
-          quantity, 
-          img_url, 
-          condition, 
-          album_name, 
-          artist, 
-          description, 
-          genre } = req.body;
 
-    const updateFields = {};
-
-    if (name) {
-      updateFields.name = name;
-    }
-    if (price) {
-      updateFields.price = price;
-    }
-    if (category) {
-      updateFields.category= category;
-    }
-    if (quantity) {
-      updateFields.quantity= quantity;
-    }
-    if (img_url) {
-      updateFields.img_url = img_url;
-    }
-    if (condition) {
-      updateFields.condition = condition;
-    }
-    if (album_name) {
-      updateFields.album_name = album_name
-    }
-    if (artist) {
-      updateFields.artist = artist
-    }
-    if (description) {
-      updateFields.description = description
-    }
-    if (genre) {
-      updateFields.genre = genre
-    }
-
-    try {
-      const updatedProduct = await updateProduct(updateFields);
-      res.send(updatedProduct)
-    } catch ({name, message}) {
-      next({name, message})
-    }
-})
 
 
 
