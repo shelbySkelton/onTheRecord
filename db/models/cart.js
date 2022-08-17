@@ -159,7 +159,7 @@ async function joinProductsInfoWithCartItems() {
   // This function will be used to get relevant product info (name, img)
   // and join it with individual_cart_items at product_id=products(id)
 }
-
+//ACTIVE CART WITH ITEMS
 async function getMyCartWithItems(user_id){
   // requires user authentication
   try {
@@ -184,7 +184,7 @@ async function getMyCartWithItems(user_id){
     throw error;
   }
 }
-
+//ALL OF MY ORDERS WITH ITEMS
 async function getMyOrdersWithItems(user_id){
   // for viewing previous orders
   // gets all cart_orders and carted_items with that cart_order
@@ -215,8 +215,24 @@ async function getMyOrdersWithItems(user_id){
   }
 }
 
-async function deleteItemFromCart(product_id){
+async function deleteItemFromCart(cartedItemId){
   
+  try {
+    const { rows: [item ]} = await client.query(`
+      DELETE FROM carted_items
+      WHERE id=$1
+      RETURNING *;
+    `, [cartedItemId])
+    console.log("Item that was deleted: ", item)
+    return item;
+
+  } catch (error) {
+    console.log("Error deleting Item from Carted_Items")
+    throw error;
+  }
+
+
+
 }
 
 async function checkOut(id){
@@ -242,5 +258,6 @@ module.exports = {
   createInitialCarts,
   createInitialCartItems,
   getMyCartWithItems,
-  getMyOrdersWithItems
+  getMyOrdersWithItems,
+  deleteItemFromCart
 }
