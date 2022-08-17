@@ -18,7 +18,6 @@ function requireAdmin(req, res, next) {
             message: "You must be an Administrator to perform this action"
         });
     }
-
     next();
 }
 
