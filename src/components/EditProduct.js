@@ -13,7 +13,9 @@ import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
 import { testMe } from '../axios-services/users';
-import { patchProduct, removeProduct } from '../axios-services/admin';
+import { patchProduct, 
+    // removeProduct 
+} from '../axios-services/admin';
 import { Input } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 

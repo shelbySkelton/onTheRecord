@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom'
 import { testMe } from '../axios-services/users';
 import { getAdminProducts, 
-   removeProduct 
+//    removeProduct 
 } from '../axios-services/admin'
 import { useNavigate } from 'react-router-dom';
 

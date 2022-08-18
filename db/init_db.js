@@ -9,10 +9,6 @@ const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser, 
 
 const { createReviewsTable, createInitialReviews, getReviewsByUser, getReviewsByProduct, updateReview, deleteReview } = require('./models/reviews');
 
-async function dropTables() {
-  await client.query(`
-    DROP TABLE IF EXISTS reviews;
-
 const { 
   createCartOrdersTable,
   createCartItemsTable,
