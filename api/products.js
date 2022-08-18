@@ -1,8 +1,8 @@
 const express = require('express');
 const productsRouter = express.Router();
 const { requireUser } = require('./utils.js')
-const { getAllProducts,
-        getProductsByCategory, 
+const { getAllActiveProducts,
+        getActiveProductsByCategory, 
         getProductById, 
          } = require('../db/models')
 
@@ -14,7 +14,7 @@ productsRouter.use((req, res, next) => {
 
 productsRouter.get('/', async (req, res, next) => {
   try {
-    const products = await getAllProducts();
+    const products = await getAllActiveProducts();
     res.send(products)
     next();
   } catch (error) {
@@ -24,7 +24,7 @@ productsRouter.get('/', async (req, res, next) => {
 
 productsRouter.get('/records', async (req, res, next) => {
   try {
-    const records = await getProductsByCategory('Record')
+    const records = await getActiveProductsByCategory('Record')
     res.send(records)
     next();
   } catch (error) {
@@ -34,7 +34,7 @@ productsRouter.get('/records', async (req, res, next) => {
 
 productsRouter.get('/accessories', async (req, res, next) => {
   try {
-    const accessories = await getProductsByCategory('Accessory')
+    const accessories = await getActiveProductsByCategory('Accessory')
     res.send(accessories);
     next();
   } catch (error) {
