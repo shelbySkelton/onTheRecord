@@ -29,7 +29,6 @@ apiRouter.use(async (req, res, next) => {
 
       try {
           const { id } = jwt.verify(token, JWT_SECRET);
-          console.log("This is id", id)
           if (id) {
               req.user = await getUserById(id);
               console.log("This is req.user", req.user)
@@ -60,7 +59,15 @@ apiRouter.use('/products', productsRouter)
 const usersRouter = require('./users')
 apiRouter.use('/users', usersRouter)
 
+
 const reviewsRouter = require('./reviews')
 apiRouter.use('/reviews', reviewsRouter)
+
+const adminRouter = require('./admin')
+apiRouter.use('/admin', adminRouter)
+
+const cartRouter = require('./cart')
+apiRouter.use('/cart', cartRouter)
+
 
 module.exports = apiRouter;

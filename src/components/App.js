@@ -12,7 +12,12 @@ import {
   Accessories,
   Login,
   Register,
-  SingleProduct
+  SingleProduct,
+  Admin,
+  Cart,
+  Header,
+  EditProduct,
+  AddProduct
 } from './index'
 
 import {
@@ -46,7 +51,6 @@ const App = () => {
     testMe()
       .then(user => {
         setUser(user);
-        console.log("user: ", user)
       })
     getAPIStatus();
   }, []);
@@ -55,38 +59,23 @@ const App = () => {
   return (
     <div className="app-container">
       <Router>
-        <navbar className='header-nav'>
-          <Link to='/home'
-            hidden={isLoggedIn ? false : true}
-            onClick={(evt) => {
-              localStorage.removeItem('token');
-              setIsLoggedIn(false);
-              setUser({});
-            }}> Log Out
-          </Link>
+        <Header
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          user={user}
+          setUser={setUser}
+          isAdmin={isAdmin}
+          setIsAdmin={setIsAdmin}
+        />
 
-          <Link to="/login"
-            hidden={isLoggedIn ? true : false}
-          >Log in</Link>
-          <Link to="/register"
-            hidden={isLoggedIn ? true : false}
-
-          >Register</Link>
-          <Link
-            hidden={isLoggedIn ? false : true}
-            to="/myAccount">{user.first_name}'s Account</Link>
-          <Link to="/cart">My Cart</Link>
-
-        </navbar>
         <div className='logo-image'>
-          {/* <img className='logo' src='https://images.unsplash.com/photo-1542208998-f6dbbb27a72f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80' width='200' height='150' /> */}
           <img className='logo' src="https://i.imgur.com/cZV1cx1.png" alt='logo' />
         </div>
         <navbar className='products-nav'>
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
-          <p>{isLoggedIn ? `You're Logged In, ${user.first_name}` : "You're Not Logged In"}</p>
+          <Link to="/admin" hidden={isAdmin ? false: true}>Admin Dashboard</Link>
         </navbar>
         <Routes>
           <Route path="/login" element={<Login
@@ -94,6 +83,8 @@ const App = () => {
             setIsLoggedIn={setIsLoggedIn}
             user={user}
             setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
           />} />
           <Route path="/register" element={<Register
             isLoggedIn={isLoggedIn}
@@ -104,23 +95,60 @@ const App = () => {
             setIsLoggedIn={setIsLoggedIn}
             setUser={setUser}
             user={user}
+            isAdmin={isAdmin}
           />} />
           <Route path="/products/all" element={<Products
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
           <Route path="/products/records" element={<Records
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
           <Route path="/products/accessories" element={<Accessories
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
           <Route path="/products/:productId" element={<SingleProduct
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} />}
+            isAdmin={isAdmin} />
+          <Route path="/admin" element={<Admin
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/admin/edit-product/:productId" element={<EditProduct
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/admin/add-product" element={<AddProduct
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/cart" element={<Cart
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
 
         </Routes>
       </Router>

@@ -1,6 +1,8 @@
 module.exports = {
   ...require('./products.js'),
   ...require('./reviews.js')
+  ...require('./user.js'),
+  ...require('./cart')
   // add each model to your exports object here
   // so that you can use them in your express server api routers
   // for example, create a users.js file for a User model

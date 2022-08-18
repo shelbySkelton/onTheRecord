@@ -27,7 +27,10 @@ const Login = ({ isLoggedIn, setIsLoggedIn, user, setUser }) => {
             setToken(data.token);
             navigate("/home");
             setUser(data);
-            setIsLoggedIn(true);;
+            setIsLoggedIn(true);
+            if (data.user.isAdmin) {
+                setIsAdmin(true);
+            }
         }
         setErrorMessage(data.message)
     }

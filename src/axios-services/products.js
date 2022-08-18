@@ -39,3 +39,7 @@ export async function getProductById(productId) {
   }
 }
 
+export async function deleteProduct(productId){
+  
+}
+
