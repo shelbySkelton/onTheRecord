@@ -4,8 +4,6 @@ const { requireUser } = require('./utils')
 const cartRouter = express.Router();
 const {
   addItemToCart,
-  createInitialCart,
-  createInitialCartItems,
   getMyCartWithItems,
   deleteItemFromCart
 } = require('../db/models/cart')
@@ -28,9 +26,32 @@ cartRouter.get('/', requireUser, async (req, res, next) => {
   }
 })
 
-// cartRouter.delete("/", (req, res, next) => {
+cartRouter.post('/', async (req, res, next) => {
+  // const userId = req.user.id;
+  const { product_id, priceAtPurchase, cart_id } = req.body;
+  try {
+    const newItem = await addItemToCart({ product_id, priceAtPurchase, cart_id })
+    res.send(newItem)
+  } catch (error) {
+    next(error)
+  }
+})
 
-// })
+cartRouter.delete('/', async (req, res, next) => {
+  const { cartedItemId } = req.body
+  console.log("This is request body: ", req.body)
+
+  // console.log(req.user)
+  console.log("this is carted item id in the api: ", cartedItemId)
+  try {
+    console.log("test")
+    const deletedItem = 
+    await deleteItemFromCart(cartedItemId);
+    res.send(deletedItem)
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 

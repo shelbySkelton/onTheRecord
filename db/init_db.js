@@ -13,7 +13,7 @@ const {
   createInitialCarts,
   createInitialCartItems,
   getMyCartWithItems,
-  getMyOrdersWithItems,
+  getMyPreviousOrdersWithItems,
   deleteItemFromCart
 } = require('./models/cart')
 
@@ -112,7 +112,7 @@ async function testDB() {
     // const user1 = await getUserById(4);
     // console.log("User4: ", user1);
     console.log("These are user2's past and present orders")
-    const user2Carts = await getMyOrdersWithItems(2);
+    const user2Carts = await getMyPreviousOrdersWithItems(2);
     console.log("user2carts: ", user2Carts)
 
     console.log("getMyCartWithItems for user 1")

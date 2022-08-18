@@ -1,11 +1,11 @@
-//shelby test
+require('dotenv').config();
+const { JWT_SECRET } = process.env
 // This is the Web Server
 const express = require('express');
+const session = require('express-session')
 const server = express();
 const apiRouter = require('./api');
-//Peju test!!!!
-// Dusty test
-// One more test
+
 
 // enable cross-origin resource sharing to proxy api requests
 // from localhost:3000 to localhost:4000 in local dev env
@@ -18,6 +18,14 @@ server.use(morgan('dev'));
 
 // handle application/json requests
 server.use(express.json());
+
+server.use(
+  session ({
+    secret: `${JWT_SECRET}`,
+    resave: false,
+    saveUninitialized: false
+  })
+)
 
 // here's our static files
 const path = require('path');
