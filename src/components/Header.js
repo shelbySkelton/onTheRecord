@@ -25,7 +25,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmin 
     return (
         <div className="header-container">
         <navbar className='header-nav'>
-            <Link to='/home'
+            <Link to='/login'
                 hidden={isLoggedIn ? false : true}
                 onClick={(evt) => {
                     localStorage.removeItem('token');

@@ -15,7 +15,9 @@ import {
   SingleProduct,
   Admin,
   Cart,
-  Header
+  Header,
+  EditProduct,
+  AddProduct
 } from './index'
 
 import {
@@ -51,7 +53,7 @@ const App = () => {
         setUser(user);
       })
     getAPIStatus();
-  }, [user]);
+  }, []);
 
 
   return (
@@ -73,6 +75,7 @@ const App = () => {
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
+          <Link to="/admin" hidden={isAdmin ? false: true}>Admin Dashboard</Link>
         </navbar>
         <Routes>
           <Route path="/login" element={<Login
@@ -115,6 +118,22 @@ const App = () => {
             user={user} />}
             isAdmin={isAdmin} />
           <Route path="/admin" element={<Admin
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/admin/edit-product/:productId" element={<EditProduct
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/admin/add-product" element={<AddProduct
             setIsLoggedIn={setIsLoggedIn}
             isLoggedIn={isLoggedIn}
             user={user}
