@@ -8,3 +8,6 @@ export { default as Register } from './Register';
 export { default as SingleProduct } from './SingleProduct';
 export { default as Admin } from './Admin';
 export { default as Cart } from './Cart';
+export { default as Header } from './Header';
+export { default as EditProduct } from './EditProduct';
+export { default as AddProduct } from './AddProduct';

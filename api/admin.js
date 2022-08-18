@@ -8,6 +8,7 @@ const adminRouter = express.Router();
 const { getAllProducts,
     getProductById,
     createProduct,
+    deactivateProduct,
     updateProduct } = require('../db/models')
 
 
@@ -66,8 +67,18 @@ adminRouter.post('/products', requireAdmin, async (req, res, next) => {
     }
 })
 
+adminRouter.patch('/deactivate/:productId', requireAdmin, async (req, res, next) => {
+//   const { productId } = req.params;
+  
+//   try {
+//     const deletedProduct = await deactivateProduct(productId)
+//     res.send(deletedProduct)
+//   } catch (error) {
+//     next(error)
+//   }
+})
+
 adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) => {
-    console.log("AM I WORKIN??")
     const { productId } = req.params;
     const { name, 
             price, 

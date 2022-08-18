@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from '@mui/icons-material/Add';
 
+
 const Cart = ({ isLoggedIn, user }) => {
   const [myCart, setMyCart] = useState({});
   // const [myItems, setMyItems] = useState([])
@@ -23,9 +24,11 @@ const Cart = ({ isLoggedIn, user }) => {
     });
   }, []);
 
+
   const { items } = myCart
  
  
+
 
   const handleDelete = async (event) => {
     event.preventDefault();
@@ -52,6 +55,7 @@ const Cart = ({ isLoggedIn, user }) => {
     getMyCart().then(myCart => setMyCart(myCart))
     return addedItem;
   }
+
 
   if (!items) {
     return <div>No items to display!</div>;

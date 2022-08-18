@@ -1,12 +1,31 @@
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import React, { useState, useEffect } from 'react';
-import { getAllProducts } from '../axios-services/admin';
 import { Link, Navigate } from 'react-router-dom'
 import { testMe } from '../axios-services/users';
+import { getAdminProducts, 
+   removeProduct 
+} from '../axios-services/admin'
+import { useNavigate } from 'react-router-dom';
 
-// import { Grid, Item } from '@mui/material/Grid';
+
+
 
 const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }) => {
     const [allProducts, setAllProducts] = useState([]);
+    const [productsView, setProductsView] = useState(false);
+    const [usersView, setUsersView] = useState(false);
+    const [viewDescription, setViewDescription] = useState(false)
+
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -24,31 +43,100 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
             })
     }, [])
 
+    const showProducts = async (event) => {
+        const products = await getAdminProducts();
+        console.log("products: ", products);
+        setAllProducts(products)
+        setUsersView(false);
+        setProductsView(true)
+    }
+
+    const showUsers = async (event) => {
+        //const users = await getAdminUsers();
+        //console.log("users: ", users);
+        setProductsView(false)
+        setUsersView(true);
+    }
+
+
+
     return (
         <div>
             <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <p>{(isAdmin) ? `Welcome to the Admin Dashboard` : `Only Website Administrators should have access to this page`}</p>
+            <div hidden={isAdmin ? false : true}>
+                <button className='admin-view-button'
+                    onClick={(showProducts)}>
+                    View Products
+                </button>
+                <button className='admin-view-button'
+                    onClick={showUsers} >
+                    View Users
+                </button>
+                <TableContainer component={Paper}
+                    hidden={productsView ? false : true}>
+                    <button className='admin-view-button'
+                        onClick={(evt) => navigate("/admin/add-product")}>
+                        Add Product
+                    </button>
+                    <Table sx={{ minWidth: 900 }} aria-label="simple table" className='admin-product-container'>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Price</TableCell>
+                                <TableCell>Category</TableCell>
+                                <TableCell>Quantity</TableCell>
+                                <TableCell>Img</TableCell>
+                                <TableCell>Condition</TableCell>
+                                <TableCell>Album</TableCell>
+                                <TableCell>Artist</TableCell>
+                                <TableCell>Description</TableCell>
+                                <TableCell>Genre</TableCell>
+                                <TableCell>Edit</TableCell>
+                                <TableCell>Deactivate</TableCell>
+                            </TableRow>
+                        </TableHead>
 
-            {/* 
-    //   <h1>Products Page</h1>
-    //   <div className='products-container'>
+                        {
+                            allProducts.map((product, idx) => {
+                                return (
+                                    <TableBody className="admin-product-details" key={idx}>
+                                        <TableRow>
+                                            <TableCell>{product.id}</TableCell>
+                                            <TableCell>{product.name}</TableCell>
+                                            <TableCell>${product.price}</TableCell>
+                                            <TableCell>{product.category}</TableCell>
+                                            <TableCell>{product.quantity}</TableCell>
+                                            <TableCell><img src={product.img_url} alt="album-cover" width="80" height="80"></img></TableCell>
+                                            <TableCell>{product.condition}</TableCell>
+                                            <TableCell>{product.album_name}</TableCell>
+                                            <TableCell>{product.artist}</TableCell>
+                                            <TableCell>
+                                                <TextSnippetIcon
+                                                    onClick={(evt) => setViewDescription(!viewDescription)} />
+                                                <p hidden={!viewDescription}>{product.description}</p></TableCell>
+                                            <TableCell>{product.genre}</TableCell>
+                                            <TableCell><Link to={`/admin/edit-product/${product.id}`}><EditIcon /></Link></TableCell>
+                                            <TableCell>{product.status}<DeleteIcon
+                                                onClick={(evt) => removeProduct(product.id)}
+                                            /></TableCell>
+                                        </TableRow>
+                                    </TableBody>
+                                )
+                            })
+                        }
 
-    //     
-    //       {allProducts.map((product, idx) => {
-    //         return (
-    //           <section className="product-card" key={idx}>
-    //             <span className="product-img">
-    //               <img src={product.img_url} alt="album-cover" width="150" height="150"></img><br></br>
-    //             </span><br></br>
-    //             <Link className="product-link" to={`/products/${product.id}`} >{product.name}</Link><br></br>
-    //             <span>${product.price}</span><br></br>
-    //           </section>
-    //         )
-    //       })
-    //     }
+
+                    </Table>
+                </TableContainer>
+                <div
+                    hidden={usersView ? false : true}>Users View
+                </div>
+            </div>
 
 
-    //   </div> */}
+
         </div>
     )
 }
