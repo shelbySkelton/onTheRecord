@@ -7,6 +7,8 @@ const { getUserById } = require('../db/models/user')
 const apiRouter = require('express').Router();
 
 apiRouter.get('/', (req, res, next) => {
+  console.log("req.sessionID: ")
+  console.log(req.sessionID)
   res.send({
     message: 'API is under construction!',
   });

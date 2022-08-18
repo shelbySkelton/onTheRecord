@@ -51,6 +51,9 @@ const App = () => {
     testMe()
       .then(user => {
         setUser(user);
+
+        // console.log("user: ", user)
+        
       })
     getAPIStatus();
   }, []);
@@ -75,7 +78,9 @@ const App = () => {
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
-          <Link to="/admin" hidden={isAdmin ? false: true}>Admin Dashboard</Link>
+
+          {/* <p>{isLoggedIn ? `You're Logged In, ${user.first_name}` : "You're Not Logged In"}</p> */}
+
         </navbar>
         <Routes>
           <Route path="/login" element={<Login

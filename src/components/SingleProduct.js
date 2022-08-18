@@ -1,26 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
+import { getMyCart, addCartItem } from '../axios-services/cart';
 
 
 
 const SingleProduct = ({ isLoggedIn, user }) => {
 
-
     const { productId } = useParams();
 
     const [productDetails, setProductDetails] = useState({});
-
+    const [myCart, setMyCart] = useState({})
 
     useEffect(() => {
         getProductById(productId)
             .then(productDetails => {
+                console.log(productDetails)
                 setProductDetails(productDetails)
             })
-
+        getMyCart()
+            .then(myCart => {
+                setMyCart(myCart)
+            })
     }, [])
 
-
+    const handleClick = async (event) => {
+        event.preventDefault();
+        const cartItem = {
+            product_id: productDetails.id,
+            priceAtPurchase: productDetails.price,
+            cart_id: myCart.id
+        }
+       const data = await addCartItem(cartItem);
+       return data;
+    }
 
     return (
         <div>
@@ -31,7 +44,7 @@ const SingleProduct = ({ isLoggedIn, user }) => {
                     <h1>{productDetails.name}</h1>
                     <img src={productDetails.img_url} alt="album-cover" width="250" height="250"></img><br></br>
                     <span>{productDetails.quantity} Left In Stock!</span>
-                    <button className='add-to-cart-button'>Add to Cart</button>
+                    <button onClick={handleClick} className='add-to-cart-button'>Add to Cart</button>
                 </div>
                 <div className='product-details'>
                     <span hidden={productDetails.artist ? false : true}

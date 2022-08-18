@@ -170,7 +170,7 @@ async function getMyCartWithItems(user_id){
     `, [user_id])
 
     const { rows: items } = await client.query(`
-      SELECT carted_items.*, products.name AS product_name
+      SELECT carted_items.*, products.name AS product_name, products.img_url AS product_img
       FROM carted_items
       JOIN products ON products.id = carted_items.product_id;
     `)
@@ -185,7 +185,7 @@ async function getMyCartWithItems(user_id){
   }
 }
 //ALL OF MY ORDERS WITH ITEMS
-async function getMyOrdersWithItems(user_id){
+async function getMyPreviousOrdersWithItems(user_id){
   // for viewing previous orders
   // gets all cart_orders and carted_items with that cart_order
   // regardless of order_status
@@ -193,7 +193,7 @@ async function getMyOrdersWithItems(user_id){
     const { rows: carts } = await client.query(`
       SELECT * 
       FROM cart_orders
-      WHERE cart_orders.user_id=$1;
+      WHERE cart_orders.user_id=$1 AND cart_orders.order_status != 'active';
     `, [user_id])
 
     const { rows: items } = await client.query(`
@@ -218,7 +218,7 @@ async function getMyOrdersWithItems(user_id){
 async function deleteItemFromCart(cartedItemId){
   
   try {
-    const { rows: [item ]} = await client.query(`
+    const { rows: [ item ]} = await client.query(`
       DELETE FROM carted_items
       WHERE id=$1
       RETURNING *;
@@ -258,6 +258,6 @@ module.exports = {
   createInitialCarts,
   createInitialCartItems,
   getMyCartWithItems,
-  getMyOrdersWithItems,
+  getMyPreviousOrdersWithItems,
   deleteItemFromCart
 }
