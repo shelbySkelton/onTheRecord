@@ -6,6 +6,13 @@ const {
 
 const { createProductsTable, createInitialProducts, createProduct, getActiveProductsByCategory, getProductById, getAllProducts, getAllInactiveProducts, getAllActiveProducts, updateProduct, deactivateProduct } = require('./models/products')
 const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser, getUserById, createInitialAdmin } = require('./models/user')
+
+const { createReviewsTable, createInitialReviews, getReviewsByUser, getReviewsByProduct, updateReview, deleteReview } = require('./models/reviews');
+
+async function dropTables() {
+  await client.query(`
+    DROP TABLE IF EXISTS reviews;
+
 const { 
   createCartOrdersTable,
   createCartItemsTable,
@@ -20,6 +27,7 @@ const {
 
 async function dropTables() {
   await client.query(`
+    DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS carted_items;
     DROP TABLE IF EXISTS cart_orders;
     DROP TABLE IF EXISTS products;
@@ -39,6 +47,8 @@ async function buildTables() {
     await createUsersTable();
     await createCartOrdersTable();
     await createCartItemsTable();
+    await createReviewsTable();
+
 
   } catch (error) {
     console.log("Error building tables!")
@@ -62,6 +72,9 @@ async function populateInitialData() {
     await createInitialAdmin();
     await createInitialCarts();
     await createInitialCartItems();
+    await createInitialReviews();
+
+
   } catch (error) {
     console.log("Error populating initial data!")
     throw error;
@@ -153,6 +166,26 @@ async function testDB() {
     // console.log("Calling getUserById");
     // const user1 = await getUserById(4);
     // console.log("User4: ", user1);
+
+    console.log("Calling get review by user");
+    const user2 = await getReviewsByUser(2);
+    console.log("user2: ", user2);
+
+    console.log("Calling get review by product");
+    const user3 = await getReviewsByProduct(7);
+    console.log("user3: ", user3);
+
+    console.log("Calling updateReview on reviews [6]");
+    // console.log("review: ", reviews[6].id)
+    const updateReviewResult = await updateReview(6, {
+      rating: "4",
+      content: "I updated this review"
+    });
+    console.log("Result: ", updateReviewResult);
+
+    console.log("Calling delete review [6]");
+    const updateDeleteReview = await deleteReview(6)
+    console.log("deleteReview: ", updateDeleteReview)
 
   } catch (error) {
     console.error("Error testing database!");

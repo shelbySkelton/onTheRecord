@@ -1,5 +1,6 @@
 module.exports = {
   ...require('./products.js'),
+  ...require('./reviews.js')
   ...require('./user.js'),
   ...require('./cart')
   // add each model to your exports object here
