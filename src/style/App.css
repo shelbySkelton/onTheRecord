@@ -162,7 +162,7 @@
   animation-name: spin;
   animation-duration: 1800ms;
   animation-iteration-count: infinite;
-  animation-timing-function: linear; 
+  animation-timing-function: linear;
 }
   
 @keyframes spin {

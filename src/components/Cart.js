@@ -9,6 +9,8 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import { getMyCart, addCartItem, deleteCartItem } from "../axios-services/cart";
 
@@ -50,6 +52,17 @@ const Cart = ({ isLoggedIn, user }) => {
     getMyCart().then((myCart) => setMyCart(myCart));
     return addedItem;
   };
+
+  let priceArray = []
+  items.map(item=> priceArray.push(item.priceAtPurchase))
+  console.log(priceArray);
+  const initialValue = 0;
+  const orderTotal = priceArray.reduce(
+  (previousValue, currentValue) => previousValue + currentValue,
+  initialValue
+  );
+  console.log("Items: ", items)
+  console.log("Order Total: ", orderTotal)
 
   if (!items) {
     return <div>No items to display!</div>;
@@ -98,9 +111,15 @@ const Cart = ({ isLoggedIn, user }) => {
                   </TableCell>
                 </TableRow>
               ))}
+              <TableRow>
+                <TableCell>Order Total</TableCell>
+                {/* <TableCell align='right'>{orderTotal}</TableCell> */}
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
+
+        <Button align="right" component={Link} to="/cart/checkout" variant="contained" color="primary">Checkout</Button>
       </div>
     );
   }

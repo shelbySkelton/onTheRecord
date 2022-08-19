@@ -20,6 +20,7 @@ import {
   AddProduct,
   EditUser,
   UserAccount,
+  Checkout
 } from './index'
 
 import {
@@ -172,9 +173,15 @@ const App = () => {
             user={user}
             setUser={setUser}
             isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin} />}
-          />
-
+            setIsAdmin={setIsAdmin} />} />
+          
+          <Route path="/cart/checkout" element={<Checkout 
+          setIsLoggedIn={setIsLoggedIn}
+          isLoggedIn={isLoggedIn}
+          user={user}
+          setUser={setUser}
+          isAdmin={isAdmin}
+          setIsAdmin={setIsAdmin} />} />
         </Routes>
       </Router>
     </div>

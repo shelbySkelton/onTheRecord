@@ -8,7 +8,6 @@ export async function getMyCart() {
         Authorization: `Bearer ${localStorage.token}`,
       },
     });
-
     return data;
   } catch (error) {
     console.error(error);
