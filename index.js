@@ -27,6 +27,17 @@ server.use(
   })
 )
 
+server.use((req, res, next) => {
+  console.log(`${req.method}:${req.url}`);
+  next(); 
+});
+
+// server.get("/", (req, res) => {
+//   console.log("req.session: ", req.session)
+//   console.log("req.sessionID!!!!: ", req.sessionID)
+// })
+
+
 // here's our static files
 const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));

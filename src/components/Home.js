@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 //import LogOut from './LogOut';
 import { testMe } from '../axios-services/users';
 
-const Home = ({ isLoggedIn, setIsLoggedIn, user, setUser }) => {
+const Home = ({ isLoggedIn, setIsLoggedIn, user, setUser,  guestCart, setGuestCart }) => {
 
 
   return (

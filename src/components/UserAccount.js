@@ -14,7 +14,7 @@ import { updateUser, getUserById } from '../axios-services/admin'
 import { useNavigate } from 'react-router-dom';
 
 
-const UserAccount = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmin }) => {
+const UserAccount = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmin,  guestCart, setGuestCart }) => {
 
 
 

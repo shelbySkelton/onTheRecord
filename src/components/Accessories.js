@@ -3,7 +3,7 @@ import { getAllAccessories } from '../axios-services/products';
 import { Link } from 'react-router-dom'
 import { getMyCart, addCartItem } from "../axios-services/cart";
 
-const Accessories = ({ user, isLoggedIn }) => {
+const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
   const [allAccessories, setAllAccessories] = useState([])
   const [myCart, setMyCart] = useState({})
   useEffect(() => {

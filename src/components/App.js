@@ -37,6 +37,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState({})
+  const [guestCart, setGuestCart] = useState([])
 
   useEffect(() => {
 
@@ -58,11 +59,10 @@ const App = () => {
         if (user.isAdmin) {
           setIsAdmin(true);
         }
-        // console.log("user: ", user)
-
+        sessionStorage.setItem('guestCart', JSON.stringify(guestCart));
       })
     getAPIStatus();
-  }, []);
+  }, [guestCart]);
 
 
   return (
@@ -95,45 +95,65 @@ const App = () => {
             setUser={setUser}
             isAdmin={isAdmin}
             setIsAdmin={setIsAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />} />
           <Route path="/register" element={<Register
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />} />
+            user={user} 
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+          />} />
           <Route path="/home" element={<Home
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             setUser={setUser}
             user={user}
             isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />} />
           <Route path="/products/all" element={<Products
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />}
-            isAdmin={isAdmin} />
+            user={user}
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />}/>
           <Route path="/products/records" element={<Records
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />}
-            isAdmin={isAdmin} />
+            user={user} 
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+          />} />
           <Route path="/products/accessories" element={<Accessories
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />}
-            isAdmin={isAdmin} />
+            user={user} 
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />} />
           <Route path="/products/:productId" element={<SingleProduct
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
-            user={user} />}
-            isAdmin={isAdmin} />
+            user={user} 
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />} />
           <Route path="/admin" element={<Admin
             setIsLoggedIn={setIsLoggedIn}
             isLoggedIn={isLoggedIn}
             user={user}
             setUser={setUser}
             isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin} />}
+            setIsAdmin={setIsAdmin}
+            />}
           />
           <Route path="/admin/edit-product/:productId" element={<EditProduct
             setIsLoggedIn={setIsLoggedIn}
@@ -141,7 +161,8 @@ const App = () => {
             user={user}
             setUser={setUser}
             isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin} />}
+            setIsAdmin={setIsAdmin}
+            />}
           />
           <Route path="/admin/edit-user/:userId" element={<EditUser
             setIsLoggedIn={setIsLoggedIn}
@@ -149,7 +170,8 @@ const App = () => {
             user={user}
             setUser={setUser}
             isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin} />}
+            setIsAdmin={setIsAdmin}
+            />}
           />
           <Route path="/my-account" element={<UserAccount
             setIsLoggedIn={setIsLoggedIn}
@@ -157,7 +179,10 @@ const App = () => {
             user={user}
             setUser={setUser}
             isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin} />}
+            setIsAdmin={setIsAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />}
           />
           <Route path="/admin/add-product" element={<AddProduct
             setIsLoggedIn={setIsLoggedIn}
@@ -165,7 +190,8 @@ const App = () => {
             user={user}
             setUser={setUser}
             isAdmin={isAdmin}
-            setIsAdmin={setIsAdmin} />}
+            setIsAdmin={setIsAdmin}
+            />}
           />
           <Route path="/cart" element={<Cart
             setIsLoggedIn={setIsLoggedIn}
@@ -181,7 +207,12 @@ const App = () => {
           user={user}
           setUser={setUser}
           isAdmin={isAdmin}
-          setIsAdmin={setIsAdmin} />} />
+          setIsAdmin={setIsAdmin}
+          guestCart={guestCart}
+          setGuestCart={setGuestCart}
+            />}
+          />
+
         </Routes>
       </Router>
     </div>

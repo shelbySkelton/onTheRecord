@@ -3,6 +3,7 @@ import { getAllRecords } from "../axios-services/products";
 import { Link, Navigate } from "react-router-dom";
 import { getMyCart, addCartItem } from "../axios-services/cart";
 
+
 const Records = ({ user, isLoggedIn }) => {
   const [allRecords, setAllRecords] = useState([]);
   const [myCart, setMyCart] = useState({});
@@ -18,6 +19,7 @@ const Records = ({ user, isLoggedIn }) => {
   }, []);
   // console.log(myCart.id);
   // console.log(allRecords);
+
 
   return (
     <div>

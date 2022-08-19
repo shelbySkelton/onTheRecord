@@ -112,9 +112,9 @@ const EditProduct = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }
             hidden={isAdmin ? false : true}
         >
             <p>Edit Product</p>
-            <Button
-                onClick={(evt)=> navigate("/admin/")}
-            >Back to Dashboard</Button>
+            <Button onClick={(evt)=> navigate("/admin/")}>
+                Back to Dashboard
+            </Button>
             <Table
                 sx={{ minWidth: 900 }}
                 aria-label="simple table"

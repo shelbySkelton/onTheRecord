@@ -161,26 +161,10 @@ async function getProductById(id) {
     }
 }
 
-//INPUT A FUNCTION THAT CHECKS IF PRODUCTID EXISTS IN ANY PENDING CARTS
-// async function getCartedItemByProductId(productId) {
-
-//     try {
-//         const { rows: [item] } = await client.query(`
-//             SELECT *
-//             FROM carted_items
-//             WHERE product_id=$1 AND order_status='pending';
-//         `, [productId])
-//         if (item) {
-//             return item;
-//         }
-//     } catch (error) {
-//         console.log(`Error in carted_items`)
-//     }
-// }
 
 
 
-// CHANGE STATUS TO INACTIVE
+
 async function deactivateProduct(id) {
 
     try {

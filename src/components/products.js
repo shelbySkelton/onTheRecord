@@ -3,7 +3,7 @@ import { getAllProducts } from '../axios-services/products';
 import { Link, Navigate } from 'react-router-dom'
 // import { Grid, Item } from '@mui/material/Grid';
 
-const Products = ({ isLoggedIn, user }) => {
+const Products = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
