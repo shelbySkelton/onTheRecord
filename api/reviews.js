@@ -9,8 +9,9 @@ reviewsRouter.use((req, res, next) => {
   });
 
   reviewsRouter.get('/:userId', async (req, res, next) => {
+    const { userId } = req.params
     try {
-      const reviews = await getReviewByUser(user_id);
+      const reviews = await getReviewByUser(userId);
       res.send(reviews)
       next();
     } catch (error) {
@@ -19,8 +20,9 @@ reviewsRouter.use((req, res, next) => {
   });
 
   reviewsRouter.get('/:productId', async (req, res, next) => {
+    const { productId } = req.params
     try {
-      const reviews = await getReviewByProduct(product_id);
+      const reviews = await getReviewByProduct(productId);
       res.send(reviews)
       next();
     } catch (error) {
@@ -28,32 +30,49 @@ reviewsRouter.use((req, res, next) => {
     }
   });
 
-  // reviewsRouter.post('/', requireUser, async (req, res, next) => {
-  //   try {
-  //       // use createReview function here
-  //       // requireUser
-  //       // getMyOrdersWithItems
-  //   } catch (error) {
-  //     next(error)  
-  //   }
-  // });
+  reviewsRouter.post('/', requireUser, async (req, res, next) => {
+    const { rating, content } = req.body
+    try {
+      const userId = req.user.id
+      const productId = req.product.id
+      const reviewData = { userId, productId, rating, content };
+      const newCreatedReview = await createReview(reviewData);
+      const userOrderedProduct = await getMyPreviousOrdersWithItems(userId)
+      if(userOrderedProduct) {
+        res.send(newCreatedReview)
+        next();
+      } else {
+        next({
+          name: 'FailedCreateReview',
+          message: "Could not create new review"
+      })
+      }
+    } catch ({ name, message }) {
+      next({ name, message });
+  }
+  });
 
-  // reviewsRouter.post('/:productId', async (req, res, next) => {
-  //   try {
-  //       // use createReview function here
-  //   } catch (error) {
-  //     next(error)  
-  //   }
-  // });
-  // do I need this route or just one route for both userId and productId??
-
-  // reviewsRouter.patch('/', async (req, res, next) => {
-  //   try {
-  //       // use updateReview function here
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // })
+  reviewsRouter.patch('/', requireUser, async (req, res, next) => {
+    const { rating, content } = req.body
+    try {
+      const userId = req.user.id
+      const productId = req.product.id
+      const reviewData = { userId, productId, rating, content };
+      const newUpdatedReview = await updateReview(reviewData);
+      const userOrderedProduct = await getMyPreviousOrdersWithItems(userId)
+      if(userOrderedProduct) {
+        res.send(newUpdatedReview)
+        next();
+      } else {
+        next({
+          name: 'FailedUpdateReview',
+          message: "Could not update review"
+      })
+      }
+    } catch ({ name, message }) {
+      next({ name, message });
+  }
+  })
 
 // reviewsRouter.delete('/', async (req, res, next) => {
 //     try {
@@ -62,14 +81,6 @@ reviewsRouter.use((req, res, next) => {
 //       next(error)  
 //     }
 // })
-
-
-
-
-
-
-
-
 
 
 module.exports = reviewsRouter;

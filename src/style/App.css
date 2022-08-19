@@ -43,6 +43,14 @@
   text-decoration: none;
 }
 
+.products-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3px;
+  text-decoration: none;
+}
+
 .logo-image {
   display: flex;
   justify-content: center;
