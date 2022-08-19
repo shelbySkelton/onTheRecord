@@ -8,7 +8,9 @@ const Login = (props) => {
         isLoggedIn, 
         setIsLoggedIn,
         user, 
-        setUser 
+        setUser,
+        guestCart,
+        setGuestCart 
         } = props
 
     const [email, setEmail] = useState('');

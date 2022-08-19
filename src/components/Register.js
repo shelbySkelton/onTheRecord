@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { registerUser } from '../axios-services/users';
 import { createUserCart } from "../axios-services/cart";
 
-const Register = ({ isLoggedIn, user }) => {
+const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
     const [email, setEmail] = useState('');
     const [first_name, setFirst_name] = useState('');
     const [last_name, setLast_name] = useState('');

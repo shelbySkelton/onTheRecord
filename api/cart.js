@@ -31,6 +31,45 @@ cartRouter.get("/myCart", requireUser, async (req, res, next) => {
   }
 });
 
+//SHELBYS ADD
+cartRouter.get('/guestCart', (req, res) => {
+  const {guestCart} = req.session;
+  if (!guestCart) {
+    res.send ("No items to display")
+  } else {
+    console.log("req.session.guestCart: ", req.session.guestCart)
+    res.send(req.session.guestCart)
+  }
+})
+
+
+cartRouter.post('/guestCart', (req, res, next) => {
+  const { product_id, priceAtPurchase } = req.body;
+  console.log("This is product_id & priceAtPurchase: ", product_id, priceAtPurchase )
+  const guestItem = { product_id, priceAtPurchase}
+  const { guestCart } = req.session
+  if ( guestCart ) {
+    const { products } = guestCart;
+    products.push(guestItem)
+  } else {
+    req.session.guestCart = {
+      products: [guestItem]
+    }
+  }
+  res.send(req.session.guestCart)
+})
+
+
+// END SHELBYS ADD
+
+
+
+
+
+
+
+
+
 // Create a user's cart
 cartRouter.post("/newUserCart", async (req, res, next) => {
   const { user_id, order_status } = req.body
@@ -44,6 +83,10 @@ cartRouter.post("/newUserCart", async (req, res, next) => {
     next(error);
   }
 });
+
+
+
+
 
 // Create a guest cart
 cartRouter.post("/newGuestCart", async (req, res, next) => {

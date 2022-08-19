@@ -11,6 +11,7 @@ apiRouter.get('/', (req, res, next) => {
   console.log(req.sessionID)
   console.log("this is req: ")
   console.log(req.headers)
+  console.log("This is req.session: ", req.session)
   res.send({
     message: 'API is under construction!',
   });
