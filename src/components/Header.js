@@ -6,15 +6,23 @@ import {
   } from 'react-router-dom';
 
 
-const Header = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmin }) => {
-
-
+const Header = (props) => {
+    const { 
+        isLoggedIn, 
+        setIsLoggedIn, 
+        user, 
+        setUser, 
+        isAdmin, 
+        setIsAdmin 
+    } = props
+    // const [user, setUser] = useState({})
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
         testMe()
             .then(user => {
                 setUser(user);
-                if (!(user === {})) {
+                if (user) {
                     setIsLoggedIn(true);
                 }       
             })

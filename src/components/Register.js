@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from '../axios-services/users';
+import { createUserCart } from "../axios-services/cart";
 
 const Register = ({ isLoggedIn, user }) => {
     const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const Register = ({ isLoggedIn, user }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [newPw1, setNewPw1] = useState('');
     const [newPw2, setNewPw2] = useState('');
+    const [myCart, setMyCart] = useState({})
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,6 +27,14 @@ const Register = ({ isLoggedIn, user }) => {
         localStorage.setItem('token', data.token);
         setToken(data.token);
         setErrorMessage(data.message);
+        await createUserCart({
+            user_id: data.user.id,
+            order_status: "active"
+        })
+        .then((myCart) => {
+            console.log(myCart)
+            setMyCart(myCart)
+        })
     }
 
     return (

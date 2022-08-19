@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../axios-services/users';
 
-const Login = ({ isLoggedIn, setIsLoggedIn, user, setUser }) => {
+const Login = (props) => {
+
+    const { 
+        isLoggedIn, 
+        setIsLoggedIn,
+        user, 
+        setUser 
+        } = props
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
     // const [isLoggedIn, setIsLoggedIn] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
+    // const [user, setUser] = useState({})
 
     const navigate = useNavigate();
 
@@ -26,11 +35,11 @@ const Login = ({ isLoggedIn, setIsLoggedIn, user, setUser }) => {
         if (data.success) {
             setToken(data.token);
             setUser(data);
-            setIsLoggedIn(true);
+            setIsLoggedIn(data.success);
             if (data.user.isAdmin) {
                 setIsAdmin(true);
             }
-            navigate("/home");
+            navigate("/home", { replace: true });
         }
         setErrorMessage(data.message)
     }

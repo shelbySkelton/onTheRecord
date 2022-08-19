@@ -52,6 +52,7 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     testMe()
       .then(user => {
+        setIsLoggedIn(true);
         setUser(user);
         if (user.isAdmin) {
           setIsAdmin(true);

@@ -13,7 +13,7 @@ usersRouter.post('/register', async (req, res, next) => {
 
   try {
     const _user = await getUserByEmail(email);
-
+    
     if (_user) {
       res.send({
         message: `User with email ${email} is already taken.`,

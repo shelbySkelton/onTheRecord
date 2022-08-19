@@ -11,7 +11,8 @@ async function createCartOrdersTable(){
       (
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id),
-        order_status VARCHAR(255) DEFAULT 'active' CHECK(order_status IN ('active', 'pending', 'shipped', 'canceled', 'lost at sea'))
+        order_status VARCHAR(255) DEFAULT 'active' CHECK(order_status IN ('active', 'pending', 'shipped', 'canceled', 'lost at sea')),
+        session_id TEXT
       );
     `)
     console.log("Finished creating cart_orders table")
@@ -56,6 +57,19 @@ async function createUserCart({ user_id, order_status }){
     return cart;
   } catch (error) {
     console.log("Error creating user cart")
+    throw error;
+  }
+}
+
+async function createGuestCart({ session_id, order_status }){
+  try {
+    const { rows: [ cart ]} = await client.query(`
+      INSERT INTO cart_orders(session_id, order_status)
+      VALUES ($1, $2)
+      RETURNING *;
+    `, [ session_id, order_status ])
+  } catch (error) {
+    console.log("Error creating a guest cart");
     throw error;
   }
 }
@@ -169,15 +183,21 @@ async function getMyCartWithItems(user_id){
       WHERE order_status='active' AND user_id=$1;
     `, [user_id])
 
+
     const { rows: items } = await client.query(`
       SELECT carted_items.*, products.name AS product_name, products.img_url AS product_img
       FROM carted_items
       JOIN products ON products.id = carted_items.product_id;
     `)
+    
+    if (items.length === 0){
+      cart.items = []
+    } else {
+      const itemsToAdd = items.filter(item => item.cart_id === cart.id)
+      cart.items = itemsToAdd
+      return cart
+    }
   
-    const itemsToAdd = items.filter(item => item.cart_id === cart.id)
-    cart.items = itemsToAdd
-    return cart
 
   } catch (error) {
     console.log("Error getting cart with items");
@@ -236,9 +256,34 @@ async function deleteItemFromCart(cartedItemId){
 }
 
 async function checkOut(id){
-  // change order_status to pending
-  // create a new active cart for the user
-  // query: UPDATE
+  try {
+    const { rows: [ cart ] } = await client.query(`
+      UPDATE cart_orders
+      SET order_status='pending'
+      WHERE id=$1
+      RETURNING *
+    `, [id])
+
+    // if(cart.session_id === null){
+    //   const newUserCart = await createUserCart({ 
+    //     user_id: cart.user_id, 
+    //     order_status: 'active' 
+    //   })
+    //   console.log("New user cart:", newUserCart)
+    //   return newUserCart
+    // } else if (cart.user_id === null && !!cart.session_id){
+    //   const newGuestCart = await createGuestCart({ 
+    //     session_id: cart.session_id, 
+    //     order_status: 'active'
+    //   })
+    //   console.log("New guest cart: ", newGuestCart)
+    //   return newGuestCart
+    // }
+    
+    return cart;
+  } catch (error) {
+    console.log("Error in checkOut function in db/models/cart")
+  }
 }
 
 // Admin functions
@@ -259,5 +304,8 @@ module.exports = {
   createInitialCartItems,
   getMyCartWithItems,
   getMyPreviousOrdersWithItems,
-  deleteItemFromCart
+  deleteItemFromCart,
+  createGuestCart,
+  createUserCart,
+  checkOut
 }
