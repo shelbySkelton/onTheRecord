@@ -172,6 +172,7 @@ async function deleteReview(id) {
 module.exports = {
     createReviewsTable,
     createInitialReviews,
+    createReview,
     getReviewsByUser,
     getReviewsByProduct,
     updateReview,

@@ -35,7 +35,7 @@ const Cart = ({ isLoggedIn, user }) => {
     // }
   }, []);
 
-  //const { items } = myCart;
+  const { items } = myCart;
 
   const handleDelete = async (event) => {
     // event.preventDefault();
