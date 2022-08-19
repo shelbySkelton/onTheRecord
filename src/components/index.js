@@ -14,3 +14,4 @@ export { default as AddProduct } from './AddProduct';
 export { default as EditUser } from './EditUser';
 export { default as UserAccount } from './UserAccount';
 export { default as Checkout } from './Checkout'
+export { default as ReviewOrder } from './ReviewOrder'

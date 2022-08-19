@@ -13,7 +13,9 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { getMyCart, addCartItem, deleteCartItem, getGuestCart, guestCart, setGuestCart, checkOutCart } from "../axios-services/cart";
+
+import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, guestCart, setGuestCart } from "../axios-services/cart";
+
 
 
 const Cart = ({ isLoggedIn, user }) => {
@@ -24,27 +26,40 @@ const Cart = ({ isLoggedIn, user }) => {
     console.log("isLoggedIn: ", isLoggedIn);
     if (isLoggedIn){
       getMyCart().then((myCart) => {
-      // console.log(myCart);
+      console.log(myCart);
       setMyCart(myCart);
       })
     } else {
       getGuestCart().then((myCart) => {
         setMyCart(myCart)
+        console.log("guestcart: ", myCart)
       })
     };
     // }
   }, []);
+
   console.log(myCart)
+
   const { items } = myCart;
 
   const handleDelete = async (event) => {
-    // event.preventDefault();
     const cartedItemId = event.target.id;
+
+    if (isLoggedIn) {
+    event.preventDefault();
     console.log("This is the cartedItemId in the frontend", cartedItemId);
     const deletedItem = await deleteCartItem(cartedItemId);
     getMyCart().then((myCart) => setMyCart(myCart));
     console.log(deletedItem);
     return deletedItem;
+    } else {
+      const itemIdx = event.target.dataset.idx
+      event.preventDefault();
+      console.log("itemidx: ", itemIdx)
+      const remainingItems = await removeItemFromGuestCart(itemIdx)
+      console.log("remainingItems: ", remainingItems)
+      setMyCart(remainingItems)
+    }
   };
 
   const handleAdd = async (event) => {
@@ -70,12 +85,11 @@ const Cart = ({ isLoggedIn, user }) => {
     console.log(priceArray);
     const initialValue = 0;
     const orderTotal = priceArray.reduce(
-      (previousValue, currentValue) => previousValue + currentValue,
+      (previousValue, currentValue) => Number(previousValue) + Number(currentValue),
       initialValue
     );
     console.log("Items: ", items);
-    console.log("Order Total: ", orderTotal);
-
+    console.log("Order Total to fixed: ", orderTotal.toFixed(2));
     return (
       <div className="cart-container">
         <h1>{items.length} items in your cart</h1>
@@ -94,7 +108,7 @@ const Cart = ({ isLoggedIn, user }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {myCart.items.map((item) => (
+              {myCart.items.map((item, idx) => (
                 <TableRow
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -107,6 +121,7 @@ const Cart = ({ isLoggedIn, user }) => {
                       aria-label="delete" 
                       size="inherit" 
                       id={item.id} 
+                      data-idx={idx}
                       onClick={(event) => { 
                         handleDelete(event); 
                       }}>

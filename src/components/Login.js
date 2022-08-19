@@ -9,6 +9,8 @@ const Login = (props) => {
         setIsLoggedIn,
         user, 
         setUser,
+        setIsAdmin,
+        isAdmin,
         guestCart,
         setGuestCart 
         } = props
@@ -36,7 +38,7 @@ const Login = (props) => {
         //IF STATEMENT FOR DATA SUCCESS
         if (data.success) {
             setToken(data.token);
-            setUser(data);
+            setUser(data.user);
             setIsLoggedIn(data.success);
             if (data.user.isAdmin) {
                 setIsAdmin(true);

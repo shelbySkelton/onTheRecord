@@ -20,7 +20,8 @@ import {
   AddProduct,
   EditUser,
   UserAccount,
-  Checkout
+  Checkout,
+  ReviewOrder
 } from './index'
 
 import {
@@ -202,6 +203,17 @@ const App = () => {
             setIsAdmin={setIsAdmin} />} />
           
           <Route path="/cart/checkout" element={<Checkout 
+          setIsLoggedIn={setIsLoggedIn}
+          isLoggedIn={isLoggedIn}
+          user={user}
+          setUser={setUser}
+          isAdmin={isAdmin}
+          setIsAdmin={setIsAdmin}
+          guestCart={guestCart}
+          setGuestCart={setGuestCart}
+            />}
+          />
+          <Route path="/cart/checkout/review-order" element={<ReviewOrder 
           setIsLoggedIn={setIsLoggedIn}
           isLoggedIn={isLoggedIn}
           user={user}

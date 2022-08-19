@@ -4,7 +4,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
-import { getMyCart } from '../axios-services/cart';
+import { getMyCart, getGuestCart } from '../axios-services/cart';
 
 const stuff = [
   {
@@ -40,17 +40,25 @@ const payments = [
 
 
 
-export default function ReviewOrder({ isLoggedIn, user }) {
+
+export default function ReviewOrder({ isLoggedIn }) {
 
   const [myCart, setMyCart] = useState({});
 
   useEffect(() => {
     console.log("isLoggedIn: ", isLoggedIn);
-    console.log("user: ", user)
-    getMyCart().then((myCart) => {
+    if (isLoggedIn){
+      getMyCart().then((myCart) => {
+      console.log(myCart);
       setMyCart(myCart);
-      
-    });
+      })
+    } else {
+      getGuestCart().then((myCart) => {
+        setMyCart(myCart)
+        console.log("guestcart: ", myCart)
+      })
+    };
+    // }
   }, []);
 
   const { items } = myCart

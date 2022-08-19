@@ -99,7 +99,8 @@ async function createInitialCarts(){
       { user_id: 1, order_status: 'active' }, // cart 1
       { user_id: 2, order_status: 'pending'}, // cart 2
       { user_id: 3, order_status: 'active' }, // cart 3
-      { user_id: 2, order_status: 'active' } // cart 4
+      { user_id: 2, order_status: 'active' }, // cart 4
+      { user_id: 4, order_status: 'active' } // cart 5
     ]
     const cart = await Promise.all(cartsToCreate.map(createUserCart));
     console.log("Carts created: ", cart)
