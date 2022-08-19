@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { testMe } from "../axios-services/users";
-import {
-    BrowserRouter as Router,
-    Link
-  } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
+import { getMyCart } from "../axios-services/cart";
 
 const Header = (props) => {
     const { 
@@ -63,3 +61,4 @@ const Header = (props) => {
 
 
 export default Header;
+

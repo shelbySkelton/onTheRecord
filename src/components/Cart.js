@@ -9,7 +9,12 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { getMyCart, addCartItem, deleteCartItem, getGuestCart, guestCart, setGuestCart } from "../axios-services/cart";
+
 
 const Cart = ({ isLoggedIn, user }) => {
   const [myCart, setMyCart] = useState({});
@@ -33,7 +38,7 @@ const Cart = ({ isLoggedIn, user }) => {
   //const { items } = myCart;
 
   const handleDelete = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const cartedItemId = event.target.id;
     console.log("This is the cartedItemId in the frontend", cartedItemId);
     const deletedItem = await deleteCartItem(cartedItemId);
@@ -52,6 +57,7 @@ const Cart = ({ isLoggedIn, user }) => {
       priceAtPurchase: price,
       cart_id: cart_id,
     });
+    console.log(event)
     getMyCart().then((myCart) => setMyCart(myCart));
     return addedItem;
   };
@@ -59,6 +65,17 @@ const Cart = ({ isLoggedIn, user }) => {
   if (!items) {
     return <div>No items to display!</div>;
   } else {
+    let priceArray = [];
+    items.map((item) => priceArray.push(item.priceAtPurchase));
+    console.log(priceArray);
+    const initialValue = 0;
+    const orderTotal = priceArray.reduce(
+      (previousValue, currentValue) => previousValue + currentValue,
+      initialValue
+    );
+    console.log("Items: ", items);
+    console.log("Order Total: ", orderTotal);
+
     return (
       <div className="cart-container">
         <h1>{myCart.items.length} items in your cart</h1>
@@ -83,29 +100,65 @@ const Cart = ({ isLoggedIn, user }) => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell sx={{ cursor: "pointer" }}>
-                    <div id={item.id} onClick={handleDelete}>
+                    {/* <div id={item.id} onClick={handleDelete}>
                       x
-                    </div>
+                    </div> */}
+                    <IconButton 
+                      aria-label="delete" 
+                      size="inherit" 
+                      id={item.id} 
+                      onClick={(event) => { 
+                        handleDelete(event); 
+                      }}>
+                      <DeleteIcon fontSize="inherit" id={item.id} />
+                    </IconButton>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {item.product_name}
                   </TableCell>
                   <TableCell align="right">{item.priceAtPurchase}</TableCell>
-                  <TableCell align="right">
-                    <div
+                  <TableCell sx={{ cursor: "pointer" }} align="right">
+                    {/* <div
                       data-product_id={item.product_id}
                       data-price={item.priceAtPurchase}
                       data-cart_id={myCart.id}
                       onClick={handleAdd}
                     >
                       +
-                    </div>
+                    </div> */}
+                    <IconButton 
+                      aria-label="add to shopping cart" 
+                      size="inherit" 
+                      data-product_id={item.product_id}
+                      data-price={item.priceAtPurchase}
+                      data-cart_id={myCart.id}
+                      onClick={(event) => { handleAdd(event); }}  >
+                      <AddShoppingCartIcon fontSize="inherit" id={item.id} />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                  Order Total
+                </TableCell>
+                <TableCell align="right">{orderTotal}</TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
+         { items.length !== 0 ? <Button
+          align="right"
+          component={Link}
+          to="/cart/checkout"
+          variant="contained"
+          color="primary"
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
+          Checkout
+        </Button> : null}           
+        
       </div>
     );
   }
