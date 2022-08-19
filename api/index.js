@@ -67,7 +67,6 @@ apiRouter.use('/users', usersRouter)
 
 const reviewsRouter = require('./reviews')
 apiRouter.use('/reviews', reviewsRouter)
-
 const adminRouter = require('./admin')
 apiRouter.use('/admin', adminRouter)
 

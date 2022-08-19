@@ -1,8 +1,9 @@
+require("dotenv").config();
 const express = require('express');
 const reviewsRouter = express.Router();
-const requireUser = require('./utils');
+const { requireUser } = require('./utils');
 const { createReview, getReviewByUser, getReviewByProduct, updateReview, deleteReview} = require('../db/models/reviews');
-
+const { getMyPreviousOrdersWithItems } = require('../db/models/cart')
 reviewsRouter.use((req, res, next) => {
     console.log("A request is being made to /reviews");
     next();
@@ -31,13 +32,12 @@ reviewsRouter.use((req, res, next) => {
   });
 
   reviewsRouter.post('/', requireUser, async (req, res, next) => {
-    const { rating, content } = req.body
+    const { product_id, rating, content } = req.body
+    const user_id = req.user.id
     try {
-      const userId = req.user.id
-      const productId = req.product.id
-      const reviewData = { userId, productId, rating, content };
+      const reviewData = { user_id, product_id, rating, content };
       const newCreatedReview = await createReview(reviewData);
-      const userOrderedProduct = await getMyPreviousOrdersWithItems(userId)
+      const userOrderedProduct = await getMyPreviousOrdersWithItems(user_id)
       if(userOrderedProduct) {
         res.send(newCreatedReview)
         next();
@@ -52,27 +52,27 @@ reviewsRouter.use((req, res, next) => {
   }
   });
 
-  reviewsRouter.patch('/', requireUser, async (req, res, next) => {
-    const { rating, content } = req.body
-    try {
-      const userId = req.user.id
-      const productId = req.product.id
-      const reviewData = { userId, productId, rating, content };
-      const newUpdatedReview = await updateReview(reviewData);
-      const userOrderedProduct = await getMyPreviousOrdersWithItems(userId)
-      if(userOrderedProduct) {
-        res.send(newUpdatedReview)
-        next();
-      } else {
-        next({
-          name: 'FailedUpdateReview',
-          message: "Could not update review"
-      })
-      }
-    } catch ({ name, message }) {
-      next({ name, message });
-  }
-  })
+  // reviewsRouter.patch('/', requireUser, async (req, res, next) => {
+  //   const { rating, content } = req.body
+  //   try {
+  //     const userId = req.user.id
+  //     const productId = req.product.id
+  //     const reviewData = { userId, productId, rating, content };
+  //     const newUpdatedReview = await updateReview(reviewData);
+  //     const userOrderedProduct = await getMyPreviousOrdersWithItems(userId)
+  //     if(userOrderedProduct) {
+  //       res.send(newUpdatedReview)
+  //       next();
+  //     } else {
+  //       next({
+  //         name: 'FailedUpdateReview',
+  //         message: "Could not update review"
+  //     })
+  //     }
+  //   } catch ({ name, message }) {
+  //     next({ name, message });
+  // }
+  // })
 
 // reviewsRouter.delete('/', async (req, res, next) => {
 //     try {
