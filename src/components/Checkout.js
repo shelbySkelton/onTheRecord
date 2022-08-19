@@ -15,8 +15,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import ReviewOrder from './ReviewOrder';
+import { getMyCart, getGuestCart, checkOutCart, createUserCart } from '../axios-services/cart';
 
-import { getMyCart, getGuestCart } from '../axios-services/cart';
+
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -25,6 +26,7 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 const theme = createTheme();
 
 export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
@@ -69,8 +71,6 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
 
 
 
-
-
   const items = myCart.items
 
   const handleNext = () => {
@@ -80,6 +80,16 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handleCheckout = async (event) => {
+    event.preventDefault();
+    const cart_id = event.target.id
+    const completedOrder = await checkOutCart(cart_id)
+    // const newCart = await 
+    return completedOrder;
+
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -113,7 +123,7 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
+                  Your order number is {myCart.id}! We have emailed your order
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
@@ -135,6 +145,8 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                   </Button>
+                  <br></br>
+                    <button id={myCart.id} onClick={handleCheckout}>complete order</button>
                 </Box>
               </React.Fragment>
             )}

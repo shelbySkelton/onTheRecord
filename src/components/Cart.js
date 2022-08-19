@@ -13,7 +13,9 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
 import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, guestCart, setGuestCart } from "../axios-services/cart";
+
 
 
 const Cart = ({ isLoggedIn, user }) => {
@@ -35,6 +37,8 @@ const Cart = ({ isLoggedIn, user }) => {
     };
     // }
   }, []);
+
+  console.log(myCart)
 
   const { items } = myCart;
 
@@ -88,7 +92,7 @@ const Cart = ({ isLoggedIn, user }) => {
     console.log("Order Total to fixed: ", orderTotal.toFixed(2));
     return (
       <div className="cart-container">
-        <h1>{myCart.items.length} items in your cart</h1>
+        <h1>{items.length} items in your cart</h1>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 320 }} aria-label="simple table">
             <TableHead>

@@ -40,7 +40,8 @@ const payments = [
 
 
 
-export default function ReviewOrder({isLoggedIn }) {
+
+export default function ReviewOrder({ isLoggedIn }) {
 
   const [myCart, setMyCart] = useState({});
 
@@ -94,7 +95,6 @@ export default function ReviewOrder({isLoggedIn }) {
             <ListItemText primary="Total" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
               {orderTotal}
-              
             </Typography>
           </ListItem>
         </List>

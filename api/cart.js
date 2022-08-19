@@ -8,6 +8,7 @@ const {
   deleteItemFromCart,
   createUserCart,
   createGuestCart,
+  checkOut
 } = require("../db/models/cart");
 
 cartRouter.use((req, res, next) => {
@@ -146,5 +147,17 @@ cartRouter.delete("/", async (req, res, next) => {
     next(error);
   }
 });
+
+// Changes a cart_order order_status to pending (patch)
+cartRouter.patch('/checkout', async (req, res, next) => {
+  const { cart_id } = req.body
+  console.log("This is the req.body: ", req.body)
+  try {
+    const checkedOutCart = await checkOut(cart_id);
+    res.send(checkedOutCart)
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = cartRouter;
