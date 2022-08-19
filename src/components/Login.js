@@ -25,12 +25,12 @@ const Login = ({ isLoggedIn, setIsLoggedIn, user, setUser }) => {
         //IF STATEMENT FOR DATA SUCCESS
         if (data.success) {
             setToken(data.token);
-            navigate("/home");
             setUser(data);
             setIsLoggedIn(true);
             if (data.user.isAdmin) {
                 setIsAdmin(true);
             }
+            navigate("/home");
         }
         setErrorMessage(data.message)
     }

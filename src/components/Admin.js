@@ -11,7 +11,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom'
 import { testMe } from '../axios-services/users';
-import { getAdminProducts, 
+import { getAdminProducts, getAllUsers 
 //    removeProduct 
 } from '../axios-services/admin'
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }) => {
     const [allProducts, setAllProducts] = useState([]);
+    const [allUsers, setallUsers] = useState([])
     const [productsView, setProductsView] = useState(false);
     const [usersView, setUsersView] = useState(false);
     const [viewDescription, setViewDescription] = useState(false)
@@ -52,8 +53,9 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
     }
 
     const showUsers = async (event) => {
-        //const users = await getAdminUsers();
-        //console.log("users: ", users);
+        const users = await getAllUsers();
+        console.log("users: ", users)
+        setallUsers(users)
         setProductsView(false)
         setUsersView(true);
     }
@@ -73,8 +75,46 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                     onClick={showUsers} >
                     View Users
                 </button>
+{/* ***************** USERS VIEW *****************    */}
+
                 <TableContainer component={Paper}
-                    hidden={productsView ? false : true}>
+                    hidden={!usersView}>
+                        <Table sx={{ minWidth: 900 }} aria-label="simple table" className='admin-product-container'>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>User ID</TableCell>
+                                    <TableCell>Email</TableCell>
+                                    <TableCell>First Name</TableCell>
+                                    <TableCell>Last Name</TableCell>
+                                    <TableCell>Admin Status</TableCell>
+                                    <TableCell>Orders</TableCell>
+                                    <TableCell>Edit</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            {
+                                allUsers.map((user, idx) => {
+                                    return(
+                                       <TableBody>
+                                        <TableRow key={idx}>
+                                            <TableCell>{user.id}</TableCell>
+                                            <TableCell>{user.email}</TableCell>
+                                            <TableCell>{user.first_name}</TableCell>
+                                            <TableCell>{user.last_name}</TableCell>
+                                            <TableCell>{user.isAdmin ? 'Administrator' : 'User'}</TableCell>
+                                            <TableCell>Input Link For Orders</TableCell>
+                                            <TableCell><Link to={`/admin/edit-user/${user.id}`}><EditIcon /></Link></TableCell>
+                                        </TableRow>
+
+                                       </TableBody> 
+                                    )
+                                })
+                            }
+                        </Table>
+
+                </TableContainer>
+{/* ***************** PRODUCTS VIEW *****************    */}
+                <TableContainer component={Paper}
+                    hidden={!productsView}>
                     <button className='admin-view-button'
                         onClick={(evt) => navigate("/admin/add-product")}>
                         Add Product
@@ -82,7 +122,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                     <Table sx={{ minWidth: 900 }} aria-label="simple table" className='admin-product-container'>
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
+                                <TableCell>Product ID</TableCell>
                                 <TableCell>Name</TableCell>
                                 <TableCell>Price</TableCell>
                                 <TableCell>Category</TableCell>
@@ -93,15 +133,15 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                                 <TableCell>Artist</TableCell>
                                 <TableCell>Description</TableCell>
                                 <TableCell>Genre</TableCell>
-                                <TableCell>Edit</TableCell>
-                                <TableCell>Deactivate</TableCell>
+                                <TableCell>View/Edit</TableCell>
+                                <TableCell>Status</TableCell>
                             </TableRow>
                         </TableHead>
 
                         {
                             allProducts.map((product, idx) => {
                                 return (
-                                    <TableBody className="admin-product-details" key={idx}>
+                                    <TableBody key={idx}>
                                         <TableRow>
                                             <TableCell>{product.id}</TableCell>
                                             <TableCell>{product.name}</TableCell>
@@ -118,9 +158,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                                                 <p hidden={!viewDescription}>{product.description}</p></TableCell>
                                             <TableCell>{product.genre}</TableCell>
                                             <TableCell><Link to={`/admin/edit-product/${product.id}`}><EditIcon /></Link></TableCell>
-                                            <TableCell>{product.status}<DeleteIcon
-                                                onClick={(evt) => removeProduct(product.id)}
-                                            /></TableCell>
+                                            <TableCell>{product.status}</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 )
@@ -130,9 +168,6 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
 
                     </Table>
                 </TableContainer>
-                <div
-                    hidden={usersView ? false : true}>Users View
-                </div>
             </div>
 
 
