@@ -1,15 +1,16 @@
 import React, { useState, useEfect } from "react";
 
 
-const Review = () => {
+// const Review = () => {
+//     const [getReviews, setGetReviews] = useState('');
+//     const [editReview, setEditReview] = useState('');
 
+//     return(
+//         <div>
 
-    return(
-        <div>
-
-        </div>
-    );
-}
+//         </div>
+//     );
+// }
 
 
 // Display add review as a button
