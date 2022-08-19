@@ -51,7 +51,7 @@ const Header = (props) => {
             >Register</Link>
             <Link
                 hidden={isLoggedIn ? false : true}
-                to="/myAccount">{user.first_name}'s Account</Link>
+                to="/my-account">{user.first_name}'s Account</Link>
             <Link to="/cart">My Cart</Link>
 
         </navbar>

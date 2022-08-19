@@ -4,6 +4,37 @@ const API_URL = 'http://localhost:4000/api'
 
 
 
+export async function getAllUsers() {
+  try {
+    const { data } = await axios.get(`/api/admin/users`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function getUserById(userId) {
+  console.log("userId: ", userId)
+  try {
+    const { data } = await axios.get(`/api/admin/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+      }
+    });
+    console.log("data: ", data)
+    return data;
+  } catch (error) {
+    console.error(error)
+  }
+
+
+}
+
+
 export async function getAdminProducts() {
   try {
     const { data } = await axios.get(`/api/admin/products`, {
@@ -16,6 +47,7 @@ export async function getAdminProducts() {
     console.error(error)
   }
 }
+
 
 export async function createProduct(
                         name,
@@ -58,21 +90,25 @@ export async function createProduct(
 }
 
 export async function deactivateProduct(productId) {
-
-//   try {
-//     const { data } = await axios.patch(`/api/admin/products/${productId}`,
-//       {
-//         headers: {
-//           'Authorization': `Bearer ${localStorage.token}`
-//         }
-//       },
-//     );
-//     return data;
-//   } catch (error) {
-//     console.log("Error in patch product!!")
-//     console.error(error)
-//   }
+  try {
+    console.log("this is my productId in axios: ", productId)
+    const { data } = await axios.patch(`/api/admin/products/${productId}`,
+      {
+          "status": "Inactive"
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${localStorage.token}`
+        }
+      },
+    );
+    return data;
+  } catch (error) {
+    console.log("Error in deactivate product!!")
+    console.error(error)
+  }
 }
+
 
 
 export async function patchProduct(

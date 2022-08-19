@@ -92,7 +92,7 @@ async function testDB() {
 
     console.log("Calling getActiveProductsByCategory(Record)...");
     const records = await getActiveProductsByCategory("Record");
-    console.log("getProductsByActiveCategory(Record): ", records);
+    console.log("getActiveProductsCategory(Record): ", records);
 
     console.log("Calling getActiveProductsByCategory(Accessory)...");
     const accessories = await getActiveProductsByCategory("Accessory");
@@ -112,9 +112,6 @@ async function testDB() {
     const updatedProduct = await updateProduct(updates)
     console.log("Finished updating product:", updatedProduct)
 
-    console.log("Calling delete product 13")
-    const wasDeleteSuccessful = await deactivateProduct(13)
-    console.log("was delete successful?", wasDeleteSuccessful)
 
     console.log("Calling deactivate product 1")
     const deactivatedProduct = await deactivateProduct(1)
@@ -125,9 +122,9 @@ async function testDB() {
     const activeProducts = await getAllActiveProducts();
     console.log("activeProducts: ", activeProducts);
 
-    console.log("Calling getAllProducts...");
-    const allProducts = await getAllProducts();
-    console.log("allProducts: ", allProducts);
+    // console.log("Calling getAllProducts...");
+    // const allProducts = await getAllProducts();
+    // console.log("allProducts: ", allProducts);
 
     console.log("Calling getAllInactiveProducts...");
     const allInactiveProducts = await getAllInactiveProducts();
@@ -147,9 +144,9 @@ async function testDB() {
     // const user1 = await getUserById(4);
     // console.log("User4: ", user1);
 
-    console.log("These are user2's past and present orders")
-    const user2Carts = await getMyPreviousOrdersWithItems(2);
-    console.log("user2carts: ", user2Carts)
+    // console.log("These are user2's past and present orders")
+    // const user2Carts = await getMyPreviousOrdersWithItems(2);
+    // console.log("user2carts: ", user2Carts)
 
     // console.log("These are user2's past and present orders")
     // const user2Carts = await getMyOrdersWithItems(2);
@@ -171,25 +168,25 @@ async function testDB() {
     // const user1 = await getUserById(4);
     // console.log("User4: ", user1);
 
-    console.log("Calling get review by user");
-    const user2 = await getReviewsByUser(2);
-    console.log("user2: ", user2);
+    // console.log("Calling get review by user");
+    // const user2 = await getReviewsByUser(2);
+    // console.log("user2: ", user2);
 
-    console.log("Calling get review by product");
-    const user3 = await getReviewsByProduct(7);
-    console.log("user3: ", user3);
+    // console.log("Calling get review by product");
+    // const user3 = await getReviewsByProduct(7);
+    // console.log("user3: ", user3);
 
-    console.log("Calling updateReview on reviews [6]");
-    // console.log("review: ", reviews[6].id)
-    const updateReviewResult = await updateReview(6, {
-      rating: "4",
-      content: "I updated this review"
-    });
-    console.log("Result: ", updateReviewResult);
+    // console.log("Calling updateReview on reviews [6]");
+    // // console.log("review: ", reviews[6].id)
+    // const updateReviewResult = await updateReview(6, {
+    //   rating: "4",
+    //   content: "I updated this review"
+    // });
+    // console.log("Result: ", updateReviewResult);
 
-    console.log("Calling delete review [6]");
-    const updateDeleteReview = await deleteReview(6)
-    console.log("deleteReview: ", updateDeleteReview)
+    // console.log("Calling delete review [6]");
+    // const updateDeleteReview = await deleteReview(6)
+    // console.log("deleteReview: ", updateDeleteReview)
 
     console.log("Pending cart 3")
     const checkedOutCart = await checkOut(3);

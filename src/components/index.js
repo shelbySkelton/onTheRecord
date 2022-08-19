@@ -11,3 +11,5 @@ export { default as Cart } from './Cart';
 export { default as Header } from './Header';
 export { default as EditProduct } from './EditProduct';
 export { default as AddProduct } from './AddProduct';
+export { default as EditUser } from './EditUser';
+export {default as UserAccount } from './UserAccount';

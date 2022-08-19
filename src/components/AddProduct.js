@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { testMe } from '../axios-services/users'
 import { createProduct } from '../axios-services/admin';
 import Box from '@mui/material/Box';
@@ -8,6 +8,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
+
 
 
 
@@ -25,6 +26,9 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
     const [description, setDescription] = useState("")
     const [genre, setGenre] = useState("")
     const [status, setStatus] = useState("")
+
+    const navigate = useNavigate();
+
 
 
 
@@ -46,7 +50,19 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
 
 
     const createHandler = async (evt) => {
-
+        console.log(
+            name,
+            price,
+            category,
+            quantity,
+            img_url,
+            condition,
+            album_name,
+            artist,
+            description,
+            genre,
+            status
+        )
         const newProduct = await createProduct(
             name,
             price,
@@ -60,6 +76,7 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
             genre,
             status)
         console.log("newProduct: ", newProduct)
+        navigate(`/products/${newProduct.id}`)
     }
 
     return (
@@ -76,20 +93,21 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     <TextField
                         required
                         label="Name"
-                        defaultValue="Product"
+                        placeholder="Product"
                         onChange={(evt) => setName(evt.target.value)}
                     />
                     <TextField
                         required
                         label="Price"
-                        defaultValue="0.00"
+                        placeholder="0.00"
                         onChange={(evt) => setPrice(evt.target.value)}
                     /><br></br>
                     <Box sx={{ minWidth: 250 }}>
+                    <p>Product Category</p>
                         <Select
                             label="Category"
                             required
-                            defaultValue="Record"
+                            placeholder="Record"
                             onChange={(evt) => setCategory(evt.target.value)}
                         >
                             <MenuItem value="Record">Record</MenuItem>
@@ -108,14 +126,15 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     <TextField
                         required
                         label="Img Url"
-                        defaultValue="http://"
+                        placeholder="http://"
                         onChange={(evt) => setImg_Url(evt.target.value)}
                     />
                     <br></br>
                     <Box sx={{ minWidth: 150 }}>
+                    <p>Product Condition</p>
                         <Select
                             label="Condition"
-                            defaultValue="New"
+                            placeholder="New"
                             required
                             onChange={(evt) => setCondition(evt.target.value)}
                         >
@@ -125,17 +144,17 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     </Box>
                     <TextField
                         label="Album Name"
-                        defaultValue="Album"
+                        placeholder="Album"
                         onChange={(evt) => setAlbum_Name(evt.target.value)}
                     />
                     <TextField
                         label="Artist"
-                        defaultValue="Artist"
+                        placeholder="Artist"
                         onChange={(evt) => setArtist(evt.target.value)}
                     />
                     <TextField
                         label="Description"
-                        defaultValue="Describe the item/record"
+                        placeholder="Describe the item/record"
                         required
                         multiline
                         maxRows={8}
@@ -143,13 +162,13 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     />
                     <TextField
                         label="Genre"
-                        defaultValue="Genre"
+                        placeholder="Genre"
                         onChange={(evt) => setGenre(evt.target.value)}
                     />
                     <Box sx={{ minWidth: 150 }}>
+                       <p>Product Status</p>
                         <Select
                             label="Status"
-                            defaultValue="Active"
                             required
                             onChange={(evt) => setStatus(evt.target.value)}
                         >
@@ -158,14 +177,9 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                         </Select>
                     </Box>
                     <Button variant="contained"
-                        onClick={createHandler}>Create Product</Button>
-
-
-
+                       onClick={createHandler}>Create Product</Button>
                 </div>
             </Box>
-
-
         </div>
     )
 }

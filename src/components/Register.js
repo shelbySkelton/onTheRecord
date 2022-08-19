@@ -41,6 +41,7 @@ const Register = ({ isLoggedIn, user }) => {
         <div id="register">
             <p>{isLoggedIn ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <h1>Register</h1>
+            <p>{errorMessage}</p>
             <form onSubmit={handleSubmit}>
                 <label>
                     Email:
@@ -81,7 +82,6 @@ const Register = ({ isLoggedIn, user }) => {
                 <button className="button" type="submit"
                     disabled={(newPw1 === newPw2) ? false : true}
                 >Register</button>
-                <p>{errorMessage}</p>
                 <p>{(newPw1 === newPw2) ? null : "Passwords must be matching"}</p>
             </form>
         </div>
