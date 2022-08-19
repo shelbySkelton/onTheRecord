@@ -39,6 +39,7 @@ const Header = (props) => {
                     localStorage.removeItem('token');
                     setIsLoggedIn(false);
                     setUser({});
+                    setIsAdmin(false);
                 }}> Log Out
             </Link>
 

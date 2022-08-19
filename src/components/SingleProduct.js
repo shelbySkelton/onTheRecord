@@ -37,12 +37,12 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
         } else {
             const guestCartItem = {
                 product_id: productId,
+                product_name: productDetails.name,
                 priceAtPurchase: productDetails.price
                 }
             const sessionCart = await addItemToGuestCart(guestCartItem);
             console.log("sessionCart: ", sessionCart)
             guestCart.push(guestCartItem)
-            console.log("guestCart(useState): ", guestCart)
         }
        
     }

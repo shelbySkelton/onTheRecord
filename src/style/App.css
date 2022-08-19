@@ -96,6 +96,8 @@
   margin: 10px;
 }
 
+
+
 .button {
   transition-duration: 0.3s;
 }
@@ -179,4 +181,10 @@
   } to {
     transform:rotate(360deg);
     }
+}
+
+#add-product-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

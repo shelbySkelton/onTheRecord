@@ -16,35 +16,60 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import ReviewOrder from './ReviewOrder';
 
-import { getMyCart } from '../axios-services/cart';
+import { getMyCart, getGuestCart } from '../axios-services/cart';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <ReviewOrder />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
 
 const theme = createTheme();
 
-export default function Checkout() {
+export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
 
   React.useEffect(() => {
-    getMyCart().then((myCart) => {
-      setMyCart(myCart)
-    })
-  }, [])
+    console.log("isLoggedIn: ", isLoggedIn);
+    if (isLoggedIn){
+      getMyCart().then((myCart) => {
+      console.log(myCart);
+      setMyCart(myCart);
+      })
+    } else {
+      getGuestCart().then((myCart) => {
+        setMyCart(myCart)
+        console.log("guestcart: ", myCart)
+      })
+    };
+  }, []);
+
+
+
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm />;
+      case 1:
+        return <PaymentForm />;
+      case 2:
+        return <ReviewOrder 
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          user={user}
+          isAdmin={isAdmin}
+          guestCart={guestCart}
+          setGuestCart={setGuestCart}
+              />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
+
+
+
 
   const items = myCart.items
 

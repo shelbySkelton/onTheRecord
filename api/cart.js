@@ -44,19 +44,32 @@ cartRouter.get('/guestCart', (req, res) => {
 
 
 cartRouter.post('/guestCart', (req, res, next) => {
-  const { product_id, priceAtPurchase } = req.body;
-  console.log("This is product_id & priceAtPurchase: ", product_id, priceAtPurchase )
-  const guestItem = { product_id, priceAtPurchase}
+  const { product_id, product_name, priceAtPurchase } = req.body;
+  console.log("This is product_id & priceAtPurchase, product_name: ", product_id, product_name, priceAtPurchase )
+  const guestItem = { product_id, product_name, priceAtPurchase}
   const { guestCart } = req.session
   if ( guestCart ) {
-    const { products } = guestCart;
-    products.push(guestItem)
+    const { items } = guestCart;
+    items.push(guestItem)
   } else {
     req.session.guestCart = {
-      products: [guestItem]
+      items: [guestItem]
     }
   }
   res.send(req.session.guestCart)
+})
+
+//deletes item from session storage
+cartRouter.delete('/guestCart', (req, res, next) => {
+   const { idx } = req.body;
+   const { guestCart } = req.session
+   const {items } = guestCart
+
+
+console.log("idx: ", idx)
+console.log("guestCart: ", guestCart)
+  items.splice(idx, 1)
+  res.send(guestCart)
 })
 
 
