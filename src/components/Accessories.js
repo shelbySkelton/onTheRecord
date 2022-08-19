@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getAllAccessories } from '../axios-services/products';
 import { Link } from 'react-router-dom'
 
-const Accessories = ({ user, isLoggedIn }) => {
+const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
   const [allAccessories, setAllAccessories] = useState([])
 
   useEffect(() => {

@@ -13,7 +13,9 @@ const Header = (props) => {
         user, 
         setUser, 
         isAdmin, 
-        setIsAdmin 
+        setIsAdmin,
+        guestCart,
+        setGuestCart 
     } = props
     // const [user, setUser] = useState({})
     // const [isLoggedIn, setIsLoggedIn] = useState(false)

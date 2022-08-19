@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
-import { getMyCart, addCartItem } from '../axios-services/cart';
+import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axios-services/cart';
 
 
 
-const SingleProduct = ({ isLoggedIn, user }) => {
+const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
 
     const { productId } = useParams();
 
@@ -26,13 +26,25 @@ const SingleProduct = ({ isLoggedIn, user }) => {
 
     const handleClick = async (event) => {
         event.preventDefault();
-        const cartItem = {
-            product_id: productId,
-            priceAtPurchase: productDetails.price,
-            cart_id: myCart.id
+        if (isLoggedIn){
+            const cartItem = {
+                product_id: productId,
+                priceAtPurchase: productDetails.price,
+                cart_id: myCart.id
+                }
+            const data = await addCartItem(cartItem);
+            return data;
+        } else {
+            const guestCartItem = {
+                product_id: productId,
+                priceAtPurchase: productDetails.price
+                }
+            const sessionCart = await addItemToGuestCart(guestCartItem);
+            console.log("sessionCart: ", sessionCart)
+            guestCart.push(guestCartItem)
+            console.log("guestCart(useState): ", guestCart)
         }
-       const data = await addCartItem(cartItem);
-       return data;
+       
     }
 
     return (

@@ -9,23 +9,28 @@ import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
-
-import { getMyCart, addCartItem, deleteCartItem } from "../axios-services/cart";
+import { getMyCart, addCartItem, deleteCartItem, getGuestCart, guestCart, setGuestCart } from "../axios-services/cart";
 
 const Cart = ({ isLoggedIn, user }) => {
   const [myCart, setMyCart] = useState({});
 
+
   useEffect(() => {
     console.log("isLoggedIn: ", isLoggedIn);
-    // if (isLoggedIn){
-    getMyCart().then((myCart) => {
+    if (isLoggedIn){
+      getMyCart().then((myCart) => {
       // console.log(myCart);
       setMyCart(myCart);
-    });
+      })
+    } else {
+      getGuestCart().then((myCart) => {
+        setMyCart(myCart)
+      })
+    };
     // }
   }, []);
 
-  const { items } = myCart;
+  //const { items } = myCart;
 
   const handleDelete = async (event) => {
     event.preventDefault();
@@ -56,7 +61,7 @@ const Cart = ({ isLoggedIn, user }) => {
   } else {
     return (
       <div className="cart-container">
-        <h1>{items.length} items in your cart</h1>
+        <h1>{myCart.items.length} items in your cart</h1>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 320 }} aria-label="simple table">
             <TableHead>
@@ -72,7 +77,7 @@ const Cart = ({ isLoggedIn, user }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((item) => (
+              {myCart.items.map((item) => (
                 <TableRow
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
