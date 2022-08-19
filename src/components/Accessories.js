@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { getAllAccessories } from '../axios-services/products';
 import { Link } from 'react-router-dom'
+import { getMyCart, addCartItem } from "../axios-services/cart";
 
 const Accessories = ({ user, isLoggedIn }) => {
   const [allAccessories, setAllAccessories] = useState([])
-
+  const [myCart, setMyCart] = useState({})
   useEffect(() => {
     getAllAccessories()
       .then(allAccessories => {
         console.log(allAccessories)
         setAllAccessories(allAccessories)
       })
+    getMyCart().then((myCart) => {
+        setMyCart(myCart);
+      });  
   }, [])
 
   return (
@@ -21,6 +25,16 @@ const Accessories = ({ user, isLoggedIn }) => {
 
         {
           allAccessories.map((accessory, idx) => {
+            const handleClick = async (event) => {
+              event.preventDefault();
+              const cartItem = {
+                product_id: accessory.id,
+                priceAtPurchase: accessory.price,
+                cart_id: myCart.id,
+              };
+              const data = await addCartItem(cartItem);
+              return data;
+            };
             return (
               <section className="product-card" key={idx}>
                 <span className="product-img">
@@ -28,6 +42,9 @@ const Accessories = ({ user, isLoggedIn }) => {
                 </span>
                 <Link className="product-link" to={`/products/${accessory.id}`} >{accessory.name}</Link><br></br>
                 <span>${accessory.price}</span><br></br>
+                <button onClick={handleClick} className="add-to-cart-button">
+                Add to Cart
+              </button>
               </section>
             )
           })
