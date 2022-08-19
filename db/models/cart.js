@@ -264,22 +264,6 @@ async function checkOut(id){
       RETURNING *
     `, [id])
 
-    // if(cart.session_id === null){
-    //   const newUserCart = await createUserCart({ 
-    //     user_id: cart.user_id, 
-    //     order_status: 'active' 
-    //   })
-    //   console.log("New user cart:", newUserCart)
-    //   return newUserCart
-    // } else if (cart.user_id === null && !!cart.session_id){
-    //   const newGuestCart = await createGuestCart({ 
-    //     session_id: cart.session_id, 
-    //     order_status: 'active'
-    //   })
-    //   console.log("New guest cart: ", newGuestCart)
-    //   return newGuestCart
-    // }
-    
     return cart;
   } catch (error) {
     console.log("Error in checkOut function in db/models/cart")

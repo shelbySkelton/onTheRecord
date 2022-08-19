@@ -40,12 +40,13 @@ const payments = [
 
 
 
-export default function ReviewOrder() {
+export default function ReviewOrder({ isLoggedIn, user }) {
 
   const [myCart, setMyCart] = useState({});
 
   useEffect(() => {
-    // console.log("isLoggedIn: ", isLoggedIn);
+    console.log("isLoggedIn: ", isLoggedIn);
+    console.log("user: ", user)
     getMyCart().then((myCart) => {
       setMyCart(myCart);
       
@@ -86,7 +87,6 @@ export default function ReviewOrder() {
             <ListItemText primary="Total" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
               {orderTotal}
-              
             </Typography>
           </ListItem>
         </List>

@@ -16,7 +16,11 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import ReviewOrder from './ReviewOrder';
 
-import { getMyCart } from '../axios-services/cart';
+import { 
+  getMyCart, 
+  checkOutCart,
+  createUserCart 
+} from '../axios-services/cart';
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
@@ -27,7 +31,7 @@ function getStepContent(step) {
     case 1:
       return <PaymentForm />;
     case 2:
-      return <ReviewOrder />;
+      return <ReviewOrder isLoggedIn={isLoggedIn} user={user} />;
     default:
       throw new Error('Unknown step');
   }
@@ -35,7 +39,8 @@ function getStepContent(step) {
 
 const theme = createTheme();
 
-export default function Checkout() {
+export default function Checkout({ isLoggedIn, user }) {
+  console.log(isLoggedIn)
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
@@ -45,6 +50,7 @@ export default function Checkout() {
       setMyCart(myCart)
     })
   }, [])
+  console.log("This is my cart on the checkout component ", myCart)
 
   const items = myCart.items
 
@@ -55,6 +61,16 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const handleCheckout = async (event) => {
+    event.preventDefault();
+    const cart_id = event.target.id
+    const completedOrder = await checkOutCart(cart_id)
+    // const newCart = await 
+    return completedOrder;
+
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -88,7 +104,7 @@ export default function Checkout() {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
+                  Your order number is {myCart.id}! We have emailed your order
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
@@ -110,6 +126,8 @@ export default function Checkout() {
                   >
                     {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                   </Button>
+                  <br></br>
+                    <button id={myCart.id} onClick={handleCheckout}>complete order</button>
                 </Box>
               </React.Fragment>
             )}

@@ -105,3 +105,15 @@ export async function deleteCartItem(cartedItemId) {
     console.error(error);
   }
 }
+
+export async function checkOutCart(cart_id){
+  try {
+    const { data } = await axios.patch('/api/cart/checkout', {
+      cart_id
+    });
+    console.log("This is axios checkOut: ", data)
+    return data;
+  } catch (error) {
+    console.error(error)
+  }
+}
