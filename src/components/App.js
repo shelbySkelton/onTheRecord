@@ -50,7 +50,9 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     testMe()
       .then(user => {
-        setUser(user);
+        console.log(user)
+        setUser(user)
+        setIsLoggedIn(true);
 
         // console.log("user: ", user)
         

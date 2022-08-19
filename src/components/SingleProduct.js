@@ -27,7 +27,7 @@ const SingleProduct = ({ isLoggedIn, user }) => {
     const handleClick = async (event) => {
         event.preventDefault();
         const cartItem = {
-            product_id: productDetails.id,
+            product_id: productId,
             priceAtPurchase: productDetails.price,
             cart_id: myCart.id
         }

@@ -9,6 +9,8 @@ const apiRouter = require('express').Router();
 apiRouter.get('/', (req, res, next) => {
   console.log("req.sessionID: ")
   console.log(req.sessionID)
+  console.log("this is req: ")
+  console.log(req.headers)
   res.send({
     message: 'API is under construction!',
   });

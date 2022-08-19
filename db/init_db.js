@@ -17,8 +17,10 @@ const {
   createInitialCartItems,
   getMyCartWithItems,
   getMyPreviousOrdersWithItems,
-  deleteItemFromCart
-} = require('./models/cart')
+  deleteItemFromCart,
+  checkOut
+} = require('./models/cart');
+const { checkout } = require('../api/products');
 
 
 async function dropTables() {
@@ -188,6 +190,11 @@ async function testDB() {
     console.log("Calling delete review [6]");
     const updateDeleteReview = await deleteReview(6)
     console.log("deleteReview: ", updateDeleteReview)
+
+    console.log("Pending cart 3")
+    const checkedOutCart = await checkOut(3);
+    console.log("CheckOutCart: ", checkedOutCart)
+
 
   } catch (error) {
     console.error("Error testing database!");
