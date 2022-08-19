@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllRecords } from "../axios-services/products";
 import { Link, Navigate } from "react-router-dom";
-import { getMyCart, addCartItem } from "../axios-services/cart";
+import { getMyCart, addCartItem, addItemToGuestCart } from "../axios-services/cart";
 
 
 const Records = ({ user, isLoggedIn }) => {
@@ -33,13 +33,24 @@ const Records = ({ user, isLoggedIn }) => {
         {allRecords.map((record, idx) => {
           const handleClick = async (event) => {
             event.preventDefault();
-            const cartItem = {
+            if (isLoggedIn) {
+              const cartItem = {
               product_id: record.id,
               priceAtPurchase: record.price,
               cart_id: myCart.id,
-            };
-            const data = await addCartItem(cartItem);
-            return data;
+              }
+              const data = await addCartItem(cartItem);
+              return data;
+            } else {
+              const guestCartItem = {
+                product_id: record.id,
+                product_name: record.name,
+                priceAtPurchase: Number(record.price)
+                }
+              const sessionCart = await addItemToGuestCart(guestCartItem);
+              console.log("sessionCart: ", sessionCart)
+            }
+            
           };
           return (
             <section className="product-card" key={idx}>

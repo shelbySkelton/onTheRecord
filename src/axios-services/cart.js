@@ -42,11 +42,12 @@ export async function getGuestCart(){
   }
 }
 
-export async function addItemToGuestCart ({product_id, priceAtPurchase}) {
-  console.log("Axios product_id, priceatpurchase: ", product_id, priceAtPurchase)
+export async function addItemToGuestCart ({product_id, product_name, priceAtPurchase}) {
+  console.log("Axios product_id, priceatpurchase: ", product_id, product_name, priceAtPurchase)
   try {
     const { data } = await axios.post(`/api/cart/guestCart`, {
       "product_id": product_id,
+      "product_name": product_name,
       "priceAtPurchase": priceAtPurchase
     })
 
@@ -57,6 +58,19 @@ export async function addItemToGuestCart ({product_id, priceAtPurchase}) {
   }
 }
 
+export async function removeItemFromGuestCart(idx) {
+  console.log("Axios idx", idx)
+  try{
+    const { data } = await axios.delete(`/api/cart/guestCart`, {   
+        "idx": idx   
+    }) 
+    console.log("Data back from axios: ", data)
+    return data;
+  } catch(error) {
+    console.log("Error removing item from session storage")
+    console.error(error)
+  }
+}
 
 
 

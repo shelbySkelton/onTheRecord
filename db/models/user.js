@@ -143,7 +143,7 @@ async function getUser({ email, password }) {
   if (passwordsMatch) {
     try {
       const { rows: [user] } = await client.query(`
-          SELECT id, email, first_name, last_name
+          SELECT id, email, first_name, last_name, "isAdmin"
           FROM users
           WHERE email = $1 and password = $2;
         `, [email, hashedPassword])

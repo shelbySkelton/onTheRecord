@@ -8,6 +8,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+
 
 
 
@@ -80,16 +82,15 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
     }
 
     return (
-        <div hidden={isAdmin ? false : true}>Add a Product
+        <div hidden={isAdmin ? false : true} id= 'add-product-box'>
             <Box
                 components="form"
-                sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
+                sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}
                 noValidate
                 autoComplete="off"
             >
                 <div>
+                    <></>
                     <TextField
                         required
                         label="Name"
@@ -176,8 +177,10 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                             <MenuItem value="Inactive">Inactive</MenuItem>
                         </Select>
                     </Box>
-                    <Button variant="contained"
-                       onClick={createHandler}>Create Product</Button>
+                    <Button 
+                        id="test-button"
+                        variant="contained"
+                        onClick={createHandler}>Create Product</Button>
                 </div>
             </Box>
         </div>

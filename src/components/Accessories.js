@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllAccessories } from '../axios-services/products';
 import { Link } from 'react-router-dom'
-import { getMyCart, addCartItem } from "../axios-services/cart";
+import { getMyCart, addCartItem, addItemToGuestCart } from "../axios-services/cart";
 
 const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
   const [allAccessories, setAllAccessories] = useState([])
@@ -12,11 +12,11 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         console.log(allAccessories)
         setAllAccessories(allAccessories)
       })
-      // if (isLoggedIn){
-        // getMyCart().then((myCart) => {
-        //   setMyCart(myCart);
-        // });
-      // }
+      if (isLoggedIn){
+        getMyCart().then((myCart) => {
+          setMyCart(myCart);
+        });
+      }
   }, [])
 
   return (
@@ -29,14 +29,24 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
           allAccessories.map((accessory, idx) => {
             const handleClick = async (event) => {
               event.preventDefault();
-              const cartItem = {
-                product_id: accessory.id,
-                priceAtPurchase: accessory.price,
-                cart_id: myCart.id,
-              };
-              const data = await addCartItem(cartItem);
-              return data;
-            };
+              if (isLoggedIn) {
+                const cartItem = {
+                  product_id: accessory.id,
+                  priceAtPurchase: accessory.price,
+                  cart_id: myCart.id,
+                };
+                const data = await addCartItem(cartItem);
+                return data;
+              } else {
+                const guestCartItem = {
+                  product_id: accessory.id,
+                  product_name: accessory.name,
+                  priceAtPurchase: accessory.price
+                  }
+                const sessionCart = await addItemToGuestCart(guestCartItem);
+                console.log("sessionCart: ", sessionCart)
+              }
+          }
             return (
               <section className="product-card" key={idx}>
                 <span className="product-img">

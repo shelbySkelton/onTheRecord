@@ -90,37 +90,37 @@ async function testDB() {
 
 
 
-    console.log("Calling getActiveProductsByCategory(Record)...");
-    const records = await getActiveProductsByCategory("Record");
-    console.log("getActiveProductsCategory(Record): ", records);
+    // console.log("Calling getActiveProductsByCategory(Record)...");
+    // const records = await getActiveProductsByCategory("Record");
+    // console.log("getActiveProductsCategory(Record): ", records);
 
-    console.log("Calling getActiveProductsByCategory(Accessory)...");
-    const accessories = await getActiveProductsByCategory("Accessory");
-    console.log("getActiveProductsByCategory(Accessory): ", accessories);
+    // console.log("Calling getActiveProductsByCategory(Accessory)...");
+    // const accessories = await getActiveProductsByCategory("Accessory");
+    // console.log("getActiveProductsByCategory(Accessory): ", accessories);
 
-    console.log("Calling getProductById... on id: 3");
-    const product = await getProductById(3);
-    console.log("getProductById: ", product);
-
-
-    console.log("Calling updateProduct on product 2...")
-    const updates = {
-      id: 2,
-      description: "UPDATED WORKED!!!!",
-      status: 'Inactive'
-    }
-    const updatedProduct = await updateProduct(updates)
-    console.log("Finished updating product:", updatedProduct)
+    // console.log("Calling getProductById... on id: 3");
+    // const product = await getProductById(3);
+    // console.log("getProductById: ", product);
 
 
-    console.log("Calling deactivate product 1")
-    const deactivatedProduct = await deactivateProduct(1)
-    console.log("product deactived:", deactivatedProduct)
+    // console.log("Calling updateProduct on product 2...")
+    // const updates = {
+    //   id: 2,
+    //   description: "UPDATED WORKED!!!!",
+    //   status: 'Inactive'
+    // }
+    // const updatedProduct = await updateProduct(updates)
+    // console.log("Finished updating product:", updatedProduct)
 
 
-    console.log("Calling getAllActiveProducts...");
-    const activeProducts = await getAllActiveProducts();
-    console.log("activeProducts: ", activeProducts);
+    // console.log("Calling deactivate product 1")
+    // const deactivatedProduct = await deactivateProduct(1)
+    // console.log("product deactived:", deactivatedProduct)
+
+
+    // console.log("Calling getAllActiveProducts...");
+    // const activeProducts = await getAllActiveProducts();
+    // console.log("activeProducts: ", activeProducts);
 
     // console.log("Calling getAllProducts...");
     // const allProducts = await getAllProducts();
