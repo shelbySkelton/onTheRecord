@@ -12,10 +12,12 @@ const Products = ({ isLoggedIn, user }) => {
         console.log(allProducts)
         setAllProducts(allProducts)
       })
-    getMyCart()
-      .then(myCart => {
-          setMyCart(myCart)
-      })    
+    if (isLoggedIn){
+      getMyCart()
+        .then(myCart => {
+            setMyCart(myCart)
+        })    
+    }  
   }, [])
 
   const handleClick = async (event) => {

@@ -12,9 +12,11 @@ const Accessories = ({ user, isLoggedIn }) => {
         console.log(allAccessories)
         setAllAccessories(allAccessories)
       })
-    getMyCart().then((myCart) => {
-        setMyCart(myCart);
-      });  
+      // if (isLoggedIn){
+        // getMyCart().then((myCart) => {
+        //   setMyCart(myCart);
+        // });
+      // }
   }, [])
 
   return (

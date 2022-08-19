@@ -10,12 +10,14 @@ const Records = ({ user, isLoggedIn }) => {
     getAllRecords().then((allRecords) => {
       setAllRecords(allRecords);
     });
-    getMyCart().then((myCart) => {
-      setMyCart(myCart);
-    });
+    if (isLoggedIn){
+      getMyCart().then((myCart) => {
+        setMyCart(myCart);
+      });
+    }
   }, []);
-  console.log(myCart.id);
-  console.log(allRecords);
+  // console.log(myCart.id);
+  // console.log(allRecords);
 
   return (
     <div>
