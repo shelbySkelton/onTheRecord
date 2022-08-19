@@ -19,11 +19,6 @@ export async function loginUser({ email, password }){
 export async function registerUser({ email, password, first_name, last_name }){
   try {
     const { data } = await axios.post('/api/users/register', {
-      headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.token}`
-    }
-    }, {
       email,
       password,
       first_name,

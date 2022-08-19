@@ -59,17 +59,40 @@ async function createAdmin({ email, password, first_name, last_name, isAdmin }) 
   }
 }
 
+async function updateUser({ id, ...fields }) {
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${key}" = $${index + 1}`
+  ).join(', ');
+
+  if (setString.length === 0) {
+    return
+  }
+  try {
+    const { rows: [user ] } = await client.query(`
+      UPDATE user
+      SET ${setString}
+      WHERE id=${id}
+      RETURNING *
+    `, Object.values((fields)));
+    return user;
+    } catch (error) {
+      console.log("Error updating user")
+      throw error;
+    }
+}
+
+
 async function createInitialAdmin() {
   console.log("Trying to create initial administrator");
   try {
     const adminToCreate =
-    [{
-      email: "admin@example.com",
-      password: "secretpassword",
-      first_name: "Admiral",
-      last_name: "Ministrator",
-      isAdmin: true
-    }]
+      [{
+        email: "admin@example.com",
+        password: "secretpassword",
+        first_name: "Admiral",
+        last_name: "Ministrator",
+        isAdmin: true
+      }]
     const admin = await Promise.all(adminToCreate.map(createAdmin))
     return admin;
   } catch (error) {
@@ -108,7 +131,7 @@ async function getUserByEmail(email) {
     return user;
   } catch (error) {
     console.log("Error with getUserByEmail")
-    throw error;    
+    throw error;
   }
 }
 
@@ -116,32 +139,32 @@ async function getUser({ email, password }) {
   const user = await getUserByEmail(email);
   const hashedPassword = user.password;
   const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-  
+
   if (passwordsMatch) {
-      try {
-        const { rows: [user] } = await client.query(`
+    try {
+      const { rows: [user] } = await client.query(`
           SELECT id, email, first_name, last_name
           FROM users
           WHERE email = $1 and password = $2;
         `, [email, hashedPassword])
-        console.log("This is user: ", user)
-        return user;
-      } catch (error) {
-        console.log('Error in the getUser')
-        throw error;
-      }
+      console.log("This is user: ", user)
+      return user;
+    } catch (error) {
+      console.log('Error in the getUser')
+      throw error;
+    }
   }
 }
 
-async function getUserById(userId){
+async function getUserById(userId) {
   try {
-    const { rows: [ user ] } = await client.query(`
+    const { rows: [user] } = await client.query(`
       SELECT id, email, first_name, last_name, "isAdmin"
       FROM users
       WHERE id=$1;
     `, [userId]);
 
-    if (!user){
+    if (!user) {
       return null;
     } else {
       // get their cart (use getCartByUser)
@@ -184,5 +207,6 @@ module.exports = {
   getUser,
   getUserByEmail,
   getUserById,
-  createInitialAdmin
+  createInitialAdmin,
+  updateUser
 };

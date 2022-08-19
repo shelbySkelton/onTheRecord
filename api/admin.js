@@ -9,6 +9,8 @@ const { getAllProducts,
     getProductById,
     createProduct,
     deactivateProduct,
+    getAllUsers,
+    getUserById,
     updateProduct } = require('../db/models')
 
 
@@ -17,6 +19,16 @@ adminRouter.get('/', requireAdmin, (req, res, next) => {
     next();
 })
 
+
+adminRouter.get('/users/:userId', requireAdmin, async (req, res, next) => {
+  const {userId} = req.params;
+  try {
+    const user = await getUserById(userId)
+    res.send(user);
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 adminRouter.get('/products', requireAdmin, async (req, res, next) => {
@@ -38,7 +50,8 @@ adminRouter.post('/products', requireAdmin, async (req, res, next) => {
         album_name,
         artist,
         description,
-        genre = "" } = req.body;
+        genre,
+        status = "" } = req.body;
 
     const productData = { name, 
         price,
@@ -49,7 +62,9 @@ adminRouter.post('/products', requireAdmin, async (req, res, next) => {
         album_name,
         artist,
         description,
-        genre};
+        genre,
+        status };
+
     console.log("ProductData: ", productData)
     try {
         const newProduct = await createProduct(productData);
@@ -67,16 +82,16 @@ adminRouter.post('/products', requireAdmin, async (req, res, next) => {
     }
 })
 
-adminRouter.patch('/deactivate/:productId', requireAdmin, async (req, res, next) => {
-//   const { productId } = req.params;
+// adminRouter.patch('/deactivate/:productId', requireAdmin, async (req, res, next) => {
+// //   const { productId } = req.params;
   
-//   try {
-//     const deletedProduct = await deactivateProduct(productId)
-//     res.send(deletedProduct)
-//   } catch (error) {
-//     next(error)
-//   }
-})
+// //   try {
+// //     const deletedProduct = await deactivateProduct(productId)
+// //     res.send(deletedProduct)
+// //   } catch (error) {
+// //     next(error)
+// //   }
+// })
 
 adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) => {
     const { productId } = req.params;
@@ -89,8 +104,8 @@ adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) =
             album_name, 
             artist, 
             description, 
-            genre } = req.body;
-
+            genre,
+            status } = req.body;
       const updateFields = {};
 
       updateFields.id = Number(productId)
@@ -125,6 +140,9 @@ adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) =
       if (genre) {
         updateFields.genre = genre
       }
+      if (status) {
+        updateFields.status = status
+      }
 
       try {
  
@@ -137,5 +155,18 @@ adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) =
         next({name, message})
       }
   })
+
+
+
+adminRouter.get('/users', requireAdmin, async (req, res, next) => {
+    try {
+        const users = await getAllUsers();
+        res.send(users);
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 
 module.exports = adminRouter;

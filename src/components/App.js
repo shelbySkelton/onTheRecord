@@ -17,7 +17,9 @@ import {
   Cart,
   Header,
   EditProduct,
-  AddProduct
+  AddProduct,
+  EditUser,
+  UserAccount,
 } from './index'
 
 import {
@@ -51,9 +53,11 @@ const App = () => {
     testMe()
       .then(user => {
         setUser(user);
-
+        if (user.isAdmin) {
+          setIsAdmin(true);
+        }
         // console.log("user: ", user)
-        
+
       })
     getAPIStatus();
   }, []);
@@ -78,8 +82,7 @@ const App = () => {
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
-
-          {/* <p>{isLoggedIn ? `You're Logged In, ${user.first_name}` : "You're Not Logged In"}</p> */}
+          <Link to='/admin' hidden={isAdmin ? false : true}>Admin Dashboard</Link>
 
         </navbar>
         <Routes>
@@ -131,6 +134,22 @@ const App = () => {
             setIsAdmin={setIsAdmin} />}
           />
           <Route path="/admin/edit-product/:productId" element={<EditProduct
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/admin/edit-user/:userId" element={<EditUser
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin} />}
+          />
+          <Route path="/my-account" element={<UserAccount
             setIsLoggedIn={setIsLoggedIn}
             isLoggedIn={isLoggedIn}
             user={user}
