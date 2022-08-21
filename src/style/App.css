@@ -161,14 +161,14 @@
   text-decoration: none;
 }
 
-.logo {
+.logo, .logo-secret{
   width: 30%;
   height: 30%;
   margin: 12px;
   padding: 12px;
 }
 
-.logo:hover {
+.logo-secret{
   animation-name: spin;
   animation-duration: 1800ms;
   animation-iteration-count: infinite;
@@ -188,3 +188,4 @@
   justify-content: center;
   align-items: center;
 }
+

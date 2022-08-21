@@ -41,10 +41,9 @@ const payments = [
 
 
 
-export default function ReviewOrder({ isLoggedIn }) {
-
+export default function ReviewOrder({ isLoggedIn, address, setAddress }) {
+  console.log(address)
   const [myCart, setMyCart] = useState({});
-
   useEffect(() => {
     console.log("isLoggedIn: ", isLoggedIn);
     if (isLoggedIn){
@@ -58,10 +57,9 @@ export default function ReviewOrder({ isLoggedIn }) {
         console.log("guestcart: ", myCart)
       })
     };
-    // }
   }, []);
-
-  const { items } = myCart
+  
+  const items = myCart.items
 
   if (!items){
     return <div>No Items!</div>
@@ -84,8 +82,8 @@ export default function ReviewOrder({ isLoggedIn }) {
           Order summary
         </Typography>
         <List disablePadding>
-          {items.map(item => (
-            <ListItem key={item.id} sx={{ py: 1, px: 0 }}>
+          {items.map((item, idx) => (
+            <ListItem key={idx} sx={{ py: 1, px: 0 }}>
               <ListItemText primary={item.product_name} />
               <Typography variant="body2">{item.priceAtPurchase}</Typography>
             </ListItem>
@@ -94,7 +92,7 @@ export default function ReviewOrder({ isLoggedIn }) {
           <ListItem sx={{ py: 1, px: 0 }}>
             <ListItemText primary="Total" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-              {orderTotal}
+              {orderTotal.toFixed(2)}
             </Typography>
           </ListItem>
         </List>

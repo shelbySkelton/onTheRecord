@@ -25,11 +25,22 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 const theme = createTheme();
 
-export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
-
+export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) {
+  console.log("This is user:", user)
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
+  const [address, setAddress] = React.useState({
+    firstName: '',
+    lastName: '',
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  })
+
 
   React.useEffect(() => {
     console.log("isLoggedIn: ", isLoggedIn);
@@ -46,32 +57,54 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
     };
   }, []);
 
+  const items = myCart.items
+
+  const handleCheckout = async () => {
+    const cart_id = myCart.id
+    if (isLoggedIn){
+      const completedOrder = await checkOutCart(cart_id)
+      const newCart = await createUserCart({
+        user_id: user.id,
+        order_status: 'active'
+      })
+      console.log(newCart, completedOrder)
+      return completedOrder, newCart
+    } else {
+      sessionStorage.removeItem(guestCart)
+    }
+    // console.log(completedOrder, newCart)
+  }
 
 
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <AddressForm />;
+        return <AddressForm 
+        address={address}
+        setAddress={setAddress}
+        />;
       case 1:
         return <PaymentForm />;
       case 2:
         return <ReviewOrder 
           isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
+          // setIsLoggedIn={setIsLoggedIn}
           user={user}
-          isAdmin={isAdmin}
-          guestCart={guestCart}
-          setGuestCart={setGuestCart}
+          // isAdmin={isAdmin}
+          // guestCart={guestCart}
+          // setGuestCart={setGuestCart}
+          address={address}
+          setAddress={setAddress}
               />;
+
       default:
         throw new Error('Unknown step');
     }
   }
 
+  console.log(activeStep)
 
-
-  const items = myCart.items
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -81,15 +114,6 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
     setActiveStep(activeStep - 1);
   };
 
-  const handleCheckout = async (event) => {
-    event.preventDefault();
-    const cart_id = event.target.id
-    const completedOrder = await checkOutCart(cart_id)
-    // const newCart = await 
-    return completedOrder;
-
-
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -137,16 +161,26 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
                       Back
                     </Button>
                   )}
-
-                  <Button
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                    variant="contained"
+                    onClick={() => {
+                      handleCheckout();
+                      handleNext();
+                    }}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                   Place order
+                  </Button>
+                  ) : (
+                    <Button
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    Next
                   </Button>
-                  <br></br>
-                    <button id={myCart.id} onClick={handleCheckout}>complete order</button>
+                  )}
                 </Box>
               </React.Fragment>
             )}

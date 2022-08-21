@@ -14,6 +14,8 @@ const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
     const [newPw2, setNewPw2] = useState('');
     const [myCart, setMyCart] = useState({})
 
+    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const user = {

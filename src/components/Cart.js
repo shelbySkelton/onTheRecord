@@ -21,7 +21,6 @@ import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGue
 const Cart = ({ isLoggedIn, user }) => {
   const [myCart, setMyCart] = useState({});
 
-
   useEffect(() => {
     console.log("isLoggedIn: ", isLoggedIn);
     if (isLoggedIn){
@@ -35,12 +34,10 @@ const Cart = ({ isLoggedIn, user }) => {
         console.log("guestcart: ", myCart)
       })
     };
-    // }
+    
   }, []);
 
-  console.log(myCart)
 
-  const { items } = myCart;
 
   const handleDelete = async (event) => {
     const cartedItemId = event.target.id;
@@ -77,22 +74,21 @@ const Cart = ({ isLoggedIn, user }) => {
     return addedItem;
   };
 
-  if (!items) {
-    return <div>No items to display!</div>;
+  if (!myCart.items) {
+    return <h1>0 items in your cart</h1>;
   } else {
     let priceArray = [];
-    items.map((item) => priceArray.push(item.priceAtPurchase));
+    myCart.items.map((item) => priceArray.push(item.priceAtPurchase));
     console.log(priceArray);
     const initialValue = 0;
     const orderTotal = priceArray.reduce(
       (previousValue, currentValue) => Number(previousValue) + Number(currentValue),
       initialValue
     );
-    console.log("Items: ", items);
     console.log("Order Total to fixed: ", orderTotal.toFixed(2));
     return (
       <div className="cart-container">
-        <h1>{items.length} items in your cart</h1>
+        <h1>{myCart.items.length} items in your cart</h1>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 320 }} aria-label="simple table">
             <TableHead>
@@ -113,66 +109,61 @@ const Cart = ({ isLoggedIn, user }) => {
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell sx={{ cursor: "pointer" }}>
-                    {/* <div id={item.id} onClick={handleDelete}>
-                      x
-                    </div> */}
+                  <TableCell>
                     <IconButton 
+                      sx={{ cursor: "pointer" }}
                       aria-label="delete" 
-                      size="inherit" 
+                      size="medium" 
                       id={item.id} 
                       data-idx={idx}
                       onClick={(event) => { 
                         handleDelete(event); 
-                      }}>
-                      <DeleteIcon fontSize="inherit" id={item.id} />
+                      }}
+                      >
+                      <DeleteIcon fontSize="medium" />
                     </IconButton>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {item.product_name}
                   </TableCell>
-                  <TableCell align="right">{item.priceAtPurchase}</TableCell>
-                  <TableCell sx={{ cursor: "pointer" }} align="right">
-                    {/* <div
-                      data-product_id={item.product_id}
-                      data-price={item.priceAtPurchase}
-                      data-cart_id={myCart.id}
-                      onClick={handleAdd}
-                    >
-                      +
-                    </div> */}
+                  <TableCell align="right">${item.priceAtPurchase.toFixed(2)}</TableCell>
+                  <TableCell align="right">
                     <IconButton 
+                      sx={{ cursor: "pointer" }}
                       aria-label="add to shopping cart" 
                       size="inherit" 
                       data-product_id={item.product_id}
                       data-price={item.priceAtPurchase}
                       data-cart_id={myCart.id}
                       onClick={(event) => { handleAdd(event); }}  >
-                      <AddShoppingCartIcon fontSize="inherit" id={item.id} />
+                      <AddShoppingCartIcon fontSize="medium" />
                     </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>
                   Order Total
                 </TableCell>
-                <TableCell align="right">{orderTotal}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-         { items.length !== 0 ? <Button
-          align="right"
+                <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>${orderTotal.toFixed(2)}</TableCell>
+                <TableCell align="right">
+                { myCart.items.length !== 0 ? <Button
+          
           component={Link}
           to="/cart/checkout"
           variant="contained"
           color="primary"
-          sx={{ display: "flex", justifyContent: "center" }}
         >
           Checkout
-        </Button> : null}           
+        </Button> : null }      
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <br></br>
+              
         
       </div>
     );

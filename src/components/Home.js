@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 //import LogOut from './LogOut';
 import { testMe } from '../axios-services/users';
 
-const Home = ({ isLoggedIn, setIsLoggedIn, user, setUser,  guestCart, setGuestCart }) => {
-
-
+const Home = (props) => {
+  const { isLoggedIn, setIsLoggedIn, user, setUser,  guestCart, setGuestCart } = props
+  // console.log(props)
   return (
     <>
       <h1>Placeholder</h1>

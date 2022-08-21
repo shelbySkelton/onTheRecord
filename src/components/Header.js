@@ -15,6 +15,7 @@ const Header = (props) => {
         guestCart,
         setGuestCart 
     } = props
+    // console.log("isLoggedIn", isLoggedIn)
     // const [user, setUser] = useState({})
     // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
@@ -33,9 +34,9 @@ const Header = (props) => {
     return (
         <div className="header-container">
         <navbar className='header-nav'>
-            <Link to='/login'
+            <Link to='/'
                 hidden={isLoggedIn ? false : true}
-                onClick={(evt) => {
+                onClick={() => {
                     localStorage.removeItem('token');
                     setIsLoggedIn(false);
                     setUser({});

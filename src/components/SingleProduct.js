@@ -29,7 +29,7 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
         if (isLoggedIn){
             const cartItem = {
                 product_id: productId,
-                priceAtPurchase: productDetails.price,
+                priceAtPurchase: Number(productDetails.price),
                 cart_id: myCart.id
                 }
             const data = await addCartItem(cartItem);
@@ -38,7 +38,7 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             const guestCartItem = {
                 product_id: productId,
                 product_name: productDetails.name,
-                priceAtPurchase: productDetails.price
+                priceAtPurchase: Number(productDetails.price)
                 }
             const sessionCart = await addItemToGuestCart(guestCartItem);
             console.log("sessionCart: ", sessionCart)

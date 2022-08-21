@@ -41,7 +41,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
                 const guestCartItem = {
                   product_id: accessory.id,
                   product_name: accessory.name,
-                  priceAtPurchase: accessory.price
+                  priceAtPurchase: Number(accessory.price)
                   }
                 const sessionCart = await addItemToGuestCart(guestCartItem);
                 console.log("sessionCart: ", sessionCart)
@@ -50,7 +50,8 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
             return (
               <section className="product-card" key={idx}>
                 <span className="product-img">
-                  <img src={accessory.img_url} alt="album-cover" width="150" height="150"></img><br></br>
+                <Link className="product-link" to={`/products/${accessory.id}`} >
+                  <img src={accessory.img_url} alt="album-cover" width="150" height="150"></img></Link><br></br>
                 </span>
                 <Link className="product-link" to={`/products/${accessory.id}`} >{accessory.name}</Link><br></br>
                 <span>${accessory.price}</span><br></br>
