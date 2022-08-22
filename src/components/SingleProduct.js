@@ -1,16 +1,24 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
 import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axios-services/cart';
+import { getReviewsUserId, getReviewsProductId, createNewReview } from "../axios-services/reviews";
 
+import Modal from './Modal';
+import Reviews from './Reviews';
 
-
-const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
+const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     const { productId } = useParams();
-
+    console.log("This is product Id in SP: ", productId)
     const [productDetails, setProductDetails] = useState({});
     const [myCart, setMyCart] = useState({})
+    const [isModal, setIsModal] = useState(false)
+    const [allReviewsUser, setAllReviewsUser] = useState([]);
+    const [createReview, setCreateReview] = useState('');
+    const [allReviewsProduct, setAllReviewsProduct] = useState([]);
+
 
     useEffect(() => {
         getProductById(productId)
@@ -22,16 +30,21 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             .then(myCart => {
                 setMyCart(myCart)
             })
+            getReviewsProductId(productId)
+            .then(allReviewsProduct => {
+                console.log(allReviewsProduct)
+                setAllReviewsProduct(allReviewsProduct)
+            })
     }, [])
 
     const handleClick = async (event) => {
         event.preventDefault();
-        if (isLoggedIn){
+        if (isLoggedIn) {
             const cartItem = {
                 product_id: productId,
                 priceAtPurchase: productDetails.price,
                 cart_id: myCart.id
-                }
+            }
             const data = await addCartItem(cartItem);
             return data;
         } else {
@@ -39,12 +52,12 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
                 product_id: productId,
                 product_name: productDetails.name,
                 priceAtPurchase: productDetails.price
-                }
+            }
             const sessionCart = await addItemToGuestCart(guestCartItem);
             console.log("sessionCart: ", sessionCart)
             guestCart.push(guestCartItem)
         }
-       
+
     }
 
     return (
@@ -71,9 +84,21 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
                 </div>
             </div>
             <div className='product-reviews'>
-                <span>Reviews Placeholder</span>
-
+                console.log("review in SP: ", allReviewsProduct) {
+                    allReviewsProduct.map((review, idx) => {
+                        <span>
+                            { review.content }
+                        </span>
+                    })}
             </div>
+            <div>
+                <button onClick={() => setIsModal(true)}>Review</button>
+            </div>
+            <body>
+                {
+                    isModal && <Modal setIsModal={setIsModal} />
+                }
+            </body>
         </div>
     )
 

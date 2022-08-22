@@ -21,8 +21,8 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
 
   return (
     <div>
+      <h1>Accessories</h1>
       <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
-      <h1>Accessories Page</h1>
       <div className='products-container'>
 
         {

@@ -30,7 +30,27 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import '../style/App.css';
+import styles from '../style/App.css';
+
+
+// const link = ({ className, children }) => (
+//   <a className={className}>
+//     {children}
+//   </a>
+// );
+
+// const StyledLink = styled(link)`
+//   color: palevioletred;
+//   font-weight: bold;
+// `;
+
+// render(
+//   <div>
+//     <Link>Unstyled, boring Link</Link>
+//     <br />
+//     <StyledLink>Styled, exciting Link</StyledLink>
+//   </div>
+// );
 
 
 const App = () => {
@@ -81,7 +101,7 @@ const App = () => {
         <div className='logo-image'>
           <img className='logo' src="https://i.imgur.com/cZV1cx1.png" alt='logo' />
         </div>
-        <navbar className='products-nav'>
+        <navbar className= 'products-nav'>
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>

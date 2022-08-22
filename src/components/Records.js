@@ -23,7 +23,7 @@ const Records = ({ user, isLoggedIn }) => {
 
   return (
     <div>
-      <h1>Records Page</h1>
+      <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
       <p>
         {isLoggedIn
           ? `You're Logged In as ${user.first_name}`

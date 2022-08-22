@@ -45,7 +45,7 @@ const Header = (props) => {
 
             <Link to="/login"
                 hidden={isLoggedIn ? true : false}
-            >Log in</Link>
+            >Login</Link>
             <Link to="/register"
                 hidden={isLoggedIn ? true : false}
 

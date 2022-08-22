@@ -7,7 +7,9 @@ const Home = ({ isLoggedIn, setIsLoggedIn, user, setUser,  guestCart, setGuestCa
 
   return (
     <>
-      <h1>Placeholder</h1>
+      <h1>{isLoggedIn
+          ? `Welcome ${user.first_name}!`
+          : `Welcome!`}</h1>
       <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}`: `You are not logged in`}</p>
     </>
   )
