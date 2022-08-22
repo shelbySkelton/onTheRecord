@@ -15,7 +15,7 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
     useEffect(() => {
         getProductById(productId)
             .then(productDetails => {
-                console.log(productDetails)
+
                 setProductDetails(productDetails)
             })
         getMyCart()
@@ -41,7 +41,7 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
                 priceAtPurchase: Number(productDetails.price)
                 }
             const sessionCart = await addItemToGuestCart(guestCartItem);
-            console.log("sessionCart: ", sessionCart)
+
             guestCart.push(guestCartItem)
         }
        

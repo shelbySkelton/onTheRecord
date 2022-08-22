@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import ReviewOrder from './ReviewOrder';
-import { getMyCart, getGuestCart, checkOutCart, createUserCart } from '../axios-services/cart';
+import { getMyCart, getGuestCart, checkOutCart, createUserCart, checkOutGuestCart } from '../axios-services/cart';
 
 
 
@@ -26,7 +26,6 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 const theme = createTheme();
 
 export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) {
-  console.log("This is user:", user)
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
@@ -43,16 +42,13 @@ export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) 
 
 
   React.useEffect(() => {
-    console.log("isLoggedIn: ", isLoggedIn);
     if (isLoggedIn){
       getMyCart().then((myCart) => {
-      console.log(myCart);
       setMyCart(myCart);
       })
     } else {
       getGuestCart().then((myCart) => {
         setMyCart(myCart)
-        console.log("guestcart: ", myCart)
       })
     };
   }, []);
@@ -67,12 +63,14 @@ export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) 
         user_id: user.id,
         order_status: 'active'
       })
-      console.log(newCart, completedOrder)
       return completedOrder, newCart
     } else {
-      sessionStorage.removeItem(guestCart)
+      // sessionStorage.removeItem(guestCart)
+      await checkOutGuestCart();
+      getGuestCart().then((myCart) => {
+        setMyCart(myCart)
+      })
     }
-    // console.log(completedOrder, newCart)
   }
 
 
@@ -103,7 +101,6 @@ export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) 
     }
   }
 
-  console.log(activeStep)
 
 
   const handleNext = () => {

@@ -7,9 +7,14 @@ import {
   addItemToGuestCart,
 } from "../axios-services/cart";
 
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+
 const Records = ({ user, isLoggedIn }) => {
   const [allRecords, setAllRecords] = useState([]);
   const [myCart, setMyCart] = useState({});
+
+
   useEffect(() => {
     getAllRecords().then((allRecords) => {
       setAllRecords(allRecords);
@@ -20,8 +25,7 @@ const Records = ({ user, isLoggedIn }) => {
       });
     }
   }, []);
-  // console.log(myCart.id);
-  // console.log(allRecords);
+
 
   return (
     <div>
@@ -50,7 +54,7 @@ const Records = ({ user, isLoggedIn }) => {
                 priceAtPurchase: Number(record.price),
               };
               const sessionCart = await addItemToGuestCart(guestCartItem);
-              console.log("sessionCart: ", sessionCart);
+              return sessionCart
             }
           };
           return (

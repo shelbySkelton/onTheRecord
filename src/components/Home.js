@@ -4,7 +4,7 @@ import { testMe } from '../axios-services/users';
 
 const Home = (props) => {
   const { isLoggedIn, setIsLoggedIn, user, setUser,  guestCart, setGuestCart } = props
-  // console.log(props)
+
   return (
     <>
       <h1>Placeholder</h1>

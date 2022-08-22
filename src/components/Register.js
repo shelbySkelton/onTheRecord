@@ -25,7 +25,7 @@ const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             last_name
         }
         const data = await registerUser(user);
-        console.log('This is my registered data', data);
+
         localStorage.setItem('token', data.token);
         setToken(data.token);
         setErrorMessage(data.message);
@@ -34,7 +34,7 @@ const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             order_status: "active"
         })
         .then((myCart) => {
-            console.log(myCart)
+
             setMyCart(myCart)
         })
     }

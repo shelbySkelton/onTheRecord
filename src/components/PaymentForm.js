@@ -14,7 +14,6 @@ export default function PaymentForm() {
   React.useEffect(() => {
     getMyCart().then((myCart) => {
       setMyCart(myCart)
-      // console.log(myCart)
     })
   }, [])
 

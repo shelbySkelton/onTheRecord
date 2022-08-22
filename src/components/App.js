@@ -4,6 +4,7 @@ import React, { useState, useEffect, createElement } from "react";
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from "../axios-services";
 import { testMe } from "../axios-services/users";
+import { getMyCart } from "../axios-services/cart";
 
 import {
   Home,
@@ -34,6 +35,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const [guestCart, setGuestCart] = useState([]);
   const [address, setAddress] = useState({});
+  const [myCart, setMyCart] = useState({})
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -47,16 +49,24 @@ const App = () => {
 
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
-    testMe().then((user) => {
-      setIsLoggedIn(true);
-      setUser(user);
-      if (user.isAdmin) {
-        setIsAdmin(true);
-      }
-      sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
-    });
+    if (!!localStorage.token){
+
+      testMe().then((user) => {
+        setIsLoggedIn(true);
+        setUser(user);
+        if (user.isAdmin) {
+          setIsAdmin(true);
+        }
+      });
+
+      getMyCart().then((myCart) => {
+        setMyCart(myCart)
+      })
+
+    }
+    sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
     getAPIStatus();
-  }, [guestCart]);
+  }, [isLoggedIn, guestCart]);
 
   const [hoverCount, setHoverCount] = useState(0);
 
@@ -70,8 +80,10 @@ const App = () => {
           setUser={setUser}
           isAdmin={isAdmin}
           setIsAdmin={setIsAdmin}
+          myCart={myCart}
+          setMyCart={setMyCart}
         />
-        {hoverCount === 5 ? (
+        {hoverCount === 3 ? (
           <div className="logo-image">
             <img
               className="logo-secret"

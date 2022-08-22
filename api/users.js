@@ -89,7 +89,6 @@ usersRouter.post('/login', async (req, res, next) => {
 
 usersRouter.get('/me', requireUser, async (req, res, next) => {
   try {
-      console.log("This is /me req.user: ", req.user)
       if (req.user.length === 0){
         res.status(404).send({
           name: "User not found",
@@ -99,7 +98,6 @@ usersRouter.get('/me', requireUser, async (req, res, next) => {
         res.send(req.user)
       }
   } catch (error) {
-    // console.log(error);
     next(error);
   }
 })

@@ -9,7 +9,6 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
   useEffect(() => {
     getAllAccessories()
       .then(allAccessories => {
-        console.log(allAccessories)
         setAllAccessories(allAccessories)
       })
       if (isLoggedIn){
@@ -44,7 +43,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
                   priceAtPurchase: Number(accessory.price)
                   }
                 const sessionCart = await addItemToGuestCart(guestCartItem);
-                console.log("sessionCart: ", sessionCart)
+                return sessionCart
               }
           }
             return (

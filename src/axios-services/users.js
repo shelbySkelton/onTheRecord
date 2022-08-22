@@ -34,6 +34,9 @@ export async function registerUser({ email, password, first_name, last_name }){
 //User Test
 export async function testMe() {
   try {
+    if (!localStorage.token){
+      return "Nothing"
+    }
       const { data } = await axios.get('/api/users/me', {
           headers: {
               'Content-Type': 'application/json',
@@ -41,7 +44,6 @@ export async function testMe() {
           }});
           return data;
   } catch (error) {
-    // console.log("testMe did not pass//No logged in user")
     throw error;
   }
 }

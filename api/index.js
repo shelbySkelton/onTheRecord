@@ -7,11 +7,6 @@ const { getUserById } = require('../db/models/user')
 const apiRouter = require('express').Router();
 
 apiRouter.get('/', (req, res, next) => {
-  console.log("req.sessionID: ")
-  console.log(req.sessionID)
-  console.log("this is req: ")
-  console.log(req.headers)
-  console.log("This is req.session: ", req.session)
   res.send({
     message: 'API is under construction!',
   });
@@ -36,7 +31,6 @@ apiRouter.use(async (req, res, next) => {
           const { id } = jwt.verify(token, JWT_SECRET);
           if (id) {
               req.user = await getUserById(id);
-              console.log("This is req.user", req.user)
               next();
           }
       } catch ({ name, message }) {

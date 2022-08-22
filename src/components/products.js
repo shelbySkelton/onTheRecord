@@ -9,7 +9,6 @@ const Products = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
   useEffect(() => {
     getAllProducts()
       .then(allProducts => {
-        console.log(allProducts)
         setAllProducts(allProducts)
       })
     if (isLoggedIn){

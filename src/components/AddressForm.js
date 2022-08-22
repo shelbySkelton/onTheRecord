@@ -10,30 +10,19 @@ import { Button } from '@mui/material';
 import { getMyCart } from '../axios-services/cart';
 
 export default function AddressForm(props) {
-
+  const { address, setAddress } = props
 
   const [myCart, setMyCart] = React.useState({})
-  const [address, setAddress] = React.useState({
-    firstName: '',
-    lastName: '',
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: ''
-  })
+
 
 
 
   React.useEffect(() => {
-    getMyCart().then((myCart) => {
-      setMyCart(myCart)
-      // console.log(myCart)
-    })
+    // getMyCart().then((myCart) => {
+    //   setMyCart(myCart)
+    // })
   }, [])
 
-  console.log(address)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
