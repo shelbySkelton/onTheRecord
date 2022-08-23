@@ -18,14 +18,14 @@ export async function getAllUsers() {
 }
 
 export async function getUserById(userId) {
-  console.log("userId: ", userId)
+
   try {
     const { data } = await axios.get(`/api/admin/users/${userId}`, {
       headers: {
         'Authorization': `Bearer ${localStorage.token}`
       }
     });
-    console.log("data: ", data)
+
     return data;
   } catch (error) {
     console.error(error)

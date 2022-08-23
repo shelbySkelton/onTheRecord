@@ -210,13 +210,14 @@ button:hover {
 
 
 
-.logo {
+
+.logo, .logo-secret {
   width: 20%;
   height: 20%;
   margin: 8px;
   padding: 8px;
 }
-.logo:hover {
+.logo-secret:hover {
   animation-name: spin;
   animation-duration: 1800ms;
   animation-iteration-count: infinite;
@@ -237,6 +238,8 @@ button:hover {
   align-items: center;
 }
 
+
 .product-link {
   text-decoration: none;
 }
+

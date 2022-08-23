@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import ReviewOrder from './ReviewOrder';
-import { getMyCart, getGuestCart, checkOutCart, createUserCart } from '../axios-services/cart';
+import { getMyCart, getGuestCart, checkOutCart, createUserCart, checkOutGuestCart } from '../axios-services/cart';
 
 
 
@@ -25,53 +25,87 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 const theme = createTheme();
 
-export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
+export default function Checkout(props) {
+
+  const { isLoggedIn, user, guestCart, setGuestCart } = props
 
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
+  const [address, setAddress] = React.useState({
+    firstName: '',
+    lastName: '',
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  })
+
 
   React.useEffect(() => {
-    console.log("isLoggedIn: ", isLoggedIn);
     if (isLoggedIn){
       getMyCart().then((myCart) => {
-      console.log(myCart);
       setMyCart(myCart);
       })
     } else {
       getGuestCart().then((myCart) => {
         setMyCart(myCart)
-        console.log("guestcart: ", myCart)
       })
     };
   }, []);
 
+  const items = myCart.items
+
+  const handleCheckout = async () => {
+    const cart_id = myCart.id
+    if (isLoggedIn){
+      const completedOrder = await checkOutCart(cart_id)
+      const newCart = await createUserCart({
+        user_id: user.id,
+        order_status: 'active'
+      })
+      return completedOrder, newCart
+    } else {
+      // sessionStorage.removeItem(guestCart)
+      await checkOutGuestCart();
+      getGuestCart().then((myCart) => {
+        setMyCart(myCart)
+      })
+    }
+  }
 
 
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <AddressForm />;
+        return <AddressForm 
+        address={address}
+        setAddress={setAddress}
+        isLoggedIn={isLoggedIn}
+        />;
       case 1:
         return <PaymentForm />;
       case 2:
         return <ReviewOrder 
-           isLoggedIn={isLoggedIn}
+          isLoggedIn={isLoggedIn}
           // setIsLoggedIn={setIsLoggedIn}
-          // user={user}
+          user={user}
           // isAdmin={isAdmin}
           // guestCart={guestCart}
           // setGuestCart={setGuestCart}
+          address={address}
+          setAddress={setAddress}
               />;
+
       default:
         throw new Error('Unknown step');
     }
   }
 
 
-
-  const items = myCart.items
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -81,15 +115,6 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
     setActiveStep(activeStep - 1);
   };
 
-  const handleCheckout = async (event) => {
-    event.preventDefault();
-    const cart_id = event.target.id
-    const completedOrder = await checkOutCart(cart_id)
-    // const newCart = await 
-    return completedOrder;
-
-
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,9 +148,14 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is {myCart.id}! We have emailed your order
+                  {/* Your order number is {myCart.id}! We have emailed your order
                   confirmation, and will send you an update when your order has
-                  shipped.
+                  shipped. */}
+                  {
+                    isLoggedIn ? `Your order number is ${myCart.id}! We have emailed your order
+                    confirmation, and will send you an update when your order has
+                    shipped.` : 'Your order has been placed! We have emailed your order confirmation, and will send you an update when your order has been shipped'
+                  }
                 </Typography>
               </React.Fragment>
             ) : (
@@ -137,16 +167,26 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
                       Back
                     </Button>
                   )}
-
-                  <Button
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                    variant="contained"
+                    onClick={() => {
+                      handleCheckout();
+                      handleNext();
+                    }}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                   Place order
+                  </Button>
+                  ) : (
+                    <Button
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    Next
                   </Button>
-                  <br></br>
-                    <button id={myCart.id} onClick={handleCheckout}>complete order</button>
+                  )}
                 </Box>
               </React.Fragment>
             )}

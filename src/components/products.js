@@ -11,7 +11,6 @@ const Products = ({ isLoggedIn, user }) => {
   useEffect(() => {
     getAllProducts()
       .then(allProducts => {
-        console.log(allProducts)
         setAllProducts(allProducts)
       })
     if (isLoggedIn) {

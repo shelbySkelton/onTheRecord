@@ -19,7 +19,7 @@ cartRouter.use((req, res, next) => {
 // Gets a user's cart
 cartRouter.get("/myCart", requireUser, async (req, res, next) => {
   const userId = req.user.id;
-  console.log("userId: ", userId);
+
   try {
     const myCart = await getMyCartWithItems(userId);
     if (myCart.length !== 0){
@@ -33,12 +33,12 @@ cartRouter.get("/myCart", requireUser, async (req, res, next) => {
 });
 
 
-cartRouter.get('/guestCart', (req, res) => {
+//SHELBYS ADD
+cartRouter.get('/guestCart', (req, res, next) => {
   const {guestCart} = req.session;
   if (!guestCart) {
     res.send ("No items to display")
   } else {
-    console.log("req.session.guestCart: ", req.session.guestCart)
     res.send(req.session.guestCart)
   }
 })
@@ -46,7 +46,7 @@ cartRouter.get('/guestCart', (req, res) => {
 
 cartRouter.post('/guestCart', (req, res, next) => {
   const { product_id, product_name, priceAtPurchase } = req.body;
-  console.log("This is product_id & priceAtPurchase, product_name: ", product_id, product_name, priceAtPurchase )
+
   const guestItem = { product_id, product_name, priceAtPurchase}
   const { guestCart } = req.session
   if ( guestCart ) {
@@ -62,18 +62,36 @@ cartRouter.post('/guestCart', (req, res, next) => {
 
 //deletes item from session storage
 cartRouter.delete('/guestCart', (req, res, next) => {
-   const { idx } = req.body;
-   const { guestCart } = req.session
-   const {items } = guestCart
+  try { 
+    
+    const { idx } = req.body;
 
-
-console.log("idx: ", idx)
-console.log("guestCart: ", guestCart)
-  items.splice(idx, 1)
-  res.send(guestCart)
+    const { guestCart } = req.session
+    const { items } = guestCart
+    items.splice(idx, 1)
+    res.send(guestCart)
+  } catch (error) {
+    next(error)
+  }
 })
 
 
+
+cartRouter.post('/guestCart/checkout', async (req, res, next) => {
+  try {
+    const guestCart = await createGuestCart({
+      session_id: req.sessionID,
+      order_status: "pending",
+    });
+
+    res.status(200).send(guestCart)
+    req.session.destroy(() => {
+      console.log("Session has been destroyed.")
+    });
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 // Create a user's cart
@@ -127,12 +145,11 @@ cartRouter.post("/", async (req, res, next) => {
 // Deletes item from a cart
 cartRouter.delete("/", async (req, res, next) => {
   const { cartedItemId } = req.body;
-  console.log("This is request body: ", req.body);
 
-  // console.log(req.user)
-  console.log("this is carted item id in the api: ", cartedItemId);
+
+
   try {
-    console.log("test");
+
     const deletedItem = await deleteItemFromCart(cartedItemId);
     res.send(deletedItem);
   } catch (error) {
@@ -143,7 +160,7 @@ cartRouter.delete("/", async (req, res, next) => {
 // Changes a cart_order order_status to pending (patch)
 cartRouter.patch('/checkout', async (req, res, next) => {
   const { cart_id } = req.body
-  console.log("This is the req.body: ", req.body)
+
   try {
     const checkedOutCart = await checkOut(cart_id);
     res.send(checkedOutCart)

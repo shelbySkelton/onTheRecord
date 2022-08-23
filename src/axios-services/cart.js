@@ -34,7 +34,7 @@ export async function createUserCart({ user_id, order_status }){
 export async function getGuestCart(){
   try {
     const { data } = await axios.get('/api/cart/guestCart')
-    console.log("data from axios: ", data)
+
     return data;
   } catch (error) {
     console.log("Error getting guestCartIn Session")
@@ -43,7 +43,7 @@ export async function getGuestCart(){
 }
 
 export async function addItemToGuestCart ({product_id, product_name, priceAtPurchase}) {
-  console.log("Axios product_id, priceatpurchase: ", product_id, product_name, priceAtPurchase)
+
   try {
     const { data } = await axios.post(`/api/cart/guestCart`, {
       "product_id": product_id,
@@ -59,14 +59,15 @@ export async function addItemToGuestCart ({product_id, product_name, priceAtPurc
 }
 
 export async function removeItemFromGuestCart(idx) {
-  console.log("Axios idx", idx)
+
   try{
-    const { data } = await axios.delete(`/api/cart/guestCart`, {   
-       data: {
-        "idx": idx 
-       }   
+    const { data } = await axios.delete('/api/cart/guestCart',  {
+      data: {
+        idx: idx
+      }
+
     }) 
-    console.log("Data back from axios: ", data)
+
     return data;
   } catch(error) {
     console.log("Error removing item from session storage")
@@ -88,6 +89,7 @@ export async function createGuestCart({ session_id, order_status}){
 
     return data
   } catch (error) {
+    console.log("Error creating guest cart");
     console.error(error)
   }
 }
@@ -99,8 +101,7 @@ export async function addCartItem({ product_id, priceAtPurchase, cart_id }) {
       priceAtPurchase,
       cart_id,
     });
-    console.log("added item to cart!")
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error(error);
@@ -109,13 +110,12 @@ export async function addCartItem({ product_id, priceAtPurchase, cart_id }) {
 
 export async function deleteCartItem(cartedItemId) {
   try {
-    console.log("this is carted item id in axios", cartedItemId)
     const { data } = await axios.delete("/api/cart/", {
       data: {
         cartedItemId: cartedItemId
       }
     });
-    // console.log("This is the axios data", data);
+
     return data;
   } catch (error) {
     console.error(error);
@@ -127,8 +127,17 @@ export async function checkOutCart(cart_id){
     const { data } = await axios.patch('/api/cart/checkout', {
       cart_id
     });
-    console.log("This is axios checkOut: ", data)
+
     return data;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export async function checkOutGuestCart(){
+  try {
+    const { data } = await axios.post('/api/cart/guestCart/checkout')
+    return data
   } catch (error) {
     console.error(error)
   }

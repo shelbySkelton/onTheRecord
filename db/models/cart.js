@@ -68,6 +68,8 @@ async function createGuestCart({ session_id, order_status }){
       VALUES ($1, $2)
       RETURNING *;
     `, [ session_id, order_status ])
+
+    return cart;
   } catch (error) {
     console.log("Error creating a guest cart");
     throw error;
@@ -251,9 +253,20 @@ async function deleteItemFromCart(cartedItemId){
     console.log("Error deleting Item from Carted_Items")
     throw error;
   }
+}
 
+async function getCartBySessionID(sessionID){
+  try {
+    const { rows: [ cart ]} = await client.query(`
+      SELECT * FROM cart_orders
+      WHERE session_id=$1
+      RETURNING *;
+    `, [cart])
 
-
+    return cart;
+  } catch (error) {
+    console.log("Error getting cart by sessionID")
+  }
 }
 
 async function checkOut(id){
@@ -268,6 +281,7 @@ async function checkOut(id){
     return cart;
   } catch (error) {
     console.log("Error in checkOut function in db/models/cart")
+    throw error;
   }
 }
 
@@ -307,5 +321,6 @@ module.exports = {
   createGuestCart,
   createUserCart,
   checkOut,
+  getCartBySessionID,
   updateCartStatus
 }

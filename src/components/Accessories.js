@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { getAllAccessories } from '../axios-services/products';
 import { Link } from 'react-router-dom'
 import { getMyCart, addCartItem, addItemToGuestCart } from "../axios-services/cart";
@@ -6,12 +10,37 @@ import { getMyCart, addCartItem, addItemToGuestCart } from "../axios-services/ca
 const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
   const [allAccessories, setAllAccessories] = useState([])
   const [myCart, setMyCart] = useState({})
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   const [searchTerm, setSearchTerm] = useState('')
+
 
   useEffect(() => {
     getAllAccessories()
       .then(allAccessories => {
-        console.log(allAccessories)
         setAllAccessories(allAccessories)
       })
     if (isLoggedIn) {
@@ -45,7 +74,17 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
 
   return (
     <div>
-      <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
+
+     <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Item has been added to your cart"
+        action={action}
+      />
+      <h1>Accessories Page</h1>
+      <div className='products-container'>
+
 
       <h1 className='font-effect-shadow-multiple'>Accessories</h1>
       <input
@@ -64,6 +103,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         {
           accessoriesToDisplay.map((accessory, idx) => {
             const handleClick = async (event) => {
+              setOpen(true);
               event.preventDefault();
               if (isLoggedIn) {
                 const cartItem = {
@@ -77,16 +117,18 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
                 const guestCartItem = {
                   product_id: accessory.id,
                   product_name: accessory.name,
-                  priceAtPurchase: accessory.price
-                }
+
+                  priceAtPurchase: Number(accessory.price)
+                  }
                 const sessionCart = await addItemToGuestCart(guestCartItem);
-                console.log("sessionCart: ", sessionCart)
+                return sessionCart
               }
             }
             return (
               <section className="product-card" key={idx}>
                 <span className="product-img">
-                  <img src={accessory.img_url} alt="album-cover" width="150" height="150"></img><br></br>
+                <Link className="product-link" to={`/products/${accessory.id}`} >
+                  <img src={accessory.img_url} alt="album-cover" width="150" height="150"></img></Link><br></br>
                 </span>
                 <Link className="product-link" to={`/products/${accessory.id}`} >{accessory.name}</Link><br></br>
                 <span>${accessory.price}</span><br></br>

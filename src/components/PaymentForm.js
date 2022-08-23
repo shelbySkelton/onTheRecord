@@ -4,19 +4,9 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { getMyCart } from '../axios-services/cart';
 
 export default function PaymentForm() {
 
-  const [myCart, setMyCart] = React.useState({})
-
-
-  React.useEffect(() => {
-    getMyCart().then((myCart) => {
-      setMyCart(myCart)
-      // console.log(myCart)
-    })
-  }, [])
 
   return (
     <React.Fragment>
@@ -30,7 +20,7 @@ export default function PaymentForm() {
             id="cardName"
             label="Name on card"
             fullWidth
-            autoComplete="cc-name"
+            // autoComplete="cc-name"
             variant="standard"
           />
         </Grid>
@@ -40,7 +30,7 @@ export default function PaymentForm() {
             id="cardNumber"
             label="Card number"
             fullWidth
-            autoComplete="cc-number"
+            // autoComplete="cc-number"
             variant="standard"
           />
         </Grid>
@@ -50,7 +40,7 @@ export default function PaymentForm() {
             id="expDate"
             label="Expiry date"
             fullWidth
-            autoComplete="cc-exp"
+            // autoComplete="cc-exp"
             variant="standard"
           />
         </Grid>
@@ -61,7 +51,7 @@ export default function PaymentForm() {
             label="CVV"
             helperText="Last three digits on signature strip"
             fullWidth
-            autoComplete="cc-csc"
+            // autoComplete="cc-csc"
             variant="standard"
           />
         </Grid>

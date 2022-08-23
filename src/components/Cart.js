@@ -6,110 +6,101 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import IconButton from '@mui/material/IconButton';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+
 
 import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, addItemToGuestCart, setGuestCart } from "../axios-services/cart";
 
 
 
-const Cart = ({ isLoggedIn, user }) => {
+
+const Cart = ({ isLoggedIn, user, guestCart }) => {
   const [myCart, setMyCart] = useState({});
 
-
   useEffect(() => {
-    console.log("isLoggedIn: ", isLoggedIn);
+
     if (isLoggedIn){
       getMyCart().then((myCart) => {
-      console.log(myCart);
       setMyCart(myCart);
       })
     } else {
       getGuestCart().then((myCart) => {
         setMyCart(myCart)
-        console.log("guestcart: ", myCart)
       })
     };
-    // }
-  }, []);
+    
+  }, [guestCart]);
 
-  //console.log(myCart)
 
-  const { items } = myCart;
 
   const handleDelete = async (event) => {
     const cartedItemId = event.target.id;
 
     if (isLoggedIn) {
     event.preventDefault();
-    console.log("This is the cartedItemId in the frontend", cartedItemId);
     const deletedItem = await deleteCartItem(cartedItemId);
     getMyCart().then((myCart) => setMyCart(myCart));
-    console.log(deletedItem);
     return deletedItem;
     } else {
-      const itemIdx = event.target.dataset.idx
       event.preventDefault();
+
+      const itemIdx = event.target.dataset.idx
+
       const remainingItems = await removeItemFromGuestCart(itemIdx)
       setMyCart(remainingItems)
+      getGuestCart().then((myCart) => setMyCart(myCart))
+      
     }
   };
 
+
+
   const handleAdd = async (event) => {
     event.preventDefault();
-    if (isLoggedIn) 
-        {const { product_id, price, cart_id } = event.target.dataset;
-        //console.log(price);
-        //console.log(product_id, price, cart_id);
-        const addedItem = await addCartItem({
-          product_id: product_id,
-          priceAtPurchase: price,
-          cart_id: cart_id,
-        });
-        console.log(event)
-        getMyCart().then((myCart) => setMyCart(myCart));
-        return addedItem;
-      } else {
-        console.log("myCart before", myCart)
-        const {product_id, price, product_name} = event.target.dataset;
-        const guestCartItem = {
-          product_id: Number(product_id),
-          product_name: product_name,
-          priceAtPurchase: Number(price)
-        }
-        const sessionCart = await addItemToGuestCart(guestCartItem)
-        console.log("sessionCart: ", sessionCart);
-        getGuestCart().then((myCart) = setMyCart(sessionCart));
-      }
+
+    const { product_id, price, cart_id, product_name } = event.target.dataset;
+    if (isLoggedIn){
+      const addedItem = await addCartItem({
+        product_id: product_id,
+        priceAtPurchase: price,
+        cart_id: cart_id,
+      });
+      getMyCart().then((myCart) => setMyCart(myCart));
+      return addedItem;
+    } else {
+      const guestCartItem = {
+        product_id: Number(product_id),
+        product_name: product_name,
+        priceAtPurchase: Number(price),
+      };
+      const sessionCart = await addItemToGuestCart(guestCartItem);
+      getGuestCart().then((myCart) => setMyCart(myCart))
+    }
+
   };
 
-  if (!items) {
-    return <div>No items to display!</div>;
+  if (!myCart.items) {
+    return <h1>0 items in your cart</h1>;
   } else {
     let priceArray = [];
-    items.map((item) => priceArray.push(item.priceAtPurchase));
-    console.log(priceArray);
+    myCart.items.map((item) => priceArray.push(item.priceAtPurchase));
     const initialValue = 0;
     const orderTotal = priceArray.reduce(
       (previousValue, currentValue) => Number(previousValue) + Number(currentValue),
       initialValue
     );
-    console.log("Items: ", items);
-    console.log("Order Total to fixed: ", orderTotal.toFixed(2));
     return (
       <div className="cart-container">
-        <h1>{items.length} items in your cart</h1>
+        <h1>{myCart.items.length} items in your cart</h1>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 320 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <DeleteOutlinedIcon />
+                  <DeleteOutlinedIcon size="large" />
                 </TableCell>
                 <TableCell>Product Name</TableCell>
                 <TableCell align="right">Price</TableCell>
@@ -124,67 +115,69 @@ const Cart = ({ isLoggedIn, user }) => {
                   key={item.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell sx={{ cursor: "pointer" }}>
-                    {/* <div id={item.id} onClick={handleDelete}>
-                      x
-                    </div> */}
-                    <IconButton 
+                  <TableCell>
+                    <Button 
+                      key={idx}
+                      sx={{ cursor: "pointer" }}
                       aria-label="delete" 
-                      size="inherit" 
+                      size="large" 
                       id={item.id} 
                       data-idx={idx}
-                      onClick={(event) => { 
-                        handleDelete(event); 
-                      }}>
-                      <DeleteIcon fontSize="inherit" id={item.id} />
-                    </IconButton>
+                      onClick={handleDelete}
+                      >
+                      Delete
+                    </Button>
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {item.product_name}
                   </TableCell>
                   <TableCell align="right">${item.priceAtPurchase}</TableCell>
-                  <TableCell sx={{ cursor: "pointer" }} align="right">
-                    {/* <div
-                      data-product_id={item.product_id}
-                      data-price={item.priceAtPurchase}
-                      data-cart_id={myCart.id}
-                      onClick={handleAdd}
-                    >
-                      +
-                    </div> */}
-                    <IconButton 
-                      aria-label="add to shopping cart" 
-                      size="inherit" 
+                  <TableCell align="right">
+                    <Button 
+                      sx={{ cursor: "pointer" }}
+                      key={idx}
+                      aria-label="add" 
+                      size="large"
+                      data-idx={idx} 
                       data-product_id={item.product_id}
                       data-price={item.priceAtPurchase}
                       data-cart_id={myCart.id}
                       data-product_name={item.product_name}
-                      onClick={(event) => { handleAdd(event); }}  >
-                      <AddShoppingCartIcon fontSize="inherit" id={item.id} />
-                    </IconButton>
+                      onClick={(event) => {
+                        handleAdd(event)
+                      }} 
+                      >
+                      Add
+                    </Button>
+
                   </TableCell>
                 </TableRow>
               ))}
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>
                   Order Total
                 </TableCell>
-                <TableCell align="right">${orderTotal.toFixed(2)}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-         { items.length !== 0 ? <Button
-          align="right"
+
+                <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>${orderTotal.toFixed(2)}</TableCell>
+                <TableCell align="right">
+                { myCart.items.length !== 0 ? <Button
+          
+
           component={Link}
           to="/cart/checkout"
           variant="contained"
           color="primary"
-          sx={{ display: "flex", justifyContent: "center" }}
         >
           Checkout
-        </Button> : null}           
+        </Button> : null }      
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <br></br>
+              
         
       </div>
     );

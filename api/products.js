@@ -16,7 +16,7 @@ productsRouter.get('/', async (req, res, next) => {
   try {
     const products = await getAllActiveProducts();
     res.send(products)
-    next();
+
   } catch (error) {
     next(error)
   }
@@ -26,7 +26,7 @@ productsRouter.get('/records', async (req, res, next) => {
   try {
     const records = await getActiveProductsByCategory('Record')
     res.send(records)
-    next();
+
   } catch (error) {
     next(error)
   }
@@ -36,7 +36,7 @@ productsRouter.get('/accessories', async (req, res, next) => {
   try {
     const accessories = await getActiveProductsByCategory('Accessory')
     res.send(accessories);
-    next();
+
   } catch (error) {
     next(error);
   }
@@ -44,7 +44,7 @@ productsRouter.get('/accessories', async (req, res, next) => {
 
 productsRouter.get('/:productId', async (req, res, next) => {
   const { productId } = req.params;
-
+  
   try {
     const product = await getProductById(productId)
     res.send(product)
