@@ -3,57 +3,26 @@ import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
 import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axios-services/cart';
-
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-
 import { getReviewsUserId, getReviewsProductId, createNewReview } from "../axios-services/reviews";
 
 import Modal from './Modal';
-
 
 const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     const { productId } = useParams();
     const [productDetails, setProductDetails] = useState({});
     const [myCart, setMyCart] = useState({})
-
-    const [open, setOpen] = React.useState(false);
-
-    const handleClose = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-  
-      setOpen(false);
-    };
-  
-  
-    const action = (
-      <React.Fragment>
-        <IconButton
-          size="small"
-          aria-label="close"
-          color="inherit"
-          onClick={handleClose}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      </React.Fragment>
-    );
-
     const [isModal, setIsModal] = useState(false)
     const [allReviewsUser, setAllReviewsUser] = useState([]);
     const [createReview, setCreateReview] = useState('');
+    const [rating, setRating] = useState(5);
     const [allReviewsProduct, setAllReviewsProduct] = useState([]);
-
 
 
     useEffect(() => {
         getProductById(productId)
             .then(productDetails => {
-
+                console.log(productDetails)
                 setProductDetails(productDetails)
             })
         getMyCart()
@@ -68,12 +37,10 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     const handleClick = async (event) => {
         event.preventDefault();
-        setOpen(true);
-        if (isLoggedIn){
-
+        if (isLoggedIn) {
             const cartItem = {
                 product_id: productId,
-                priceAtPurchase: Number(productDetails.price),
+                priceAtPurchase: productDetails.price,
                 cart_id: myCart.id
             }
             const data = await addCartItem(cartItem);
@@ -82,11 +49,10 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             const guestCartItem = {
                 product_id: productId,
                 product_name: productDetails.name,
-
-                priceAtPurchase: Number(productDetails.price)
-                }
+                priceAtPurchase: productDetails.price
+            }
             const sessionCart = await addItemToGuestCart(guestCartItem);
-
+            console.log("sessionCart: ", sessionCart)
             guestCart.push(guestCartItem)
         }
 
@@ -94,13 +60,6 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     return (
         <div>
-            <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="Item has been added to your cart"
-        action={action}
-      />
             <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <div className='single-product-container'>
 
@@ -131,6 +90,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
                     <span key={idx}>
                        <p> {review.rating}/5 </p> <br></br>
                        <p> {review.content} </p> <br></br>
+                       <hr></hr>
                     </span> 
                   )
                 
@@ -141,7 +101,17 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             </div>
             <body>
                 {
-                    isModal && <Modal setIsModal={setIsModal} />
+                    isModal && <Modal 
+                    setIsModal={setIsModal} 
+                    productDetails={productDetails} 
+                    createReview={createReview}
+                    setCreateReview={setCreateReview}
+                    rating={rating}
+                    setRating={setRating}
+                    user={user}
+                    allReviewsProduct={allReviewsProduct}
+                    setAllReviewsProduct={setAllReviewsProduct}
+                    />
                 }
             </body>
         </div>

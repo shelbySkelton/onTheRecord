@@ -33,70 +33,72 @@ reviewsRouter.use((req, res, next) => {
     }
   });
 
-  reviewsRouter.post('/', requireUser, async (req, res, next) => {
-    const { product_id, rating, content } = req.body
-    const user_id = req.user.id
+  reviewsRouter.post('/', async (req, res, next) => {
+    const { user_id, product_id, rating, content } = req.body
+    // const user_id = req.user.id
+    console.log("This is req.body in API ", req.body)
     try {
       const reviewData = { user_id, product_id, rating, content };
       const newCreatedReview = await createReview(reviewData);
-      const userOrderedProduct = await getMyPreviousOrdersWithItems(user_id)
-      if(userOrderedProduct) {
+      // const userOrderedProduct = await getMyPreviousOrdersWithItems(user_id)
+      // if(userOrderedProduct) {
         res.send(newCreatedReview)
         next();
-      } else {
-        next({
-          name: 'FailedCreateReview',
-          message: "Could not create new review"
-      })
-      }
-    } catch ({ name, message }) {
+      } 
+      // else {
+      //   next({
+      //     name: 'FailedCreateReview',
+      //     message: "Could not create new review"
+      // })
+      // }
+      catch ({ name, message }) {
       next({ name, message });
   }
   });
 
-  reviewsRouter.patch('/', requireUser, async (req, res, next) => {
-    const { rating, content } = req.body
-    const updateFields = {};
-    updateFields.id = Number(user_id, product_id);
-    if(rating) {
-      updateFields.rating = rating;
-    }
-    if(content) {
-      updateFields.content = content;
-    }
-    try {
-      // const user_id = req.user.id
-      // const reviewData = { rating, content };
-      console.log("This is update fields: ", updateFields)
-      const newUpdatedReview = await updateReview(updateFields);
-      console.log("This is new updated review: ", newUpdatedReview)
-      // const userOrderedProduct = await getMyPreviousOrdersWithItems(user_id)
-      // console.log("This is userOrderedProduct: ", userOrderedProduct)
-      // if(userOrderedProduct) {
-        res.send({newUpdatedReview})
-        next();
-      // } else {
-      //   next({
-      //     name: 'FailedUpdateReview',
-      //     message: "Could not update review"
-      // })
-      // }
-    } catch ({ name, message }) {
-      next({ name, message });
-  }
-  })
+//   reviewsRouter.patch('/', requireUser, async (req, res, next) => {
+//     const { rating, content } = req.body
+//     const updateFields = {};
+//     updateFields.id = Number(user_id, product_id);
+//     if(rating) {
+//       updateFields.rating = rating;
+//     }
+//     if(content) {
+//       updateFields.content = content;
+//     }
+//     try {
+//       // const user_id = req.user.id
+//       // const reviewData = { rating, content };
+//       console.log("This is update fields: ", updateFields)
+//       const newUpdatedReview = await updateReview(updateFields);
+//       console.log("This is new updated review: ", newUpdatedReview)
+//       // const userOrderedProduct = await getMyPreviousOrdersWithItems(user_id)
+//       // console.log("This is userOrderedProduct: ", userOrderedProduct)
+//       // if(userOrderedProduct) {
+//         res.send({newUpdatedReview})
+//         next();
+//       // } else {
+//       //   next({
+//       //     name: 'FailedUpdateReview',
+//       //     message: "Could not update review"
+//       // })
+//       // }
+//     } catch ({ name, message }) {
+//       next({ name, message });
+//   }
+//   })
 
-reviewsRouter.delete('/', requireUser, async (req, res, next) => {
-  const { rating, content } = req.body;
-  console.log("This is request body: ", req.body);
-  try {
-    data = { rating, content}
-    const deletedReview = await deleteReview(data);
-    res.send(deletedReview);
-  } catch (error) {
-    next(error);
-  }
-});
+// reviewsRouter.delete('/', requireUser, async (req, res, next) => {
+//   const { rating, content } = req.body;
+//   console.log("This is request body: ", req.body);
+//   try {
+//     data = { rating, content}
+//     const deletedReview = await deleteReview(data);
+//     res.send(deletedReview);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 
 

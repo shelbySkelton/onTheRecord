@@ -65,7 +65,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
 
 
     return (
-        <div>
+        <div className='admin'>
             <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <p>{(isAdmin) ? `Welcome to the Admin Dashboard` : `Only Website Administrators should have access to this page`}</p>
             <div hidden={isAdmin ? false : true}>
@@ -81,7 +81,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
 
                 <TableContainer component={Paper}
                     hidden={!usersView}>
-                        <Table sx={{ minWidth: 900 }} aria-label="simple table" className='admin-product-container'>
+                        <Table sx={{ maxWidth: 900 }} aria-label="simple table" className='admin-product-container'>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>User ID</TableCell>

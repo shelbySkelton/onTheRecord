@@ -58,7 +58,6 @@ const Products = ({ isLoggedIn, user }) => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
