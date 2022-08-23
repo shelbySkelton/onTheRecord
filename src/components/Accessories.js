@@ -46,7 +46,8 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
   return (
     <div>
       <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
-      <h1>Accessories Page</h1>
+
+      <h1 className='font-effect-shadow-multiple'>Accessories</h1>
       <input
           id='search-words'
           type='text'
@@ -58,6 +59,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         <button
           onClick={(evt) => setSearchTerm('')}
         >Clear Search</button>
+
       <div className='products-container'>
         {
           accessoriesToDisplay.map((accessory, idx) => {

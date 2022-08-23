@@ -118,7 +118,7 @@ async function getReviewsByProduct(product_id) {
           JOIN products ON reviews.product_id=products.id
           WHERE product_id=$1;
         `, [ product_id ]);
-    
+        console.log("This is review: ", reviews)
         return reviews;
       } catch(error) {
         console.log("Error in getReviewsByProduct")

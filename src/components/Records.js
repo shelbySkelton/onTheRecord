@@ -13,7 +13,7 @@ const Records = ({ user, isLoggedIn }) => {
     getAllRecords().then((allRecords) => {
       setAllRecords(allRecords);
     });
-    if (isLoggedIn){
+    if (isLoggedIn) {
       getMyCart().then((myCart) => {
         setMyCart(myCart);
       });
@@ -48,12 +48,14 @@ const Records = ({ user, isLoggedIn }) => {
 
   return (
     <div>
-      <h1>Records Page</h1>
       <p>
         {isLoggedIn
           ? `You're Logged In as ${user.first_name}`
           : `You are not logged in`}
       </p>
+
+      <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
+
         <input
           id='search-words'
           type='text'
@@ -66,16 +68,15 @@ const Records = ({ user, isLoggedIn }) => {
           onClick={(evt) => setSearchTerm('')}
         >Clear Search</button>
 
-
       <div className="products-container">
         {recordsToDisplay.map((record, idx) => {
           const handleClick = async (event) => {
             event.preventDefault();
             if (isLoggedIn) {
               const cartItem = {
-              product_id: record.id,
-              priceAtPurchase: record.price,
-              cart_id: myCart.id,
+                product_id: record.id,
+                priceAtPurchase: record.price,
+                cart_id: myCart.id,
               }
               const data = await addCartItem(cartItem);
               return data;
@@ -84,10 +85,10 @@ const Records = ({ user, isLoggedIn }) => {
                 product_id: record.id,
                 product_name: record.name,
                 priceAtPurchase: Number(record.price)
-                }
+              }
               const sessionCart = await addItemToGuestCart(guestCartItem);
             }
-            
+
           };
           return (
             <section className="product-card" key={idx}>

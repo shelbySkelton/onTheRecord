@@ -31,7 +31,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import '../style/App.css';
+import styles from '../style/App.css';
 
 
 const App = () => {
@@ -82,7 +82,7 @@ const App = () => {
         <div className='logo-image'>
           <img className='logo' src="https://i.imgur.com/cZV1cx1.png" alt='logo' />
         </div>
-        <navbar className='products-nav'>
+        <navbar className= 'products-nav'>
           <Link to="/home">Home</Link>
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
@@ -107,7 +107,7 @@ const App = () => {
             guestCart={guestCart}
             setGuestCart={setGuestCart}
           />} />
-          <Route path="/home" element={<Home
+          {/* <Route path="/home" element={<Home
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             setUser={setUser}
@@ -115,10 +115,11 @@ const App = () => {
             isAdmin={isAdmin}
             guestCart={guestCart}
             setGuestCart={setGuestCart}
-          />} />
-          <Route path="/products/all" element={<Products
+          />} /> */}
+          <Route path="/home" element={<Products
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
+            setUser={setUser}
             user={user}
             isAdmin={isAdmin}
             guestCart={guestCart}

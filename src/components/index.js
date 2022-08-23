@@ -13,6 +13,8 @@ export { default as EditProduct } from './EditProduct';
 export { default as AddProduct } from './AddProduct';
 export { default as EditUser } from './EditUser';
 export { default as UserAccount } from './UserAccount';
-export { default as Checkout } from './Checkout'
+export { default as Checkout } from './Checkout';
 export { default as ReviewOrder } from './ReviewOrder';
+export { default as Modal } from './Modal';
 export { default as Orders } from './Orders';
+

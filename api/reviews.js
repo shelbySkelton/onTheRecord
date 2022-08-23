@@ -20,11 +20,13 @@ reviewsRouter.use((req, res, next) => {
     }
   });
 
-  reviewsRouter.get('/:productId', async (req, res, next) => {
+  reviewsRouter.get('/products/:productId', async (req, res, next) => {
     const { productId } = req.params
+    console.log("This is product Id to get reviewed: ", productId)
     try {
       const reviews = await getReviewsByProduct(productId);
-      res.send(reviews)
+      console.log("This is reviews in API: ", reviews)
+      res.send(reviews);
       next();
     } catch (error) {
       next(error)
@@ -54,33 +56,48 @@ reviewsRouter.use((req, res, next) => {
 
   reviewsRouter.patch('/', requireUser, async (req, res, next) => {
     const { rating, content } = req.body
+    const updateFields = {};
+    updateFields.id = Number(user_id, product_id);
+    if(rating) {
+      updateFields.rating = rating;
+    }
+    if(content) {
+      updateFields.content = content;
+    }
     try {
-      const userId = req.user.id
-      const productId = req.product.id
-      const reviewData = { userId, productId, rating, content };
-      const newUpdatedReview = await updateReview(reviewData);
-      const userOrderedProduct = await getMyPreviousOrdersWithItems(userId)
-      if(userOrderedProduct) {
-        res.send(newUpdatedReview)
+      // const user_id = req.user.id
+      // const reviewData = { rating, content };
+      console.log("This is update fields: ", updateFields)
+      const newUpdatedReview = await updateReview(updateFields);
+      console.log("This is new updated review: ", newUpdatedReview)
+      // const userOrderedProduct = await getMyPreviousOrdersWithItems(user_id)
+      // console.log("This is userOrderedProduct: ", userOrderedProduct)
+      // if(userOrderedProduct) {
+        res.send({newUpdatedReview})
         next();
-      } else {
-        next({
-          name: 'FailedUpdateReview',
-          message: "Could not update review"
-      })
-      }
+      // } else {
+      //   next({
+      //     name: 'FailedUpdateReview',
+      //     message: "Could not update review"
+      // })
+      // }
     } catch ({ name, message }) {
       next({ name, message });
   }
   })
 
-// reviewsRouter.delete('/', async (req, res, next) => {
-//     try {
-//        // use deleteReview function here 
-//     } catch (error) {
-//       next(error)  
-//     }
-// })
+reviewsRouter.delete('/', requireUser, async (req, res, next) => {
+  const { rating, content } = req.body;
+  console.log("This is request body: ", req.body);
+  try {
+    data = { rating, content}
+    const deletedReview = await deleteReview(data);
+    res.send(deletedReview);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 module.exports = reviewsRouter;
