@@ -15,15 +15,6 @@ export async function getReviewsUserId(userId) {
   }
 }
 
-<<<<<<< HEAD
-export async function getReviewsProductId(productId) {
-  try {
-    const { data } = await axios.get(`/api/reviews/products/${productId}`)
-    console.log("This is the data: ", data)
-    return data;
-  } catch (error) {
-    console.error(error);
-=======
   export async function getReviewsProductId(productId) {
     try {
       const { data }  = await axios.get(`/api/reviews/products/${productId}`)
@@ -32,9 +23,8 @@ export async function getReviewsProductId(productId) {
     } catch (error) {
       console.error(error);
     }
->>>>>>> ce8352daeaa995a1ed2958c2907d41aa38906994
   }
-}
+
 
 export async function createNewReview({ user_id, product_id, rating, content }) {
   try {

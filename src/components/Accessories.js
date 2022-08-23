@@ -142,20 +142,4 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
     </>
   )
 }
-<<<<<<< HEAD
 export default Accessories;
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-export default Accessories;
->>>>>>> ce8352daeaa995a1ed2958c2907d41aa38906994

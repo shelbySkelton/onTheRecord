@@ -59,10 +59,6 @@ const Products = ({ isLoggedIn, user }) => {
       return;
     }
 
-<<<<<<< HEAD
-  return (
-    <div>
-=======
     setOpen(false);
   };
 
@@ -90,7 +86,6 @@ const Products = ({ isLoggedIn, user }) => {
         message="Item has been added to your cart"
         action={action}
       />
->>>>>>> ce8352daeaa995a1ed2958c2907d41aa38906994
       <h1 className='font-effect-shadow-multiple'>All Products</h1>
 
       <input
