@@ -3,12 +3,14 @@ const API_URL = "http://localhost:4000/api";
 
 export async function getMyCart() {
   try {
-    const { data } = await axios.get(`/api/cart/mycart`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-    });
-    return data;
+    if (localStorage.token){
+      const { data } = await axios.get(`/api/cart/mycart`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      });
+      return data;
+    }
   } catch (error) {
     console.error(error);
   }

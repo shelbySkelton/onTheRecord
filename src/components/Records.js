@@ -93,13 +93,6 @@ const Records = ({ user, isLoggedIn }) => {
         message="Item has been added to your cart"
         action={action}
       />
-      <h1>Records Page</h1>
-
-      <p>
-        {isLoggedIn
-          ? `You're Logged In as ${user.first_name}`
-          : `You are not logged in`}
-      </p>
 
       <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
 
