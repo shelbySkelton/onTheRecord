@@ -5,12 +5,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { testMe } from '../axios-services/users';
-import { updateUser, getUserById } from '../axios-services/admin'
+import { updateUser, getUserById, updateUserStatus } from '../axios-services/admin'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -20,7 +22,8 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
     const navigate = useNavigate();
 
 
-    const [ userDetails, setUserDetails ] = useState({})
+    const [userDetails, setUserDetails] = useState({})
+    const [adminRights, setAdminRights] = useState(false)
 
     useEffect(() => {
         console.log("userId: ", userId)
@@ -33,11 +36,11 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
                 if (user.isAdmin) {
                     setIsAdmin(true)
                 }
-                }).then(getUserById(userId)
-                    .then(userDetails => {
+            }).then(getUserById(userId)
+                .then(userDetails => {
                     setUserDetails(userDetails)
                     console.log("userdetails: ", userDetails)
-                    }))
+                }))
 
     }, [])
 
@@ -46,48 +49,63 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
             component={Paper}
             hidden={!isAdmin}
         >
-            <p>Edit User</p>
-            <Button onClick={(evt)=> navigate("/admin/")}>
+            <Button onClick={(evt) => navigate("/admin/")}>
                 Back to Dashboard
             </Button>
             <Table
                 sx={{ minWidth: 900 }}
                 aria-label="simple table"
             >
-            <TableHead>
+                <TableHead>
                     <TableRow>
                         <TableCell>Key</TableCell>
                         <TableCell>User Details</TableCell>
-                        <TableCell>Edit</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableHead>
-            <TableBody>
-                <TableRow>
-                    <TableCell>User ID</TableCell>
-                    <TableCell>{userDetails.id}</TableCell>
-                    <TableCell></TableCell>             
-                </TableRow>
-                <TableRow>
-                    <TableCell>E-Mail</TableCell>
-                    <TableCell>{userDetails.email}</TableCell>
-                    <TableCell></TableCell>             
-                </TableRow>
-                <TableRow>
-                    <TableCell>First Name</TableCell>
-                    <TableCell>{userDetails.first_name}</TableCell>
-                    <TableCell></TableCell>             
-                </TableRow>
-                <TableRow>
-                    <TableCell>Last Name</TableCell>
-                    <TableCell>{userDetails.last_name}</TableCell>
-                    <TableCell></TableCell>             
-                </TableRow>
-                <TableRow>
-                    <TableCell>Status</TableCell>
-                    <TableCell>{userDetails.isAdmin ? 'Administrator' : 'User'}</TableCell>
-                    <TableCell></TableCell>             
-                </TableRow>
-            </TableBody>
+                <TableBody>
+                    <TableRow>
+                        <TableCell>User ID</TableCell>
+                        <TableCell>{userDetails.id}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>E-Mail</TableCell>
+                        <TableCell>{userDetails.email}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>First Name</TableCell>
+                        <TableCell>{userDetails.first_name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Last Name</TableCell>
+                        <TableCell>{userDetails.last_name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Status</TableCell>
+                        <TableCell>{userDetails.isAdmin ? 'Administrator' : 'User'}</TableCell>
+                        <TableCell>
+                            <Select
+                                defaultValue={userDetails.isAdmin ? 'Administrator' : 'User'}
+                                onChange={(evt) => setAdminRights(evt.target.value)}
+                            >
+                                <MenuItem value='true'>Administrator</MenuItem>
+                                <MenuItem value='false'>User</MenuItem>
+                            </Select>
+                            <Button
+                                variant='contained'
+                                onClick={(evt) => {
+                                    updateUserStatus(userId, adminRights)
+                                    getUserById(userId)
+                                        .then(userDetails => {
+                                            setUserDetails(userDetails)
+                                        })
+                                }}
+                            >
+                                Update Account Type
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
             </Table>
         </TableContainer>
     )

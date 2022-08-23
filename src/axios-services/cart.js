@@ -62,7 +62,9 @@ export async function removeItemFromGuestCart(idx) {
   console.log("Axios idx", idx)
   try{
     const { data } = await axios.delete(`/api/cart/guestCart`, {   
-        "idx": idx   
+       data: {
+        "idx": idx 
+       }   
     }) 
     console.log("Data back from axios: ", data)
     return data;

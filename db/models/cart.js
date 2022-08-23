@@ -277,6 +277,20 @@ async function checkOut(id){
 // getCartOrdersWithItemsByUserId - on admin dashboard, if looking at user, admin can pull up cart_orders for a user
 
 
+async function updateCartStatus(id, status) {
+  try {
+    const { rows: [ cart ] } = await client.query(`
+      UPDATE cart_orders
+      SET "order_status"= $1
+      WHERE id=${id}
+      RETURNING *;
+    `, [status]);
+
+    return cart;
+  } catch (error) {
+    console.log("Error updating cart status")
+  }
+}
 
 
 
@@ -292,5 +306,6 @@ module.exports = {
   deleteItemFromCart,
   createGuestCart,
   createUserCart,
-  checkOut
+  checkOut,
+  updateCartStatus
 }

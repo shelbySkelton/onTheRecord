@@ -185,10 +185,6 @@ async function deactivateProduct(id) {
 
 
 
-
-
-
-
 async function createInitialProducts() {
     console.log("Starting to create initial products...")
     try {
@@ -425,6 +421,7 @@ async function createInitialProducts() {
         throw error;
     }
 }
+
 
 
 
