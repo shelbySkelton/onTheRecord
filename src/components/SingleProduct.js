@@ -62,7 +62,6 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             })
         getReviewsProductId(productId)
             .then(allReviewsProduct => {
-                console.log(allReviewsProduct)
                 setAllReviewsProduct(allReviewsProduct)
             })
     }, [])

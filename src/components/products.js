@@ -3,6 +3,10 @@ import { getAllProducts } from '../axios-services/products';
 import { Link, Navigate } from 'react-router-dom'
 import { addCartItem, getMyCart, addItemToGuestCart } from '../axios-services/cart';
 
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 const Products = ({ isLoggedIn, user }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [myCart, setMyCart] = useState({})
@@ -47,13 +51,41 @@ const Products = ({ isLoggedIn, user }) => {
   const productsToDisplay = searchTerm.length ? filteredProducts : allProducts;
 
 
+  // Snackbar alert
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
 
   return (
     <div>
-      <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
-
-
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Item has been added to your cart"
+        action={action}
+      />
       <h1 className='font-effect-shadow-multiple'>All Products</h1>
 
       <input
@@ -75,6 +107,7 @@ const Products = ({ isLoggedIn, user }) => {
 
             const handleClick = async (event) => {
               event.preventDefault();
+              setOpen(true);
               if (isLoggedIn) {
                 const cartItem = {
                   product_id: allProducts.id,

@@ -73,8 +73,8 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
 
 
   return (
-    <div>
-
+    // <div>
+    <>
      <Snackbar
         open={open}
         autoHideDuration={6000}
@@ -82,7 +82,6 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         message="Item has been added to your cart"
         action={action}
       />
-      <h1>Accessories Page</h1>
       <div className='products-container'>
 
 
@@ -117,7 +116,6 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
                 const guestCartItem = {
                   product_id: accessory.id,
                   product_name: accessory.name,
-
                   priceAtPurchase: Number(accessory.price)
                   }
                 const sessionCart = await addItemToGuestCart(guestCartItem);
@@ -127,7 +125,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
             return (
               <section className="product-card" key={idx}>
                 <span className="product-img">
-                <Link className="product-link" to={`/products/${accessory.id}`} >
+                  <Link className="product-link" to={`/products/${accessory.id}`} >
                   <img src={accessory.img_url} alt="album-cover" width="150" height="150"></img></Link><br></br>
                 </span>
                 <Link className="product-link" to={`/products/${accessory.id}`} >{accessory.name}</Link><br></br>
@@ -141,7 +139,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         }
       </div>
     </div>
+    </>
   )
 }
-
 export default Accessories;
