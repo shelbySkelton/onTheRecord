@@ -58,25 +58,24 @@ const App = () => {
 
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
-    if (!!localStorage.token){
+    if (localStorage.token){
 
       testMe().then((user) => {
         setIsLoggedIn(true);
         setUser(user);
-        if (user.isAdmin) {
-          setIsAdmin(true);
-        }
+        setIsAdmin(user.isAdmin)
       });
-
-      getMyCart().then((myCart) => {
-        setMyCart(myCart)
-      })
 
     } else {
       sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
       // createGuestCart().then((myCart) => {
       //   setMyCart(myCart)
       // })
+    }
+    if (isLoggedIn){
+      getMyCart().then((myCart) => {
+        setMyCart(myCart)
+      })
     }
     getAPIStatus();
   }, [isLoggedIn, guestCart]);

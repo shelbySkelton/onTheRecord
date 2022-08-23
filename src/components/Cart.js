@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Accordion from "@mui/material/Accordion";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Typography } from "@mui/material";
@@ -97,8 +98,8 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
     return (
       <div className="cart-container">
         <h1>{myCart.items.length} items in your cart</h1>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 320 }} aria-label="simple table">
+        <TableContainer component={Paper} >
+          <Table sx={{ minWidth: 320, margin: '12px' }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>

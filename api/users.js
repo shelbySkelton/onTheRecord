@@ -12,9 +12,8 @@ const usersRouter = express.Router();
 usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
   const { userId } = req.params;
   const { email, first_name, last_name } = req.body
-  console.log("userid == req.user.id: ", userId, req.user.id)
+  
   if (userId == req.user.id) {
-    console.log("HII?")
     const updateFields = {};
 
     updateFields.id = Number(userId)
@@ -28,10 +27,8 @@ usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
      if (last_name) {
       updateFields.last_name = last_name
      }
-     console.log("updatefields: ", updateFields)
      try {
       const updatedUser = await updateUser(updateFields)
-      console.log("updatedUser: ", updatedUser)
       res.send(updatedUser)
      } catch ({name, message}) {
       next({name, message})
@@ -115,7 +112,6 @@ usersRouter.post('/login', async (req, res, next) => {
       name: "MissingCredentialsError",
       message: "Please supply both a username and password"
     });
-    next();
   }
 
   try {
@@ -124,13 +120,13 @@ usersRouter.post('/login', async (req, res, next) => {
     if (user) {
       const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
       res.send({ success: true, user, message: "you're logged in!", token });
-      next();
+
     } else {
       res.send({
         name: 'IncorrectCredentialsError',
         message: 'Email or password is incorrect'
       });
-      next();
+
     }
   } catch ({ name, message }) {
     next({ name, message });
