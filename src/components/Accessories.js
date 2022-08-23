@@ -82,11 +82,12 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         message="Item has been added to your cart"
         action={action}
       />
-      <div className='products-container'>
+      
 
 
       <h1 className='font-effect-shadow-multiple'>Accessories</h1>
       <input
+          className='text-box'
           id='search-words'
           type='text'
           value={searchTerm}
@@ -138,8 +139,9 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
           })
         }
       </div>
-    </div>
+    {/* </div> */}
     </>
   )
 }
+
 export default Accessories;

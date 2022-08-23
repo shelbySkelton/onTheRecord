@@ -26,7 +26,6 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
     const [adminRights, setAdminRights] = useState(false)
 
     useEffect(() => {
-        console.log("userId: ", userId)
         testMe()
             .then(user => {
                 setUser(user);
@@ -39,7 +38,6 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
             }).then(getUserById(userId)
                 .then(userDetails => {
                     setUserDetails(userDetails)
-                    console.log("userdetails: ", userDetails)
                 }))
 
     }, [])

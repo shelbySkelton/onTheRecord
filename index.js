@@ -32,11 +32,6 @@ server.use((req, res, next) => {
   next(); 
 });
 
-// server.get("/", (req, res) => {
-//   console.log("req.session: ", req.session)
-//   console.log("req.sessionID!!!!: ", req.sessionID)
-// })
-
 
 // here's our static files
 const path = require('path');

@@ -139,7 +139,6 @@ export async function createProduct(
 
 export async function deactivateProduct(productId) {
   try {
-    console.log("this is my productId in axios: ", productId)
     const { data } = await axios.patch(`/api/admin/products/${productId}`,
       {
           "status": "Inactive"

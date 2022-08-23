@@ -98,6 +98,7 @@ const Records = ({ user, isLoggedIn }) => {
 
         <input
           id='search-words'
+          className='text-box'
           type='text'
           value={searchTerm}
           placeholder="Search records.."
