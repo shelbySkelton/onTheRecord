@@ -22,10 +22,8 @@ reviewsRouter.use((req, res, next) => {
 
   reviewsRouter.get('/products/:productId', async (req, res, next) => {
     const { productId } = req.params
-    console.log("This is product Id to get reviewed: ", productId)
     try {
       const reviews = await getReviewsByProduct(productId);
-      console.log("This is reviews in API: ", reviews)
       res.send(reviews);
       next();
     } catch (error) {
@@ -36,7 +34,6 @@ reviewsRouter.use((req, res, next) => {
   reviewsRouter.post('/', async (req, res, next) => {
     const { user_id, product_id, rating, content } = req.body
     // const user_id = req.user.id
-    console.log("This is req.body in API ", req.body)
     try {
       const reviewData = { user_id, product_id, rating, content };
       const newCreatedReview = await createReview(reviewData);

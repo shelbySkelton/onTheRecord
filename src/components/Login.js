@@ -53,6 +53,7 @@ const Login = (props) => {
             <h1>Login</h1>
             <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <form onSubmit={handleSubmit}>
+                    <p>{errorMessage}</p>
                 <label>
                     Email:
                     <input className="text-box" type="text" name="email" onChange={(event) => {
@@ -66,7 +67,6 @@ const Login = (props) => {
                     }} />
                 </label><br></br>
                 <button className="button" type="submit">Login</button>
-                <p>{errorMessage}</p>
             </form>
         </div>
     );
