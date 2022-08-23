@@ -30,9 +30,57 @@ export async function getUserById(userId) {
   } catch (error) {
     console.error(error)
   }
-
-
 }
+
+export async function getUsersOrders(userId) {
+  try {
+    const { data } = await axios.get(`/api/admin/${userId}/orders`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+      }
+    });
+    return data;
+  } catch (error) {
+    console.log("Error getting user's orders")
+    throw error;
+  }
+}
+
+export async function updateUserStatus(userId, status) {
+  try {
+    const { data } = await axios.patch(`/api/admin/users/${userId}`, 
+    {
+      "isAdmin": status
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+      }
+    });
+    return data;
+  } catch (error) {
+    console.log("Error in updateUserStatus")
+  }
+}
+
+export async function updateOrderStatus(orderId, status) {
+  try {
+    const { data } = await axios.patch(`/api/admin/orders/${orderId}`, 
+    {
+      "status": status
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+      }
+    });
+    return data;
+  } catch (error) {
+    console.log("Error in updateOrderStatus")
+    throw error;
+  }
+}
+
 
 
 export async function getAdminProducts() {

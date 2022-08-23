@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, guestCart, setGuestCart } from "../axios-services/cart";
+import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, addItemToGuestCart, setGuestCart } from "../axios-services/cart";
 
 
 
@@ -38,7 +38,7 @@ const Cart = ({ isLoggedIn, user }) => {
     // }
   }, []);
 
-  console.log(myCart)
+  //console.log(myCart)
 
   const { items } = myCart;
 
@@ -55,26 +55,37 @@ const Cart = ({ isLoggedIn, user }) => {
     } else {
       const itemIdx = event.target.dataset.idx
       event.preventDefault();
-      console.log("itemidx: ", itemIdx)
       const remainingItems = await removeItemFromGuestCart(itemIdx)
-      console.log("remainingItems: ", remainingItems)
       setMyCart(remainingItems)
     }
   };
 
   const handleAdd = async (event) => {
     event.preventDefault();
-    const { product_id, price, cart_id } = event.target.dataset;
-    console.log(price);
-    console.log(product_id, price, cart_id);
-    const addedItem = await addCartItem({
-      product_id: product_id,
-      priceAtPurchase: price,
-      cart_id: cart_id,
-    });
-    console.log(event)
-    getMyCart().then((myCart) => setMyCart(myCart));
-    return addedItem;
+    if (isLoggedIn) 
+        {const { product_id, price, cart_id } = event.target.dataset;
+        //console.log(price);
+        //console.log(product_id, price, cart_id);
+        const addedItem = await addCartItem({
+          product_id: product_id,
+          priceAtPurchase: price,
+          cart_id: cart_id,
+        });
+        console.log(event)
+        getMyCart().then((myCart) => setMyCart(myCart));
+        return addedItem;
+      } else {
+        console.log("myCart before", myCart)
+        const {product_id, price, product_name} = event.target.dataset;
+        const guestCartItem = {
+          product_id: Number(product_id),
+          product_name: product_name,
+          priceAtPurchase: Number(price)
+        }
+        const sessionCart = await addItemToGuestCart(guestCartItem)
+        console.log("sessionCart: ", sessionCart);
+        getGuestCart().then((myCart) = setMyCart(sessionCart));
+      }
   };
 
   if (!items) {
@@ -131,7 +142,7 @@ const Cart = ({ isLoggedIn, user }) => {
                   <TableCell component="th" scope="row">
                     {item.product_name}
                   </TableCell>
-                  <TableCell align="right">{item.priceAtPurchase}</TableCell>
+                  <TableCell align="right">${item.priceAtPurchase}</TableCell>
                   <TableCell sx={{ cursor: "pointer" }} align="right">
                     {/* <div
                       data-product_id={item.product_id}
@@ -147,6 +158,7 @@ const Cart = ({ isLoggedIn, user }) => {
                       data-product_id={item.product_id}
                       data-price={item.priceAtPurchase}
                       data-cart_id={myCart.id}
+                      data-product_name={item.product_name}
                       onClick={(event) => { handleAdd(event); }}  >
                       <AddShoppingCartIcon fontSize="inherit" id={item.id} />
                     </IconButton>
@@ -158,7 +170,7 @@ const Cart = ({ isLoggedIn, user }) => {
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   Order Total
                 </TableCell>
-                <TableCell align="right">{orderTotal}</TableCell>
+                <TableCell align="right">${orderTotal.toFixed(2)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

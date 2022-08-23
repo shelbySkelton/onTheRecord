@@ -32,7 +32,7 @@ cartRouter.get("/myCart", requireUser, async (req, res, next) => {
   }
 });
 
-//SHELBYS ADD
+
 cartRouter.get('/guestCart', (req, res) => {
   const {guestCart} = req.session;
   if (!guestCart) {
@@ -72,14 +72,6 @@ console.log("guestCart: ", guestCart)
   items.splice(idx, 1)
   res.send(guestCart)
 })
-
-
-// END SHELBYS ADD
-
-
-
-
-
 
 
 

@@ -21,7 +21,8 @@ import {
   EditUser,
   UserAccount,
   Checkout,
-  ReviewOrder
+  ReviewOrder,
+  Orders
 } from './index'
 
 import {
@@ -167,6 +168,15 @@ const App = () => {
             />}
           />
           <Route path="/admin/edit-user/:userId" element={<EditUser
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
+            />}
+          />
+          <Route path="/admin/orders/:userId" element={<Orders
             setIsLoggedIn={setIsLoggedIn}
             isLoggedIn={isLoggedIn}
             user={user}

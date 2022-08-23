@@ -7,6 +7,8 @@ import { getMyCart, addCartItem, addItemToGuestCart } from "../axios-services/ca
 const Records = ({ user, isLoggedIn }) => {
   const [allRecords, setAllRecords] = useState([]);
   const [myCart, setMyCart] = useState({});
+  const [searchTerm, setSearchTerm] = useState('')
+
   useEffect(() => {
     getAllRecords().then((allRecords) => {
       setAllRecords(allRecords);
@@ -20,6 +22,29 @@ const Records = ({ user, isLoggedIn }) => {
   // console.log(myCart.id);
   // console.log(allRecords);
 
+  function searchMatches(record, searchTerm) {
+    let instances = 0;
+    let isItThere = false;
+
+      let recordName = record.name.toLowerCase().split(" ")
+      let recordArtist = record.artist.toLowerCase().split(" ")
+      let recordAlbumName = record.album_name.toLowerCase().split(" ")
+      let recordGenre = record.genre.toLowerCase().split(" ")
+      let recordDesc = record.description.toLowerCase().split(" ")
+      isItThere = recordName.includes(searchTerm)
+                  || recordArtist.includes(searchTerm) 
+                  || recordAlbumName.includes(searchTerm) 
+                  || recordDesc.includes(searchTerm) 
+                  || recordGenre.includes(searchTerm)
+      if (isItThere) {
+        instances ++
+      }
+   return isItThere;
+  }
+
+
+  const filteredRecords = allRecords.filter(record => searchMatches(record, searchTerm))
+  const recordsToDisplay = searchTerm.length ? filteredRecords : allRecords;
 
   return (
     <div>
@@ -28,9 +53,23 @@ const Records = ({ user, isLoggedIn }) => {
           ? `You're Logged In as ${user.first_name}`
           : `You are not logged in`}
       </p>
+
       <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
+
+        <input
+          id='search-words'
+          type='text'
+          value={searchTerm}
+          placeholder="Search records.."
+          onChange={(evt)=> setSearchTerm(evt.target.value)}
+        >
+        </input>
+        <button
+          onClick={(evt) => setSearchTerm('')}
+        >Clear Search</button>
+
       <div className="products-container">
-        {allRecords.map((record, idx) => {
+        {recordsToDisplay.map((record, idx) => {
           const handleClick = async (event) => {
             event.preventDefault();
             if (isLoggedIn) {
@@ -48,7 +87,6 @@ const Records = ({ user, isLoggedIn }) => {
                 priceAtPurchase: Number(record.price)
               }
               const sessionCart = await addItemToGuestCart(guestCartItem);
-              console.log("sessionCart: ", sessionCart)
             }
 
           };

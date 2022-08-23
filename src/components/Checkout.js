@@ -57,12 +57,12 @@ export default function Checkout({ isLoggedIn, guestCart, setGuestCart }) {
         return <PaymentForm />;
       case 2:
         return <ReviewOrder 
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-          user={user}
-          isAdmin={isAdmin}
-          guestCart={guestCart}
-          setGuestCart={setGuestCart}
+           isLoggedIn={isLoggedIn}
+          // setIsLoggedIn={setIsLoggedIn}
+          // user={user}
+          // isAdmin={isAdmin}
+          // guestCart={guestCart}
+          // setGuestCart={setGuestCart}
               />;
       default:
         throw new Error('Unknown step');
