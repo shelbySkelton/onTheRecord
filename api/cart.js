@@ -64,7 +64,7 @@ cartRouter.delete('/guestCart', (req, res, next) => {
   try { 
     
     const { idx } = req.body;
-    console.log("This is idx: ",idx)
+
     const { guestCart } = req.session
     const { items } = guestCart
     items.splice(idx, 1)
@@ -77,17 +77,15 @@ cartRouter.delete('/guestCart', (req, res, next) => {
 
 cartRouter.post('/guestCart/checkout', async (req, res, next) => {
   try {
-    console.log(req.sessionID)
-    console.log(req.session.guestCart)
-    // req.session.destroy(() => {
-    //   console.log("Session has been destroyed.")
-    // });
     const guestCart = await createGuestCart({
       session_id: req.sessionID,
       order_status: "pending",
     });
-    console.log("This is guestcart", guestCart)
+
     res.status(200).send(guestCart)
+    req.session.destroy(() => {
+      console.log("Session has been destroyed.")
+    });
   } catch (error) {
     next(error)
   }

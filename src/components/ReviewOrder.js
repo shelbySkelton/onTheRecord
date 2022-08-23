@@ -71,14 +71,14 @@ export default function ReviewOrder({ isLoggedIn, address, setAddress }) {
           {items.map((item, idx) => (
             <ListItem key={idx} sx={{ py: 1, px: 0 }}>
               <ListItemText primary={item.product_name} />
-              <Typography variant="body2">{item.priceAtPurchase}</Typography>
+              <Typography variant="body2">${item.priceAtPurchase}</Typography>
             </ListItem>
           ))}
   
           <ListItem sx={{ py: 1, px: 0 }}>
             <ListItemText primary="Total" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-              {orderTotal.toFixed(2)}
+              ${orderTotal.toFixed(2)}
             </Typography>
           </ListItem>
         </List>

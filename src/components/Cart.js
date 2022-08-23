@@ -6,13 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import IconButton from '@mui/material/IconButton';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, guestCart, setGuestCart, addItemToGuestCart } from "../axios-services/cart";
 
@@ -140,17 +137,10 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
                       data-price={item.priceAtPurchase}
                       data-cart_id={myCart.id}
                       data-product_name={item.product_name}
-                      // onClick={(event) => { handleAdd(event); }} 
                       onClick={(event) => {
                         handleAdd(event)
                       }} 
                       >
-                      {/* <AddShoppingCartIcon fontSize="large"
-                      // data-product_id={item.product_id}
-                      // data-price={item.priceAtPurchase}
-                      // data-cart_id={myCart.id}
-                      // data-product_name={item.product_name}
-                      /> */}
                       Add
                     </Button>
                   </TableCell>
