@@ -35,7 +35,6 @@ import {
 import styles from '../style/App.css';
 
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../style/App.css";
 
 const App = () => {
@@ -117,15 +116,20 @@ const App = () => {
             />
           </div>
         )}
-        <navbar className="products-nav">
-          <Link to="/">Home</Link>
+        <div className="products-nav">
+          <Link to="/home">Home</Link>
 
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
-          <Link to="/admin" hidden={isAdmin ? false : true}>
+          {
+            isAdmin ? <Link to="/admin" hidden={isAdmin ? false : true}>
             Admin Dashboard
-          </Link>
-        </navbar>
+          </Link> : null
+          }
+          {/* <Link to="/admin" hidden={isAdmin ? false : true}>
+            Admin Dashboard
+          </Link> */}
+        </div>
         <Routes>
 
           <Route path="/login" element={<Login

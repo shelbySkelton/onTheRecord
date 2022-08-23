@@ -77,14 +77,18 @@ export async function registerUser({ email, password, first_name, last_name }) {
 //User Test
 export async function testMe() {
   try {
-    const { data } = await axios.get('/api/users/me', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.token}`
-      }
-    });
-    return data;
+    if (localStorage.token){
+
+      const { data } = await axios.get('/api/users/me', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.token}`
+        }
+      });
+      return data;
+    }
   } catch (error) {
+    console.log("No one is logged in")
     throw error;
   }
 }
