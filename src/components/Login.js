@@ -32,9 +32,9 @@ const Login = (props) => {
             password
         }
         const data = await loginUser(user);
-        console.log('This is my registered data', data);
+
         localStorage.setItem('token', data.token);
-        console.log('data back from login: ', data)
+
         //IF STATEMENT FOR DATA SUCCESS
         if (data.success) {
             setToken(data.token);
@@ -43,7 +43,7 @@ const Login = (props) => {
             if (data.user.isAdmin) {
                 setIsAdmin(true);
             }
-            navigate("/home", { replace: true });
+            navigate("/", { replace: true });
         }
         setErrorMessage(data.message)
     }

@@ -32,6 +32,19 @@ const EditProduct = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }
 
     const { productId } = useParams();
     const [productDetails, setProductDetails] = useState({})
+    // const {changes, setChanges} = useState({
+    //     name: '',
+    //     price: '',
+    //     category: '',
+    //     quantity: '',
+    //     img_url: '',
+    //     condition: '',
+    //     album_name: '',
+    //     artist: '',
+    //     description: '',
+    //     genre: '',
+    //     status:''
+    // })
     const [name, setName] = useState("")
     const [editName, setEditName] = useState(false)
     const [price, setPrice] = useState("")

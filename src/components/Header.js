@@ -13,19 +13,21 @@ const Header = (props) => {
         isAdmin, 
         setIsAdmin,
         guestCart,
-        setGuestCart 
+        setGuestCart,
+        myCart,
+        setMyCart 
     } = props
+
     // const [user, setUser] = useState({})
     // const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-    useEffect(() => {
-        testMe()
-            .then(user => {
-                setUser(user);
-                if (user) {
-                    setIsLoggedIn(true);
-                }       
-            })
+    useEffect(() => {   
+        // testMe()
+        //     .then(user => {
+        //         setUser(user);
+        //         if (user) {
+        //             setIsLoggedIn(true);
+        //         }       
+        //     })
     }, [])
 
 
@@ -33,10 +35,10 @@ const Header = (props) => {
     return (
         <div className="header-container">
         <navbar className='header-nav'>
-            <Link to='/login'
+            <Link to='/'
                 hidden={isLoggedIn ? false : true}
-                onClick={(evt) => {
-                    localStorage.removeItem('token');
+                onClick={() => {
+                    localStorage.clear();
                     setIsLoggedIn(false);
                     setUser({});
                     setIsAdmin(false);
@@ -53,7 +55,7 @@ const Header = (props) => {
             <Link
                 hidden={isLoggedIn ? false : true}
                 to="/my-account">{user.first_name}'s Account</Link>
-            <Link to="/cart">My Cart</Link>
+            <Link to="/cart">My Cart </Link>
 
         </navbar>
         </div>

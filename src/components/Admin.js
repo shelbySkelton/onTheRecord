@@ -1,3 +1,4 @@
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import React, { useState, useEffect } from 'react';
@@ -86,13 +88,14 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                                     <TableCell>Email</TableCell>
                                     <TableCell>First Name</TableCell>
                                     <TableCell>Last Name</TableCell>
-                                    <TableCell>Admin Status</TableCell>
+                                    <TableCell>Account Type</TableCell>
                                     <TableCell>Orders</TableCell>
                                     <TableCell>Edit</TableCell>
                                 </TableRow>
                             </TableHead>
                             {
                                 allUsers.map((user, idx) => {
+
                                     return(
                                        <TableBody>
                                         <TableRow key={idx}>
@@ -101,7 +104,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                                             <TableCell>{user.first_name}</TableCell>
                                             <TableCell>{user.last_name}</TableCell>
                                             <TableCell>{user.isAdmin ? 'Administrator' : 'User'}</TableCell>
-                                            <TableCell>Input Link For Orders</TableCell>
+                                            <TableCell><Link to={`/admin/orders/${user.id}`}><ViewListIcon/></Link></TableCell>
                                             <TableCell><Link to={`/admin/edit-user/${user.id}`}><EditIcon /></Link></TableCell>
                                         </TableRow>
 

@@ -156,7 +156,7 @@ async function getProductById(id) {
         `, [id]);
         return product;
     } catch (error) {
-        console.log("Error in getRecordById!")
+        console.log("Error in getProductById!")
         throw error;
     }
 }
@@ -181,10 +181,6 @@ async function deactivateProduct(id) {
     throw error;
     }
 }
-
-
-
-
 
 
 
@@ -425,6 +421,7 @@ async function createInitialProducts() {
         throw error;
     }
 }
+
 
 
 
