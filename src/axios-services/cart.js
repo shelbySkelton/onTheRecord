@@ -88,6 +88,7 @@ export async function createGuestCart({ session_id, order_status}){
 
     return data
   } catch (error) {
+    console.log("Error creating guest cart");
     console.error(error)
   }
 }
@@ -134,7 +135,7 @@ export async function checkOutCart(cart_id){
 
 export async function checkOutGuestCart(){
   try {
-    const { data } = await axios.delete('/api/cart/guestCart/checkout')
+    const { data } = await axios.post('/api/cart/guestCart/checkout')
     return data
   } catch (error) {
     console.error(error)

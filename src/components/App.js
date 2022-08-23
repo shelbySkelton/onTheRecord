@@ -4,7 +4,7 @@ import React, { useState, useEffect, createElement } from "react";
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from "../axios-services";
 import { testMe } from "../axios-services/users";
-import { getMyCart } from "../axios-services/cart";
+import { getMyCart, createGuestCart } from "../axios-services/cart";
 
 import {
   Home,
@@ -63,8 +63,12 @@ const App = () => {
         setMyCart(myCart)
       })
 
+    } else {
+      sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
+      // createGuestCart().then((myCart) => {
+      //   setMyCart(myCart)
+      // })
     }
-    sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
     getAPIStatus();
   }, [isLoggedIn, guestCart]);
 

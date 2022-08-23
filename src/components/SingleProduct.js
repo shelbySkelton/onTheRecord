@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
 import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axios-services/cart';
-
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
@@ -11,6 +13,29 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
 
     const [productDetails, setProductDetails] = useState({});
     const [myCart, setMyCart] = useState({})
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+  
+  
+    const action = (
+      <React.Fragment>
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    );
 
     useEffect(() => {
         getProductById(productId)
@@ -26,6 +51,7 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
 
     const handleClick = async (event) => {
         event.preventDefault();
+        setOpen(true);
         if (isLoggedIn){
             const cartItem = {
                 product_id: productId,
@@ -49,6 +75,13 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
 
     return (
         <div>
+            <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Item has been added to your cart"
+        action={action}
+      />
             <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <div className='single-product-container'>
 

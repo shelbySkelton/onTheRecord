@@ -7,14 +7,43 @@ import {
   addItemToGuestCart,
 } from "../axios-services/cart";
 
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+
 
 const Records = ({ user, isLoggedIn }) => {
   const [allRecords, setAllRecords] = useState([]);
   const [myCart, setMyCart] = useState({});
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
 
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+  
   useEffect(() => {
     getAllRecords().then((allRecords) => {
       setAllRecords(allRecords);
@@ -28,7 +57,15 @@ const Records = ({ user, isLoggedIn }) => {
 
 
   return (
+    
     <div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Item has been added to your cart"
+        action={action}
+      />
       <h1>Records Page</h1>
       <p>
         {isLoggedIn
@@ -38,6 +75,7 @@ const Records = ({ user, isLoggedIn }) => {
       <div className="products-container">
         {allRecords.map((record, idx) => {
           const handleClick = async (event) => {
+            setOpen(true);
             event.preventDefault();
             if (isLoggedIn) {
               const cartItem = {
@@ -56,6 +94,7 @@ const Records = ({ user, isLoggedIn }) => {
               const sessionCart = await addItemToGuestCart(guestCartItem);
               return sessionCart
             }
+            
           };
           return (
             <section className="product-card" key={idx}>

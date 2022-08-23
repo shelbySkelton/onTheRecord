@@ -33,7 +33,7 @@ cartRouter.get("/myCart", requireUser, async (req, res, next) => {
 });
 
 //SHELBYS ADD
-cartRouter.get('/guestCart', (req, res) => {
+cartRouter.get('/guestCart', (req, res, next) => {
   const {guestCart} = req.session;
   if (!guestCart) {
     res.send ("No items to display")
@@ -75,15 +75,19 @@ cartRouter.delete('/guestCart', (req, res, next) => {
 })
 
 
-cartRouter.delete('/guestCart/checkout', (req, res, next) => {
+cartRouter.post('/guestCart/checkout', async (req, res, next) => {
   try {
-
-    
-    req.session.destroy(() => {
-      console.log("Session has been destroyed.")
+    console.log(req.sessionID)
+    console.log(req.session.guestCart)
+    // req.session.destroy(() => {
+    //   console.log("Session has been destroyed.")
+    // });
+    const guestCart = await createGuestCart({
+      session_id: req.sessionID,
+      order_status: "pending",
     });
-  
-    res.sendStatus(200); 
+    console.log("This is guestcart", guestCart)
+    res.status(200).send(guestCart)
   } catch (error) {
     next(error)
   }

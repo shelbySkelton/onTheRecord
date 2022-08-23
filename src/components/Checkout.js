@@ -25,7 +25,10 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 const theme = createTheme();
 
-export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) {
+export default function Checkout(props) {
+
+  const { isLoggedIn, user, guestCart, setGuestCart } = props
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [myCart, setMyCart] = React.useState({})
@@ -81,6 +84,7 @@ export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) 
         return <AddressForm 
         address={address}
         setAddress={setAddress}
+        isLoggedIn={isLoggedIn}
         />;
       case 1:
         return <PaymentForm />;
@@ -144,9 +148,14 @@ export default function Checkout({ isLoggedIn, user, guestCart, setGuestCart }) 
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is {myCart.id}! We have emailed your order
+                  {/* Your order number is {myCart.id}! We have emailed your order
                   confirmation, and will send you an update when your order has
-                  shipped.
+                  shipped. */}
+                  {
+                    isLoggedIn ? `Your order number is ${myCart.id}! We have emailed your order
+                    confirmation, and will send you an update when your order has
+                    shipped.` : 'Your order has been placed! We have emailed your order confirmation, and will send you an update when your order has been shipped'
+                  }
                 </Typography>
               </React.Fragment>
             ) : (
