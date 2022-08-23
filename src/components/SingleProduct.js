@@ -22,7 +22,6 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
     useEffect(() => {
         getProductById(productId)
             .then(productDetails => {
-                console.log(productDetails)
                 setProductDetails(productDetails)
             })
         getMyCart()
@@ -52,7 +51,6 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
                 priceAtPurchase: productDetails.price
             }
             const sessionCart = await addItemToGuestCart(guestCartItem);
-            console.log("sessionCart: ", sessionCart)
             guestCart.push(guestCartItem)
         }
 
@@ -99,7 +97,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             <div>
                 <button onClick={() => setIsModal(true)}>Add a Review</button>
             </div>
-            <body>
+            <div>
                 {
                     isModal && <Modal 
                     setIsModal={setIsModal} 
@@ -113,7 +111,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
                     setAllReviewsProduct={setAllReviewsProduct}
                     />
                 }
-            </body>
+            </div>
         </div>
     )
 

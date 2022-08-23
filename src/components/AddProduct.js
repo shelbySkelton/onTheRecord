@@ -38,8 +38,6 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
     useEffect(() => {
         testMe()
             .then(user => {
-
-                console.log("user: ", user)
                 setUser(user);
                 if (!(user === {})) {
                     setIsLoggedIn(true);
@@ -77,7 +75,6 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
             description,
             genre,
             status)
-        console.log("newProduct: ", newProduct)
         navigate(`/products/${newProduct.id}`)
     }
 
@@ -85,7 +82,11 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
         <div hidden={isAdmin ? false : true} id= 'add-product-box'>
             <Box
                 components="form"
-                sx={{'& .MuiTextField-root': { m: 1, width: '25ch' }}}
+                sx={{'& .MuiTextField-root': { 
+                    m: 1, 
+                    width: '25ch', 
+                    backgroundColor: 'white',
+                }}}
                 noValidate
                 autoComplete="off"
             >
@@ -106,6 +107,9 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     <Box sx={{ minWidth: 250 }}>
                     <p>Product Category</p>
                         <Select
+                            sx={{
+                                backgroundColor: 'white'
+                            }}
                             label="Category"
                             required
                             placeholder="Record"
@@ -134,6 +138,9 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     <Box sx={{ minWidth: 150 }}>
                     <p>Product Condition</p>
                         <Select
+                        sx={{
+                            backgroundColor: 'white'
+                        }}
                             label="Condition"
                             placeholder="New"
                             required
@@ -170,6 +177,9 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                        <p>Product Status</p>
                         <Select
                             label="Status"
+                            sx={{
+                                backgroundColor: 'white'
+                            }}
                             required
                             onChange={(evt) => setStatus(evt.target.value)}
                         >
