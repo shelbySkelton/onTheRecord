@@ -91,7 +91,6 @@ const EditProduct = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }
 
 
     const submitEdits = async (evt) => {
-        console.log("status: ", status)
         const updatedProduct = await patchProduct(
             productId,
             name,
@@ -106,7 +105,6 @@ const EditProduct = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }
             genre,
             status)
         if (updatedProduct) {
-            console.log("UpdatedProduct!!!: ", updatedProduct)
             await (getProductById(productId)
                 .then(productDetails => {
                     setProductDetails(productDetails)

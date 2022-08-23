@@ -89,6 +89,7 @@ const Products = ({ isLoggedIn, user }) => {
 
       <input
         id='search-words'
+        className='text-box'
         type='text'
         value={searchTerm}
         placeholder="Search products.."

@@ -16,13 +16,13 @@ const Modal = (props) => {
             rating: rating,
             content: createReview
         }
-        console.log("Review: ", reviews)
+     
         const data = await createNewReview(reviews);
-        console.log("This is data in review", data);
+   
         setIsModal(false);
         getReviewsProductId(productDetails.id)
             .then(allReviewsProduct => {
-                console.log(allReviewsProduct)
+            
                 setAllReviewsProduct(allReviewsProduct)
             })
     }

@@ -44,13 +44,11 @@ const UserAccount = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsA
     const submitEdits = async (evt) => {
         const { email, first_name, last_name } = updates;
         const updatedUser = await updateAccount(user.id, email, first_name, last_name)
-        console.log('udpatedUser: ', updatedUser)
         setMyInfo(updatedUser);
     }
 
     const ordersHandler = async (evt) => {
         const myOrders = await viewOrders(user.id)
-        console.log("myOrders: ", myOrders)
         setOrders(myOrders)
     }
 

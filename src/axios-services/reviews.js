@@ -23,7 +23,8 @@ export async function getReviewsProductId(productId) {
     return data;
   } catch (error) {
     console.error(error);
-
+  }
+}
 
 export async function createNewReview({ user_id, product_id, rating, content }) {
   try {
@@ -38,7 +39,7 @@ export async function createNewReview({ user_id, product_id, rating, content }) 
         rating,
         content
       });
-      console.log("data in axios ", data)
+
     return data;
   } catch (error) {
     console.error(error);

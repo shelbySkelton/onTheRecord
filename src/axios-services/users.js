@@ -18,7 +18,6 @@ export async function loginUser({ email, password }) {
 
 //Edit My Account
 export async function updateAccount(id, email, first_name, last_name) {
-  console.log("AXIOS: id, email fname lname: ", id, email, first_name, last_name)
 
   try {
     const { data } = await axios.patch(`/api/users/${id}`,
@@ -34,7 +33,6 @@ export async function updateAccount(id, email, first_name, last_name) {
         }
       }
     );
-    console.log("data from axios call: ", data)
     return data;
   } catch (error) {
     console.log("Error in updating account")
@@ -100,7 +98,6 @@ export async function getMyAccount() {
         'Authorization': `Bearer ${localStorage.token}`
       }
     });
-    console.log("data: ", data)
     return data;
   } catch (error) {
     console.error(error)

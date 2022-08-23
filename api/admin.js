@@ -83,7 +83,6 @@ adminRouter.post('/products', requireAdmin, async (req, res, next) => {
         genre,
         status };
 
-    console.log("ProductData: ", productData)
     try {
         const newProduct = await createProduct(productData);
         if (newProduct) {
@@ -100,16 +99,6 @@ adminRouter.post('/products', requireAdmin, async (req, res, next) => {
     }
 })
 
-// adminRouter.patch('/deactivate/:productId', requireAdmin, async (req, res, next) => {
-// //   const { productId } = req.params;
-  
-// //   try {
-// //     const deletedProduct = await deactivateProduct(productId)
-// //     res.send(deletedProduct)
-// //   } catch (error) {
-// //     next(error)
-// //   }
-// })
 
 adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) => {
     const { productId } = req.params;
@@ -164,7 +153,6 @@ adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) =
 
       try {
  
-        console.log("Updatefields: ", updateFields)
         const updatedProduct = await updateProduct(updateFields);
 
         res.send(updatedProduct)

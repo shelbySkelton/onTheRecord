@@ -35,7 +35,6 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
         testMe()
             .then(user => {
 
-                console.log("user: ", user)
                 setUser(user);
                 if (!(user === {})) {
                     setIsLoggedIn(true);
@@ -48,7 +47,6 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
 
     const showProducts = async (event) => {
         const products = await getAdminProducts();
-        console.log("products: ", products);
         setAllProducts(products)
         setUsersView(false);
         setProductsView(true)
@@ -56,7 +54,6 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
 
     const showUsers = async (event) => {
         const users = await getAllUsers();
-        console.log("users: ", users)
         setallUsers(users)
         setProductsView(false)
         setUsersView(true);
