@@ -18,7 +18,6 @@ export async function getReviewsUserId(userId) {
   export async function getReviewsProductId(productId) {
     try {
       const { data }  = await axios.get(`/api/reviews/products/${productId}`)
-      console.log("Type of product id: ", productId)
       console.log("This is the data: ", data)
       return data;
     } catch (error) {

@@ -6,12 +6,10 @@ import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axi
 import { getReviewsUserId, getReviewsProductId, createNewReview } from "../axios-services/reviews";
 
 import Modal from './Modal';
-import Reviews from './Reviews';
 
 const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     const { productId } = useParams();
-    console.log("This is product Id in SP: ", productId)
     const [productDetails, setProductDetails] = useState({});
     const [myCart, setMyCart] = useState({})
     const [isModal, setIsModal] = useState(false)
@@ -30,7 +28,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             .then(myCart => {
                 setMyCart(myCart)
             })
-            getReviewsProductId(productId)
+        getReviewsProductId(productId)
             .then(allReviewsProduct => {
                 console.log(allReviewsProduct)
                 setAllReviewsProduct(allReviewsProduct)
@@ -66,7 +64,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             <div className='single-product-container'>
 
                 <div className='product-view'>
-                    <h1>{productDetails.name}</h1>
+                    <h1 id='header-singleProduct'>{productDetails.name}</h1>
                     <img src={productDetails.img_url} alt="album-cover" width="250" height="250"></img><br></br>
                     <span>{productDetails.quantity} Left In Stock!</span>
                     <button onClick={handleClick} className='add-to-cart-button'>Add to Cart</button>
@@ -84,15 +82,21 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
                 </div>
             </div>
             <div className='product-reviews'>
-                console.log("review in SP: ", allReviewsProduct) {
-                    allReviewsProduct.map((review, idx) => {
-                        <span>
-                            { review.content }
-                        </span>
-                    })}
+        
+                <h3>Reviews</h3>
+        
+                {allReviewsProduct.map((review, idx) => {
+                  return(
+                    <span key={idx}>
+                       <p> {review.rating}/5 </p> <br></br>
+                       <p> {review.content} </p> <br></br>
+                    </span> 
+                  )
+                
+                })}
             </div>
             <div>
-                <button onClick={() => setIsModal(true)}>Review</button>
+                <button onClick={() => setIsModal(true)}>Add a Review</button>
             </div>
             <body>
                 {

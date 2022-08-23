@@ -33,26 +33,6 @@ import {
 import styles from '../style/App.css';
 
 
-// const link = ({ className, children }) => (
-//   <a className={className}>
-//     {children}
-//   </a>
-// );
-
-// const StyledLink = styled(link)`
-//   color: palevioletred;
-//   font-weight: bold;
-// `;
-
-// render(
-//   <div>
-//     <Link>Unstyled, boring Link</Link>
-//     <br />
-//     <StyledLink>Styled, exciting Link</StyledLink>
-//   </div>
-// );
-
-
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -126,7 +106,7 @@ const App = () => {
             guestCart={guestCart}
             setGuestCart={setGuestCart}
           />} />
-          <Route path="/home" element={<Home
+          {/* <Route path="/home" element={<Home
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             setUser={setUser}
@@ -134,10 +114,11 @@ const App = () => {
             isAdmin={isAdmin}
             guestCart={guestCart}
             setGuestCart={setGuestCart}
-          />} />
-          <Route path="/products/all" element={<Products
+          />} /> */}
+          <Route path="/home" element={<Products
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
+            setUser={setUser}
             user={user}
             isAdmin={isAdmin}
             guestCart={guestCart}

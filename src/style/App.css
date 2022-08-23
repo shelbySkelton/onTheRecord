@@ -7,18 +7,23 @@
 h1 {
   font-family: Sofia, sans-serif;
   text-align: center;
-  font-size: 80px;
+  font-size: 50px;
+  color: #AE69FF;
 }
 
-.home {
-  height: 100%;
-  width: 100%;
+#header-singleProduct {
+  font-size: 20px;
 }
 
-.app-container h1 {
+/* .home {
+  height: 100vh;
+  width: 100vw;
+} */
+
+/* .app-container h1 {
   color: var(--green);
   padding: 1rem;
-}
+} */
 
 .products-container {
   display: flex;
@@ -30,15 +35,15 @@ h1 {
   flex-basis: 200px;
   flex-grow: 1;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
-  margin: 15px 20px;
-  padding: 40px;
+  margin: 10px 15px;
+  padding: 10px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   transition: transform 200ms ease-in-out;
-  border: solid rgb(239, 181, 105) 4px;
+  border: solid #AE69FF 3px;
   font-family: sans-serif;
   background-color: white;
   color: black;
@@ -60,9 +65,10 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 10px;
-  font-size: x-large;
+  padding: 20px;
+  font-size: large;
   background-color: rgb(239, 181, 105);
+  border-bottom: solid #AE69FF 3px;
 }
 
 .header-nav a:visited {color: black;}
@@ -78,7 +84,7 @@ h1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
   text-decoration: none;
   font-family: sans-serif;
   /* background-color: black; */
@@ -103,7 +109,7 @@ h1 {
 .products-nav {
   display: flex;
   justify-content: center;
-  font-size: x-large;
+  font-size: large;
 }
 
 button {
@@ -152,6 +158,12 @@ button:hover {
   flex-wrap: wrap;
   justify-content: space-evenly;
   font-family: sans-serif;
+  border: solid #AE69FF 3px;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px 15px;
+  font-family: sans-serif;
+  background-color: white;
+  color: black;
 }
 
 .product-view {
@@ -196,20 +208,10 @@ button:hover {
   justify-content: space-evenly; */
 }
 
-/* .add-to-cart-button {
-  width: 100px;
-  background-color: rgb(239, 181, 105);
-  color: white;
-  /* justify-content:  */
-
-
-/* .add-to-cart-button {
-  transition-duration: 0.3s;
-} */ */
 
 
 .logo {
-  width: 40%;
+  width: 20%;
   height: 20%;
   margin: 8px;
   padding: 8px;

@@ -36,7 +36,7 @@ const Products = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
     <div>
       <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
 
-      <h1>Products Page</h1>
+      <h1 className='font-effect-shadow-multiple'>All Products</h1>
       <div className='products-container'>
 
         {
