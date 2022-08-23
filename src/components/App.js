@@ -23,7 +23,17 @@ import {
   UserAccount,
   Checkout,
   ReviewOrder,
-} from "./index";
+  Orders
+} from './index'
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom';
+import styles from '../style/App.css';
+
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../style/App.css";
@@ -87,6 +97,7 @@ const App = () => {
           myCart={myCart}
           setMyCart={setMyCart}
         />
+
         {hoverCount === 3 ? (
           <div className="logo-image">
             <img
@@ -108,6 +119,7 @@ const App = () => {
         )}
         <navbar className="products-nav">
           <Link to="/">Home</Link>
+
           <Link to="/products/records">Records</Link>
           <Link to="/products/Accessories">Accessories</Link>
           <Link to="/admin" hidden={isAdmin ? false : true}>
@@ -115,20 +127,75 @@ const App = () => {
           </Link>
         </navbar>
         <Routes>
-          <Route
-            path="/login"
-            element={
-              <Login
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-                user={user}
-                setUser={setUser}
-                isAdmin={isAdmin}
-                setIsAdmin={setIsAdmin}
-                guestCart={guestCart}
-                setGuestCart={setGuestCart}
-              />
-            }
+
+          <Route path="/login" element={<Login
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+          />} />
+          <Route path="/register" element={<Register
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} 
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+          />} />
+          {/* <Route path="/home" element={<Home
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            setUser={setUser}
+            user={user}
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+          />} /> */}
+          <Route path="/home" element={<Products
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            setUser={setUser}
+            user={user}
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />}/>
+          <Route path="/products/records" element={<Records
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} 
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+          />} />
+          <Route path="/products/accessories" element={<Accessories
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} 
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />} />
+          <Route path="/products/:productId" element={<SingleProduct
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            user={user} 
+            isAdmin={isAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />} />
+          <Route path="/admin" element={<Admin
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
+            />}
+
           />
           <Route
             path="/register"
@@ -156,18 +223,26 @@ const App = () => {
               />
             }
           />
-          <Route
-            path="/products/all"
-            element={
-              <Products
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-                user={user}
-                isAdmin={isAdmin}
-                guestCart={guestCart}
-                setGuestCart={setGuestCart}
-              />
-            }
+
+          <Route path="/admin/orders/:userId" element={<Orders
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
+            />}
+          />
+          <Route path="/my-account" element={<UserAccount
+            setIsLoggedIn={setIsLoggedIn}
+            isLoggedIn={isLoggedIn}
+            user={user}
+            setUser={setUser}
+            isAdmin={isAdmin}
+            setIsAdmin={setIsAdmin}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
+            />}
           />
           <Route
             path="/products/records"

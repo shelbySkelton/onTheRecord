@@ -28,12 +28,13 @@ export default function ReviewOrder({ isLoggedIn, address, setAddress }) {
  
       setMyCart(myCart);
       })
+
     } else {
       getGuestCart().then((myCart) => {
         setMyCart(myCart)
-
       })
     };
+
   }, []);
   
   const items = myCart.items

@@ -69,10 +69,10 @@ async function updateUser({ id, ...fields }) {
   }
   try {
     const { rows: [user ] } = await client.query(`
-      UPDATE user
+      UPDATE users
       SET ${setString}
       WHERE id=${id}
-      RETURNING *
+      RETURNING id, email, first_name, last_name, "isAdmin";
     `, Object.values((fields)));
     return user;
     } catch (error) {

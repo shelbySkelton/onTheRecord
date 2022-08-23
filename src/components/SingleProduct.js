@@ -1,18 +1,24 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { getProductById } from '../axios-services/products';
 import { useParams } from 'react-router-dom';
 import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axios-services/cart';
+
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
+import { getReviewsUserId, getReviewsProductId, createNewReview } from "../axios-services/reviews";
 
-const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
+import Modal from './Modal';
+
+
+const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     const { productId } = useParams();
-
     const [productDetails, setProductDetails] = useState({});
     const [myCart, setMyCart] = useState({})
+
     const [open, setOpen] = React.useState(false);
 
     const handleClose = (event, reason) => {
@@ -37,6 +43,13 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
       </React.Fragment>
     );
 
+    const [isModal, setIsModal] = useState(false)
+    const [allReviewsUser, setAllReviewsUser] = useState([]);
+    const [createReview, setCreateReview] = useState('');
+    const [allReviewsProduct, setAllReviewsProduct] = useState([]);
+
+
+
     useEffect(() => {
         getProductById(productId)
             .then(productDetails => {
@@ -47,30 +60,37 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             .then(myCart => {
                 setMyCart(myCart)
             })
+        getReviewsProductId(productId)
+            .then(allReviewsProduct => {
+                console.log(allReviewsProduct)
+                setAllReviewsProduct(allReviewsProduct)
+            })
     }, [])
 
     const handleClick = async (event) => {
         event.preventDefault();
         setOpen(true);
         if (isLoggedIn){
+
             const cartItem = {
                 product_id: productId,
                 priceAtPurchase: Number(productDetails.price),
                 cart_id: myCart.id
-                }
+            }
             const data = await addCartItem(cartItem);
             return data;
         } else {
             const guestCartItem = {
                 product_id: productId,
                 product_name: productDetails.name,
+
                 priceAtPurchase: Number(productDetails.price)
                 }
             const sessionCart = await addItemToGuestCart(guestCartItem);
 
             guestCart.push(guestCartItem)
         }
-       
+
     }
 
     return (
@@ -86,7 +106,7 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             <div className='single-product-container'>
 
                 <div className='product-view'>
-                    <h1>{productDetails.name}</h1>
+                    <h1 id='header-singleProduct'>{productDetails.name}</h1>
                     <img src={productDetails.img_url} alt="album-cover" width="250" height="250"></img><br></br>
                     <span>{productDetails.quantity} Left In Stock!</span>
                     <button onClick={handleClick} className='add-to-cart-button'>Add to Cart</button>
@@ -104,9 +124,27 @@ const SingleProduct = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
                 </div>
             </div>
             <div className='product-reviews'>
-                <span>Reviews Placeholder</span>
-
+        
+                <h3>Reviews</h3>
+        
+                {allReviewsProduct.map((review, idx) => {
+                  return(
+                    <span key={idx}>
+                       <p> {review.rating}/5 </p> <br></br>
+                       <p> {review.content} </p> <br></br>
+                    </span> 
+                  )
+                
+                })}
             </div>
+            <div>
+                <button onClick={() => setIsModal(true)}>Add a Review</button>
+            </div>
+            <body>
+                {
+                    isModal && <Modal setIsModal={setIsModal} />
+                }
+            </body>
         </div>
     )
 

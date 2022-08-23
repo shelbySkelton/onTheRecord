@@ -65,6 +65,7 @@ export async function removeItemFromGuestCart(idx) {
       data: {
         idx: idx
       }
+
     }) 
 
     return data;

@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 const Records = ({ user, isLoggedIn }) => {
   const [allRecords, setAllRecords] = useState([]);
   const [myCart, setMyCart] = useState({});
+
   const [open, setOpen] = React.useState(false);
 
   const handleClose = (event, reason) => {
@@ -44,6 +45,8 @@ const Records = ({ user, isLoggedIn }) => {
   );
 
   
+  const [searchTerm, setSearchTerm] = useState('')
+
   useEffect(() => {
     getAllRecords().then((allRecords) => {
       setAllRecords(allRecords);
@@ -55,10 +58,34 @@ const Records = ({ user, isLoggedIn }) => {
     }
   }, []);
 
+  function searchMatches(record, searchTerm) {
+    let instances = 0;
+    let isItThere = false;
+
+      let recordName = record.name.toLowerCase().split(" ")
+      let recordArtist = record.artist.toLowerCase().split(" ")
+      let recordAlbumName = record.album_name.toLowerCase().split(" ")
+      let recordGenre = record.genre.toLowerCase().split(" ")
+      let recordDesc = record.description.toLowerCase().split(" ")
+      isItThere = recordName.includes(searchTerm)
+                  || recordArtist.includes(searchTerm) 
+                  || recordAlbumName.includes(searchTerm) 
+                  || recordDesc.includes(searchTerm) 
+                  || recordGenre.includes(searchTerm)
+      if (isItThere) {
+        instances ++
+      }
+   return isItThere;
+  }
+
+
+  const filteredRecords = allRecords.filter(record => searchMatches(record, searchTerm))
+  const recordsToDisplay = searchTerm.length ? filteredRecords : allRecords;
 
   return (
     
     <div>
+
       <Snackbar
         open={open}
         autoHideDuration={6000}
@@ -67,13 +94,29 @@ const Records = ({ user, isLoggedIn }) => {
         action={action}
       />
       <h1>Records Page</h1>
+
       <p>
         {isLoggedIn
           ? `You're Logged In as ${user.first_name}`
           : `You are not logged in`}
       </p>
+
+      <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
+
+        <input
+          id='search-words'
+          type='text'
+          value={searchTerm}
+          placeholder="Search records.."
+          onChange={(evt)=> setSearchTerm(evt.target.value)}
+        >
+        </input>
+        <button
+          onClick={(evt) => setSearchTerm('')}
+        >Clear Search</button>
+
       <div className="products-container">
-        {allRecords.map((record, idx) => {
+        {recordsToDisplay.map((record, idx) => {
           const handleClick = async (event) => {
             setOpen(true);
             event.preventDefault();
@@ -82,7 +125,9 @@ const Records = ({ user, isLoggedIn }) => {
                 product_id: record.id,
                 priceAtPurchase: record.price,
                 cart_id: myCart.id,
+
               };
+
               const data = await addCartItem(cartItem);
               return data;
             } else {
@@ -94,7 +139,7 @@ const Records = ({ user, isLoggedIn }) => {
               const sessionCart = await addItemToGuestCart(guestCartItem);
               return sessionCart
             }
-            
+
           };
           return (
             <section className="product-card" key={idx}>

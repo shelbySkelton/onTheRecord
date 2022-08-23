@@ -4,9 +4,60 @@ const express = require("express");
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = process.env;
 const { requireUser, requireAdmin } = require('./utils')
-const { getUserByEmail, getUser, createUser, getAllUsers } = require("../db/models/user");
-
+const { getUserByEmail, getUser, createUser, getAllUsers, updateUser } = require("../db/models/user");
+const { getMyPreviousOrdersWithItems } = require("../db/models/cart")
 const usersRouter = express.Router();
+
+
+usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
+  const { userId } = req.params;
+  const { email, first_name, last_name } = req.body
+  console.log("userid == req.user.id: ", userId, req.user.id)
+  if (userId == req.user.id) {
+    console.log("HII?")
+    const updateFields = {};
+
+    updateFields.id = Number(userId)
+
+    if (email) {
+     updateFields.email = email
+    }
+    if (first_name) {
+      updateFields.first_name = first_name
+     }
+     if (last_name) {
+      updateFields.last_name = last_name
+     }
+     console.log("updatefields: ", updateFields)
+     try {
+      const updatedUser = await updateUser(updateFields)
+      console.log("updatedUser: ", updatedUser)
+      res.send(updatedUser)
+     } catch ({name, message}) {
+      next({name, message})
+     }
+  }
+})
+
+
+usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
+  const { userId } = req.params;
+ try {
+  if (userId == req.user.id) {
+    const userOrders = await getMyPreviousOrdersWithItems(userId)
+    res.send(userOrders)
+    } else {
+      res.send({
+        name: "UnauthorizedUser",
+        messagae: `Users may only view their own prior orders`
+      })
+    }
+  } catch({name, message}) {
+    next({name, message})
+  }
+})
+
+
 
 usersRouter.post('/register', async (req, res, next) => {
   const { email, password, first_name, last_name } = req.body;

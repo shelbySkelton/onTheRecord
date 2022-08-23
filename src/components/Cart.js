@@ -11,7 +11,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, guestCart, setGuestCart, addItemToGuestCart } from "../axios-services/cart";
+
+import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, addItemToGuestCart, setGuestCart } from "../axios-services/cart";
+
 
 
 
@@ -44,7 +46,9 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
     return deletedItem;
     } else {
       event.preventDefault();
+
       const itemIdx = event.target.dataset.idx
+
       const remainingItems = await removeItemFromGuestCart(itemIdx)
       setMyCart(remainingItems)
       getGuestCart().then((myCart) => setMyCart(myCart))
@@ -56,6 +60,7 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
 
   const handleAdd = async (event) => {
     event.preventDefault();
+
     const { product_id, price, cart_id, product_name } = event.target.dataset;
     if (isLoggedIn){
       const addedItem = await addCartItem({
@@ -74,6 +79,7 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
       const sessionCart = await addItemToGuestCart(guestCartItem);
       getGuestCart().then((myCart) => setMyCart(myCart))
     }
+
   };
 
   if (!myCart.items) {
@@ -143,6 +149,7 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
                       >
                       Add
                     </Button>
+
                   </TableCell>
                 </TableRow>
               ))}
@@ -151,10 +158,12 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
                 <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>
                   Order Total
                 </TableCell>
+
                 <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>${orderTotal.toFixed(2)}</TableCell>
                 <TableCell align="right">
                 { myCart.items.length !== 0 ? <Button
           
+
           component={Link}
           to="/cart/checkout"
           variant="contained"

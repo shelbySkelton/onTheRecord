@@ -32,6 +32,7 @@ cartRouter.get("/myCart", requireUser, async (req, res, next) => {
   }
 });
 
+
 //SHELBYS ADD
 cartRouter.get('/guestCart', (req, res, next) => {
   const {guestCart} = req.session;
@@ -75,6 +76,7 @@ cartRouter.delete('/guestCart', (req, res, next) => {
 })
 
 
+
 cartRouter.post('/guestCart/checkout', async (req, res, next) => {
   try {
     const guestCart = await createGuestCart({
@@ -90,11 +92,6 @@ cartRouter.post('/guestCart/checkout', async (req, res, next) => {
     next(error)
   }
 })
-
-
-
-
-
 
 
 // Create a user's cart

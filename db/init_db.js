@@ -5,7 +5,7 @@ const {
 } = require('./');
 
 const { createProductsTable, createInitialProducts, createProduct, getActiveProductsByCategory, getProductById, getAllProducts, getAllInactiveProducts, getAllActiveProducts, updateProduct, deactivateProduct } = require('./models/products')
-const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser, getUserById, createInitialAdmin } = require('./models/user')
+const { getAllUsers, createUser, createInitialUsers, createUsersTable, getUser, getUserById, createInitialAdmin, updateUser } = require('./models/user')
 
 const { createReviewsTable, createInitialReviews, getReviewsByUser, getReviewsByProduct, updateReview, deleteReview } = require('./models/reviews');
 
@@ -104,13 +104,23 @@ async function testDB() {
 
 
     // console.log("Calling updateProduct on product 2...")
-    // const updates = {
+    // const produpdates = {
     //   id: 2,
     //   description: "UPDATED WORKED!!!!",
     //   status: 'Inactive'
     // }
-    // const updatedProduct = await updateProduct(updates)
+    // const updatedProduct = await updateProduct(produpdates)
     // console.log("Finished updating product:", updatedProduct)
+
+    // console.log("Calling update my account id 2...")
+    // const updates = {
+    //   id: 2,
+    //   email: "albertooo@test.com",
+    //   first_name: "Berto"
+    // }
+    // console.log("updates: ", updates)
+    // const updatedUser = await updateUser(updates);
+    // console.log("Finished updating user 2: ", updatedUser)
 
 
     // console.log("Calling deactivate product 1")
@@ -126,9 +136,9 @@ async function testDB() {
     // const allProducts = await getAllProducts();
     // console.log("allProducts: ", allProducts);
 
-    console.log("Calling getAllInactiveProducts...");
-    const allInactiveProducts = await getAllInactiveProducts();
-    console.log("allInactiveProducts: ", allInactiveProducts);
+    // console.log("Calling getAllInactiveProducts...");
+    // const allInactiveProducts = await getAllInactiveProducts();
+    // console.log("allInactiveProducts: ", allInactiveProducts);
 
     // console.log("Calling getAllUsers");
     // const users = await getAllUsers();
@@ -147,6 +157,7 @@ async function testDB() {
     // console.log("These are user2's past and present orders")
     // const user2Carts = await getMyPreviousOrdersWithItems(2);
     // console.log("user2carts: ", user2Carts)
+    // console.log("cart.items: ", user2Carts[0].items)
 
     // console.log("These are user2's past and present orders")
     // const user2Carts = await getMyOrdersWithItems(2);
@@ -187,6 +198,7 @@ async function testDB() {
     // console.log("Calling delete review [6]");
     // const updateDeleteReview = await deleteReview(6)
     // console.log("deleteReview: ", updateDeleteReview)
+
 
     console.log("Pending cart 3")
     const checkedOutCart = await checkOut(3);
