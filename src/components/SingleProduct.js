@@ -15,6 +15,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
     const [isModal, setIsModal] = useState(false)
     const [allReviewsUser, setAllReviewsUser] = useState([]);
     const [createReview, setCreateReview] = useState('');
+    const [rating, setRating] = useState(5);
     const [allReviewsProduct, setAllReviewsProduct] = useState([]);
 
 
@@ -90,6 +91,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
                     <span key={idx}>
                        <p> {review.rating}/5 </p> <br></br>
                        <p> {review.content} </p> <br></br>
+                       <hr></hr>
                     </span> 
                   )
                 
@@ -100,7 +102,17 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             </div>
             <body>
                 {
-                    isModal && <Modal setIsModal={setIsModal} />
+                    isModal && <Modal 
+                    setIsModal={setIsModal} 
+                    productDetails={productDetails} 
+                    createReview={createReview}
+                    setCreateReview={setCreateReview}
+                    rating={rating}
+                    setRating={setRating}
+                    user={user}
+                    allReviewsProduct={allReviewsProduct}
+                    setAllReviewsProduct={setAllReviewsProduct}
+                    />
                 }
             </body>
         </div>

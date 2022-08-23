@@ -23,11 +23,6 @@ const Records = ({ user, isLoggedIn }) => {
 
   return (
     <div>
-      <p>
-        {isLoggedIn
-          ? `You're Logged In as ${user.first_name}`
-          : `You are not logged in`}
-      </p>
       <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
       <div className="products-container">
         {allRecords.map((record, idx) => {
