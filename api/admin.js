@@ -11,7 +11,11 @@ const { getAllProducts,
     deactivateProduct,
     getAllUsers,
     getUserById,
-    updateProduct } = require('../db/models')
+    updateProduct,
+    getMyPreviousOrdersWithItems,
+    updateCartStatus,
+    updateUser
+  } = require('../db/models')
 
 
 adminRouter.get('/', requireAdmin, (req, res, next) => {
@@ -29,6 +33,20 @@ adminRouter.get('/users/:userId', requireAdmin, async (req, res, next) => {
     next(error)
   }
 })
+
+
+adminRouter.get('/:userId/orders', requireAdmin, async (req, res, next) => {
+  const { userId } = req.params;
+ try {
+    const userOrders = await getMyPreviousOrdersWithItems(userId);
+    res.send(userOrders)
+
+  } catch({name, message}) {
+    next({name, message})
+  }
+})
+
+
 
 
 adminRouter.get('/products', requireAdmin, async (req, res, next) => {
@@ -156,7 +174,31 @@ adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) =
       }
   })
 
+adminRouter.patch('/orders/:orderId', requireAdmin, async (req, res, next) => {
+  const {orderId} = req.params;
+  const { status } = req.body
+  try {
+    const order = await updateCartStatus(orderId, status);
+    res.send(order)
+  } catch ({name, message}) {
+    next({name, message})
+  }
 
+})
+
+adminRouter.patch('/users/:userId', requireAdmin, async (req, res, next) => {
+  const { userId } = req.params;
+  const { isAdmin } = req.body;
+  const updateFields = {};
+  updateFields.id = userId;
+  updateFields.isAdmin = isAdmin;
+  try {
+    const user = await updateUser(updateFields)
+    res.send(user)
+  } catch ({name, message}) {
+    next({name, message})
+  }
+})
 
 adminRouter.get('/users', requireAdmin, async (req, res, next) => {
     try {

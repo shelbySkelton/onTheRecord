@@ -52,12 +52,13 @@ export default function ReviewOrder({ isLoggedIn }) {
       console.log(myCart);
       setMyCart(myCart);
       })
-    } else {
-      getGuestCart().then((myCart) => {
-        setMyCart(myCart)
-        console.log("guestcart: ", myCart)
-      })
-    };
+    }
+    // else {
+    //   getGuestCart().then((myCart) => {
+    //     setMyCart(myCart)
+    //     console.log("guestcart: ", myCart)
+    //   })
+    // };
     // }
   }, []);
 
