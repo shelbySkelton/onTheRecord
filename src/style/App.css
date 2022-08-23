@@ -90,7 +90,8 @@ h1 {
 .products-nav a {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   padding: 5px;
   text-decoration: none;
   font-family: sans-serif;
@@ -245,7 +246,7 @@ button:hover {
   margin: 8px;
   padding: 8px;
 }
-.logo-secret:hover {
+.logo-secret {
   animation-name: spin;
   animation-duration: 1800ms;
   animation-iteration-count: infinite;

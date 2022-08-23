@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 
@@ -83,7 +83,9 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
   };
 
   if (!myCart.items) {
-    return <h1>0 items in your cart</h1>;
+    return (
+      <h1>0 items in your cart</h1>
+    ) 
   } else {
     let priceArray = [];
     myCart.items.map((item) => priceArray.push(item.priceAtPurchase));
@@ -112,7 +114,8 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
             <TableBody>
               {myCart.items.map((item, idx) => (
                 <TableRow
-                  key={item.id}
+                  // key={item.id}
+                  key={idx}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>

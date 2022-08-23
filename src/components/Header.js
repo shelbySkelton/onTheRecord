@@ -34,7 +34,7 @@ const Header = (props) => {
 
     return (
         <div className="header-container">
-        <navbar className='header-nav'>
+        <div className='header-nav'>
             <Link to='/'
                 hidden={isLoggedIn ? false : true}
                 onClick={() => {
@@ -57,7 +57,7 @@ const Header = (props) => {
                 to="/my-account">{user.first_name}'s Account</Link>
             <Link to="/cart">My Cart </Link>
 
-        </navbar>
+        </div>
         </div>
     )
 }

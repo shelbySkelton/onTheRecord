@@ -142,16 +142,5 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
     </>
   )
 }
+
 export default Accessories;
-
-
-
-
-
-
-
-
-
-
-
-
