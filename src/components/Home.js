@@ -10,7 +10,6 @@ const Home = (props) => {
       <h1>{isLoggedIn
           ? `Welcome ${user.first_name}!`
           : `Welcome!`}</h1>
-      <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}`: `You are not logged in`}</p>
     </div>
   )
 }
