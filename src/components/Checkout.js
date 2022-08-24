@@ -23,7 +23,13 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#AE69FF'
+    }
+  }
+});
 
 export default function Checkout(props) {
 
@@ -121,19 +127,32 @@ export default function Checkout(props) {
       <CssBaseline />
       <AppBar
         position="absolute"
-        color="default"
+        // color="default"
         elevation={0}
         sx={{
           position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
+          // borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
       >
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
+      <Typography 
+        component="h1" 
+        variant="h4" 
+        align="center"
+        className='font-effect-shadow-multiple' 
+        theme={theme}
+        sx={{ 
+          variant: 'h1',
+          marginTop: '8px',
+          fontFamily: 'Sofia',
+          fontSize: '48px',
+          fontWeight: '900'
+          }}>
+          Checkout
+        </Typography>
+        
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>

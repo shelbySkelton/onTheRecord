@@ -11,12 +11,19 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { createTheme } from "@mui/material";
 
 
 import { getMyCart, addCartItem, deleteCartItem, getGuestCart, removeItemFromGuestCart, addItemToGuestCart, setGuestCart } from "../axios-services/cart";
 
 
-
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#AE69FF'
+    }
+  }
+});
 
 const Cart = ({ isLoggedIn, user, guestCart }) => {
   const [myCart, setMyCart] = useState({});
@@ -97,15 +104,39 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
     );
     return (
       <div className="cart-container">
-        <h1>{myCart.items.length} items in your cart</h1>
-        <TableContainer component={Paper} >
-          <Table sx={{ minWidth: 320, margin: '12px' }} aria-label="simple table">
+        <h3>{myCart.items.length} items in your cart</h3>
+        <TableContainer
+          theme={theme}
+          component={Paper}
+          sx={{ 
+            minWidth: 320, 
+            // margin: '12px',
+            border: 2,
+            borderColor: 'primary.main',
+            borderRadius: '10px'
+
+                        
+            // maxWidth: 960,
+          }} 
+          >
+          <Table 
+            theme={theme}
+            sx={{ 
+              minWidth: 320, 
+              // margin: '12px',
+              
+              border: 1,
+              borderColor: 'primary.main'
+
+              // maxWidth: 960,
+            }} 
+            aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>
                   <DeleteOutlinedIcon size="large" />
                 </TableCell>
-                <TableCell>Product Name</TableCell>
+                <TableCell fontWeight='bold'>Product Name</TableCell>
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">
                   <AddIcon />
@@ -122,7 +153,11 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
                   <TableCell>
                     <Button 
                       key={idx}
-                      sx={{ cursor: "pointer" }}
+                      theme={theme}
+                      sx={{ 
+                        cursor: "pointer",
+                        fontWeight: 'bold' 
+                      }}
                       aria-label="delete" 
                       size="large" 
                       id={item.id} 
@@ -138,8 +173,12 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
                   <TableCell align="right">${item.priceAtPurchase}</TableCell>
                   <TableCell align="right">
                     <Button 
-                      sx={{ cursor: "pointer" }}
                       key={idx}
+                      theme={theme}
+                      sx={{ 
+                        cursor: "pointer",
+                        fontWeight: 'bold' 
+                      }}
                       aria-label="add" 
                       size="large"
                       data-idx={idx} 
@@ -171,7 +210,8 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
           component={Link}
           to="/cart/checkout"
           variant="contained"
-          color="primary"
+          // color="primary"
+          theme={theme}
         >
           Checkout
         </Button> : null }      

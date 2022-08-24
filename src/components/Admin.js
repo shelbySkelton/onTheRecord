@@ -94,7 +94,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
                                 allUsers.map((user, idx) => {
 
                                     return(
-                                       <TableBody>
+                                       <TableBody key={idx}>
                                         <TableRow key={idx}>
                                             <TableCell>{user.id}</TableCell>
                                             <TableCell>{user.email}</TableCell>
