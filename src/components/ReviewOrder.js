@@ -18,25 +18,8 @@ const payments = [
 
 
 
-export default function ReviewOrder({ isLoggedIn, address, setAddress }) {
+export default function ReviewOrder({ isLoggedIn, address, setAddress, myCart, setMyCart }) {
 
-  const [myCart, setMyCart] = useState({});
-  useEffect(() => {
-
-    if (isLoggedIn){
-      getMyCart().then((myCart) => {
- 
-      setMyCart(myCart);
-      })
-
-    } else {
-      getGuestCart().then((myCart) => {
-        setMyCart(myCart)
-      })
-    };
-
-  }, []);
-  
   const items = myCart.items
 
   const {
@@ -58,7 +41,7 @@ export default function ReviewOrder({ isLoggedIn, address, setAddress }) {
     items.map(item => priceArray.push(item.priceAtPurchase))
     const initialValue = 0;
     const orderTotal = priceArray.reduce(
-    (previousValue, currentValue) => previousValue + currentValue,
+    (previousValue, currentValue) => Number(previousValue) + Number(currentValue),
     initialValue
     );
 
@@ -79,7 +62,7 @@ export default function ReviewOrder({ isLoggedIn, address, setAddress }) {
           <ListItem sx={{ py: 1, px: 0 }}>
             <ListItemText primary="Total" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-              ${orderTotal.toFixed(2)}
+              ${Number(orderTotal).toFixed(2)}
             </Typography>
           </ListItem>
         </List>

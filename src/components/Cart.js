@@ -202,7 +202,7 @@ const Cart = ({ isLoggedIn, user, guestCart }) => {
                   Order Total
                 </TableCell>
 
-                <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>${orderTotal.toFixed(2)}</TableCell>
+                <TableCell align="right" sx={{ fontWeight: "bold", fontSize: "18px" }}>${Number(orderTotal).toFixed(2)}</TableCell>
                 <TableCell align="right">
                 { myCart.items.length !== 0 ? <Button
           

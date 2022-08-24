@@ -102,6 +102,8 @@ export default function Checkout(props) {
           // isAdmin={isAdmin}
           // guestCart={guestCart}
           // setGuestCart={setGuestCart}
+          myCart={myCart}
+          setMyCart={setMyCart}
           address={address}
           setAddress={setAddress}
               />;
