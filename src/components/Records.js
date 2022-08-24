@@ -90,6 +90,10 @@ const Records = ({ user, isLoggedIn }) => {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
+        anchorOrigin={{
+          horizontal: 'center',
+          vertical: 'bottom'
+        }}
         message="Item has been added to your cart"
         action={action}
       />
@@ -146,15 +150,15 @@ const Records = ({ user, isLoggedIn }) => {
                     height="150"
                   ></img>{" "}
                 </Link>
-                <br></br>
+                {/* <br></br> */}
               </span>
-              <br></br>
+              {/* <br></br> */}
               <Link className="product-link" to={`/products/${record.id}`}>
                 {record.name}
               </Link>
-              <br></br>
+              {/* <br></br> */}
               <span>${record.price}</span>
-              <br></br>
+              {/* <br></br> */}
               <button onClick={handleClick} className="add-to-cart-button">
                 Add to Cart
               </button>

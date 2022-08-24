@@ -81,7 +81,7 @@ const App = () => {
   }, [isLoggedIn, guestCart]);
 
   const [hoverCount, setHoverCount] = useState(0);
-
+  console.log(hoverCount)
   return (
     <div className="app-container">
       <Router>
@@ -100,7 +100,7 @@ const App = () => {
           <div className="logo-image">
             <img
               className="logo-secret"
-              onMouseOver={() => setHoverCount(hoverCount + 1)}
+              onClick={() => setHoverCount(hoverCount + 1)}
               src="https://i.imgur.com/cZV1cx1.png"
               alt="logo"
             />
@@ -109,7 +109,7 @@ const App = () => {
           <div className="logo-image">
             <img
               className="logo"
-              onMouseOver={() => setHoverCount(hoverCount + 1)}
+              onClick={() => setHoverCount(hoverCount + 1)}
               src="https://i.imgur.com/cZV1cx1.png"
               alt="logo"
             />
