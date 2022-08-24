@@ -68,9 +68,6 @@ const App = () => {
 
     } else {
       sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
-      // createGuestCart().then((myCart) => {
-      //   setMyCart(myCart)
-      // })
     }
     if (isLoggedIn){
       getMyCart().then((myCart) => {
@@ -81,7 +78,7 @@ const App = () => {
   }, [isLoggedIn, guestCart]);
 
   const [hoverCount, setHoverCount] = useState(0);
-  console.log(hoverCount)
+
   return (
     <div className="app-container">
       <Router>
@@ -125,9 +122,7 @@ const App = () => {
             Admin Dashboard
           </Link> : null
           }
-          {/* <Link to="/admin" hidden={isAdmin ? false : true}>
-            Admin Dashboard
-          </Link> */}
+
         </div>
         <Routes>
 

@@ -1,4 +1,4 @@
-<<<<<<<<< Temporary merge branch 1
+
 html, body {
   margin:0;
   padding:0;
@@ -23,18 +23,18 @@ h1 {
   font-size: 20px;
 }
 
-<<<<<<<<< Temporary merge branch 1
+
 .admin {
   display: flex;
 
   flex-direction: column;
 
   margin: auto;
+}
 
-=========
 .admin,
 .cart-container {
->>>>>>>>> Temporary merge branch 2
+
   height: 100%;
 
   width: 90%;
@@ -52,10 +52,6 @@ h1 {
   align-items: center;
   width: 80%
   /* justify-content: center; */
-=========
-.cart-container {
-  margin-top: 12px;
->>>>>>>>> Temporary merge branch 2
 }
 
 
@@ -124,17 +120,8 @@ h1 {
 }
 
 .header-nav a:hover {
-<<<<<<<<< Temporary merge branch 1
-  /* font-size:125%; */
-
   transition: 0.3s;
   transform: scale(125%);
-
-  /* height: 30px; */
-=========
-  font-size: 125%;
-  height: 30px
->>>>>>>>> Temporary merge branch 2
 }
 
 .header-nav a {
@@ -178,24 +165,10 @@ h1 {
 
 }
 
-/* .products-nav a:link {color:#ff0000;} */
-<<<<<<<<< Temporary merge branch 1
-/* .products-nav a:visited {color: black;} */
+
 .products-nav a:hover {
   transition: 0.3s;
-  /* font-size:125%; */
-
   transform: scale(125%);
-
-
-=========
-.products-nav a:visited {
-  color: black;
-}
-
-.products-nav a:hover {
-  font-size: 125%;
->>>>>>>>> Temporary merge branch 2
 }
 
 .modal {
@@ -352,10 +325,20 @@ button:hover {
 
 @keyframes spin {
   from {
-    transform:rotate(0deg);
-  } to {
-    transform:rotate(360deg);
-    }
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#product-add-container {
+  display: flex;
+  font-family: sans-serif;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #add-product-box {
