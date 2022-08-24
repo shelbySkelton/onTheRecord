@@ -5,22 +5,22 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { getMyCart } from "../axios-services/cart";
 
 const Header = (props) => {
-    const { 
-        isLoggedIn, 
-        setIsLoggedIn, 
-        user, 
-        setUser, 
-        isAdmin, 
+    const {
+        isLoggedIn,
+        setIsLoggedIn,
+        user,
+        setUser,
+        isAdmin,
         setIsAdmin,
         guestCart,
         setGuestCart,
         myCart,
-        setMyCart 
+        setMyCart
     } = props
 
     // const [user, setUser] = useState({})
     // const [isLoggedIn, setIsLoggedIn] = useState(false)
-    useEffect(() => {   
+    useEffect(() => {
         // testMe()
         //     .then(user => {
         //         setUser(user);
@@ -34,30 +34,39 @@ const Header = (props) => {
 
     return (
         <div className="header-container">
-        <div className='header-nav'>
-            <Link to='/'
-                hidden={isLoggedIn ? false : true}
-                onClick={() => {
-                    localStorage.clear();
-                    setIsLoggedIn(false);
-                    setUser({});
-                    setIsAdmin(false);
-                }}> Log Out
-            </Link>
+            <div className='header-nav'
+            >
+                {
+                    isLoggedIn ?
+                        <Link to='/'
+                            hidden={isLoggedIn ? false : true}
+                            onClick={() => {
+                                localStorage.clear();
+                                setIsLoggedIn(false);
+                                setUser({});
+                                setIsAdmin(false);
+                            }}> Log Out
+                        </Link>
+                        :
+                        <Link to="/login"
+                            hidden={isLoggedIn ? true : false}
+                        >Login</Link>
+                }
 
-            <Link to="/login"
-                hidden={isLoggedIn ? true : false}
-            >Login</Link>
-            <Link to="/register"
-                hidden={isLoggedIn ? true : false}
+                    <Link to="/register"
+                     hidden={isLoggedIn ? true : false}
 
-            >Register</Link>
-            <Link
-                hidden={isLoggedIn ? false : true}
-                to="/my-account">{user.first_name}'s Account</Link>
-            <Link to="/cart">My Cart </Link>
-
-        </div>
+                    >Register</Link>
+                {
+                    isLoggedIn ?
+                        <Link
+                            hidden={isLoggedIn ? false : true}
+                            to="/my-account">{user.first_name}'s Account
+                        </Link>
+                        : null
+                }
+                <Link to="/cart">My Cart </Link>
+            </div>
         </div>
     )
 }
