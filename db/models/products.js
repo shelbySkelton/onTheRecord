@@ -204,7 +204,7 @@ async function createInitialProducts() {
                 status: "Active"
             },
             {
-                name: "Blond (Limited Edition LP)",
+                name: "Blond LP (Limited Edition)",
                 price: "100.00",
                 category: "Record",
                 quantity: "5",
@@ -231,7 +231,7 @@ async function createInitialProducts() {
                 status: "Active"
             },
             {
-                name: "Lemonade (Limited Edition Yellow Colored Double LP",
+                name: "Lemonade 2 x LP (Limited Edition Yellow Colored",
                 price: "68.99",
                 category: "Record",
                 quantity: "20",
@@ -244,7 +244,7 @@ async function createInitialProducts() {
                 status: "Active"
             },
             {
-                name: "Get This In Ya!! (EP, Limited Edition)",
+                name: "Get This In Ya!! EP (Limited Edition)",
                 price: "27.87",
                 category: "Record",
                 quantity: "15",
@@ -306,7 +306,7 @@ async function createInitialProducts() {
                 status: "Active"
             },
             {
-                name: "HIStory - Past, Present And Future - Book I",
+                name: "HIStory - Past, Present And Future - Book I LP",
                 price: "30.99",
                 category: "Record",
                 quantity: "1",
@@ -319,7 +319,7 @@ async function createInitialProducts() {
                 status: "Active"
             },
             {
-                name: "Anti",
+                name: "Anti LP",
                 price: "24.99",
                 category: "Record",
                 quantity: "2",
@@ -332,7 +332,7 @@ async function createInitialProducts() {
                 status: "Active"
             },
             {
-                name: "Keasbey Nights LP (Limited Edition - blue translucent",
+                name: "Keasbey Nights LP (Limited Edition Blue Translucent",
                 price: "14.99",
                 category: "Record",
                 quantity: "5",

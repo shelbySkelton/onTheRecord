@@ -58,7 +58,6 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     return (
         <div>
-            <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
             <div className='single-product-container'>
 
                 <div className='product-view'>
