@@ -8,6 +8,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { MenuItem } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
 
 
@@ -79,19 +80,25 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
     }
 
     return (
-        <div hidden={isAdmin ? false : true} id= 'add-product-box'>
+        <div hidden={isAdmin ? false : true} 
+            id="product-add-container"
+             >
+            <h1 className="font-effect-shadow-multiple">Add a Product</h1>
             <Box
+                id='add-product-box'
                 components="form"
-                sx={{'& .MuiTextField-root': { 
-                    m: 1, 
-                    width: '25ch', 
-                    backgroundColor: 'white',
-                }}}
+                sx={{
+                    '& .MuiTextField-root': {
+                        m: 1,
+                        width: '25ch',
+                        backgroundColor: 'white',
+                    }
+                }}
                 noValidate
                 autoComplete="off"
             >
                 <div>
-                    <></>
+
                     <TextField
                         required
                         label="Name"
@@ -105,14 +112,14 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                         onChange={(evt) => setPrice(evt.target.value)}
                     /><br></br>
                     <Box sx={{ minWidth: 250 }}>
-                    <p>Product Category</p>
+                    <InputLabel id="Category">Category</InputLabel>
                         <Select
                             sx={{
                                 backgroundColor: 'white'
                             }}
+                            labelId="Category"
                             label="Category"
                             required
-                            placeholder="Record"
                             onChange={(evt) => setCategory(evt.target.value)}
                         >
                             <MenuItem value="Record">Record</MenuItem>
@@ -121,6 +128,7 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                     </Box>
                     <TextField
                         label="Quantity"
+                        min="0"
                         required
                         type="number"
                         InputLabelProps={{
@@ -135,21 +143,21 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                         onChange={(evt) => setImg_Url(evt.target.value)}
                     />
                     <br></br>
-                    <Box sx={{ minWidth: 150 }}>
-                    <p>Product Condition</p>
-                        <Select
+                    {/* <Box sx={{ minWidth: 150 }}> */}
+                    <InputLabel id="condition-select">Condition</InputLabel>
+                    <Select
                         sx={{
                             backgroundColor: 'white'
                         }}
-                            label="Condition"
-                            placeholder="New"
-                            required
-                            onChange={(evt) => setCondition(evt.target.value)}
-                        >
-                            <MenuItem value="New">New</MenuItem>
-                            <MenuItem value="Used">Used</MenuItem>
-                        </Select>
-                    </Box>
+                        labelId="condition-select"
+                        label="Condition"
+                        required
+                        onChange={(evt) => setCondition(evt.target.value)}
+                    >
+                        <MenuItem value="New">New</MenuItem>
+                        <MenuItem value="Used">Used</MenuItem>
+                    </Select>
+                    {/* </Box> */}
                     <TextField
                         label="Album Name"
                         placeholder="Album"
@@ -173,24 +181,27 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
                         placeholder="Genre"
                         onChange={(evt) => setGenre(evt.target.value)}
                     />
-                    <Box sx={{ minWidth: 150 }}>
-                       <p>Product Status</p>
-                        <Select
-                            label="Status"
-                            sx={{
-                                backgroundColor: 'white'
-                            }}
-                            required
-                            onChange={(evt) => setStatus(evt.target.value)}
-                        >
-                            <MenuItem value="Active">Active</MenuItem>
-                            <MenuItem value="Inactive">Inactive</MenuItem>
-                        </Select>
-                    </Box>
-                    <Button 
+                    {/* <Box sx={{ minWidth: 150 }}> */}
+                    <InputLabel id="status-select">Status</InputLabel>
+                    <Select
+                        label="Status"
+                        labelId='status-select'
+                        sx={{
+                            backgroundColor: 'white'
+                        }}
+                        required
+                        onChange={(evt) => setStatus(evt.target.value)}
+                    >
+                        <MenuItem value="Active">Active</MenuItem>
+                        <MenuItem value="Inactive">Inactive</MenuItem>
+                    </Select>
+                    <br></br>
+                    <Button
                         id="test-button"
                         variant="contained"
                         onClick={createHandler}>Create Product</Button>
+                    {/* </Box> */}
+
                 </div>
             </Box>
         </div>

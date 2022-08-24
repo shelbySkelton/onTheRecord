@@ -1,8 +1,10 @@
+
 html, body {
   margin:0;
   padding:0;
   background-color: rgb(234, 208, 174);
 }
+
 
 .app-container {
   background-color: rgb(234, 208, 174);
@@ -21,12 +23,17 @@ h1 {
   font-size: 20px;
 }
 
+
 .admin {
   display: flex;
 
   flex-direction: column;
 
   margin: auto;
+}
+
+.admin,
+.cart-container {
 
   height: 100%;
 
@@ -38,7 +45,6 @@ h1 {
   /* margin: 50px; */
 }
 
-
 .cart-container{
   display:flex;
   flex-direction: column;
@@ -48,15 +54,6 @@ h1 {
   /* justify-content: center; */
 }
 
-/* .cart-container{
-  /* margin-top: 12px;  */
-  /* border-style: solid black 2px;
-} */
-
-/* .app-container h1 {
-  color: var(--green);
-  padding: 1rem;
-} */
 
 .products-container {
   display: flex;
@@ -118,14 +115,13 @@ h1 {
   /* height: 30px; */
 }
 
-.header-nav a:visited {color: black;}
-.header-nav a:hover {
-  /* font-size:125%; */
+.header-nav a:visited {
+  color: black;
+}
 
+.header-nav a:hover {
   transition: 0.3s;
   transform: scale(125%);
-
-  /* height: 30px; */
 }
 
 .header-nav a {
@@ -166,18 +162,13 @@ h1 {
   border-bottom: solid white 2px; */
   width: 100vw;
   /* color: black; */
-  
+
 }
 
-/* .products-nav a:link {color:#ff0000;} */
-/* .products-nav a:visited {color: black;} */
+
 .products-nav a:hover {
   transition: 0.3s;
-  /* font-size:125%; */
-
   transform: scale(125%);
-
-
 }
 
 .modal {
@@ -316,12 +307,14 @@ button:hover {
 
 
 
-.logo, .logo-secret {
+.logo,
+.logo-secret {
   width: 20%;
   height: 20%;
   margin: 8px;
   padding: 8px;
 }
+
 .logo-secret {
   transition: 0.3s;
   animation-name: spin;
@@ -329,25 +322,56 @@ button:hover {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-  
+
 @keyframes spin {
   from {
-    transform:rotate(0deg);
-  } to {
-    transform:rotate(360deg);
-    }
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#product-add-container {
+  display: flex;
+  font-family: sans-serif;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #add-product-box {
   display: flex;
+  width: 500px;
+  border: solid black 2px;
+  padding: 20px;
+  background-color: white;
   justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  margin: 20px
+  flex-direction: center;
+  margin: 10px;
+  border: solid #AE69FF 3px;
+  border-radius: 10px;
+  box-shadow:rgba(0, 0, 0, 0.2) ;
 }
 
+#add-product-box * {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin: 5px;
+  width: 300px;
+}
+
+#update-user-button {
+  margin: 8px;
+}
+
+#update-status-select {
+  width: 150px;
+}
 
 .product-link {
   text-decoration: none;
 }
-
