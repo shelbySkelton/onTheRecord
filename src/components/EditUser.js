@@ -81,15 +81,22 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
                     <TableRow>
                         <TableCell>Status</TableCell>
                         <TableCell>{userDetails.isAdmin ? 'Administrator' : 'User'}</TableCell>
+                    </TableRow>
+                    <TableRow>
                         <TableCell>
+                            Update Status <br></br>
                             <Select
+                                id='update-status-select'
                                 defaultValue={userDetails.isAdmin ? 'Administrator' : 'User'}
                                 onChange={(evt) => setAdminRights(evt.target.value)}
                             >
                                 <MenuItem value='true'>Administrator</MenuItem>
                                 <MenuItem value='false'>User</MenuItem>
                             </Select>
+                        </TableCell>
+                        <TableCell>
                             <Button
+                                id='update-user-button'
                                 variant='contained'
                                 onClick={(evt) => {
                                     updateUserStatus(userId, adminRights)
