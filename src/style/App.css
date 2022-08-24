@@ -1,3 +1,9 @@
+<<<<<<<<< Temporary merge branch 1
+html, body {
+  margin:0;
+  padding:0;
+  background-color: rgb(234, 208, 174);
+}
 
 
 .app-container {
@@ -17,7 +23,18 @@ h1 {
   font-size: 20px;
 }
 
-.admin, .cart-container {
+<<<<<<<<< Temporary merge branch 1
+.admin {
+  display: flex;
+
+  flex-direction: column;
+
+  margin: auto;
+
+=========
+.admin,
+.cart-container {
+>>>>>>>>> Temporary merge branch 2
   height: 100%;
 
   width: 90%;
@@ -29,18 +46,18 @@ h1 {
 }
 
 .cart-container{
+  display:flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  width: 80%
+  /* justify-content: center; */
+=========
+.cart-container {
   margin-top: 12px;
+>>>>>>>>> Temporary merge branch 2
 }
 
-/* .cart-container{
-  /* margin-top: 12px;  */
-  /* border-style: solid black 2px;
-} */
-
-/* .app-container h1 {
-  color: var(--green);
-  padding: 1rem;
-} */
 
 .products-container {
   display: flex;
@@ -107,8 +124,17 @@ h1 {
 }
 
 .header-nav a:hover {
-  font-size:125%;
+<<<<<<<<< Temporary merge branch 1
+  /* font-size:125%; */
+
+  transition: 0.3s;
+  transform: scale(125%);
+
+  /* height: 30px; */
+=========
+  font-size: 125%;
   height: 30px
+>>>>>>>>> Temporary merge branch 2
 }
 
 .header-nav a {
@@ -153,8 +179,24 @@ h1 {
 }
 
 /* .products-nav a:link {color:#ff0000;} */
-.products-nav a:visited {color: black;}
-.products-nav a:hover {font-size:125%;}
+<<<<<<<<< Temporary merge branch 1
+/* .products-nav a:visited {color: black;} */
+.products-nav a:hover {
+  transition: 0.3s;
+  /* font-size:125%; */
+
+  transform: scale(125%);
+
+
+=========
+.products-nav a:visited {
+  color: black;
+}
+
+.products-nav a:hover {
+  font-size: 125%;
+>>>>>>>>> Temporary merge branch 2
+}
 
 .modal {
   display: flex;
