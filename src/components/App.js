@@ -23,7 +23,8 @@ import {
   UserAccount,
   Checkout,
   ReviewOrder,
-  Orders
+  Orders,
+  ErrorPage
 } from './index'
 
 import {
@@ -395,6 +396,21 @@ const App = () => {
                 setAddress={setAddress}
               />
             }
+          />
+          <Route
+            path="*"
+            element={<ErrorPage 
+              setIsLoggedIn={setIsLoggedIn}
+                isLoggedIn={isLoggedIn}
+                user={user}
+                setUser={setUser}
+                isAdmin={isAdmin}
+                setIsAdmin={setIsAdmin}
+                guestCart={guestCart}
+                setGuestCart={setGuestCart}
+                address={address}
+                setAddress={setAddress}
+            />}
           />
         </Routes>
       </Router>
