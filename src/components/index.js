@@ -17,4 +17,5 @@ export { default as Checkout } from './Checkout';
 export { default as ReviewOrder } from './ReviewOrder';
 export { default as Modal } from './Modal';
 export { default as Orders } from './Orders';
+export { default as ErrorPage } from './ErrorPage'
 

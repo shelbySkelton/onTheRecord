@@ -79,6 +79,10 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
+        anchorOrigin={{
+          horizontal: 'center',
+          vertical: 'bottom'
+        }}
         message="Item has been added to your cart"
         action={action}
       />

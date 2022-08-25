@@ -52,11 +52,12 @@ const Header = (props) => {
                             hidden={isLoggedIn ? true : false}
                         >Login</Link>
                 }
+                {
+                    !isLoggedIn ? <Link to="/register"
+                    hidden={isLoggedIn ? true : false}
 
-                    <Link to="/register"
-                     hidden={isLoggedIn ? true : false}
-
-                    >Register</Link>
+                   >Register</Link> : null
+                }
                 {
                     isLoggedIn ?
                         <Link

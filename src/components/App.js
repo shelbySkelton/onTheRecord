@@ -23,7 +23,8 @@ import {
   UserAccount,
   Checkout,
   ReviewOrder,
-  Orders
+  Orders,
+  ErrorPage
 } from './index'
 
 import {
@@ -68,9 +69,6 @@ const App = () => {
 
     } else {
       sessionStorage.setItem("guestCart", JSON.stringify(guestCart));
-      // createGuestCart().then((myCart) => {
-      //   setMyCart(myCart)
-      // })
     }
     if (isLoggedIn){
       getMyCart().then((myCart) => {
@@ -81,7 +79,7 @@ const App = () => {
   }, [isLoggedIn, guestCart]);
 
   const [hoverCount, setHoverCount] = useState(0);
-  console.log(hoverCount)
+
   return (
     <div className="app-container">
       <Router>
@@ -125,9 +123,7 @@ const App = () => {
             Admin Dashboard
           </Link> : null
           }
-          {/* <Link to="/admin" hidden={isAdmin ? false : true}>
-            Admin Dashboard
-          </Link> */}
+
         </div>
         <Routes>
 
@@ -400,6 +396,21 @@ const App = () => {
                 setAddress={setAddress}
               />
             }
+          />
+          <Route
+            path="*"
+            element={<ErrorPage 
+              setIsLoggedIn={setIsLoggedIn}
+                isLoggedIn={isLoggedIn}
+                user={user}
+                setUser={setUser}
+                isAdmin={isAdmin}
+                setIsAdmin={setIsAdmin}
+                guestCart={guestCart}
+                setGuestCart={setGuestCart}
+                address={address}
+                setAddress={setAddress}
+            />}
           />
         </Routes>
       </Router>

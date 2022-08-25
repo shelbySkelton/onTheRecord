@@ -5,6 +5,10 @@ import { useParams } from 'react-router-dom';
 import { getMyCart, addCartItem, addItemToGuestCart, getGuestCart } from '../axios-services/cart';
 import { getReviewsUserId, getReviewsProductId, createNewReview } from "../axios-services/reviews";
 
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import Modal from './Modal';
 
 const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
@@ -17,6 +21,7 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
     const [createReview, setCreateReview] = useState('');
     const [rating, setRating] = useState(5);
     const [allReviewsProduct, setAllReviewsProduct] = useState([]);
+    
 
 
     useEffect(() => {
@@ -34,8 +39,32 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
             })
     }, [])
 
+    const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
     const handleClick = async (event) => {
         event.preventDefault();
+        setOpen(true)
         if (isLoggedIn) {
             const cartItem = {
                 product_id: productId,
@@ -58,8 +87,19 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     return (
         <div>
-            <div className='single-product-container'>
 
+            <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{
+                horizontal: 'center',
+                vertical: 'bottom'
+              }}
+            message="Item has been added to your cart"
+            action={action}
+      />
+            <div className='single-product-container'>
                 <div className='product-view'>
                     <h1 id='header-singleProduct'>{productDetails.name}</h1>
                     <img src={productDetails.img_url} alt="album-cover" width="250" height="250"></img><br></br>
