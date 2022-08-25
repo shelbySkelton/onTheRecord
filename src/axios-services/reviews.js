@@ -26,6 +26,7 @@ export async function getReviewsProductId(productId) {
   }
 }
 
+
 export async function createNewReview({ user_id, product_id, rating, content }) {
   try {
     const { data } = await axios.post(`/api/reviews`, {
