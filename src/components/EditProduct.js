@@ -122,7 +122,6 @@ const EditProduct = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }
             component={Paper}
             hidden={isAdmin ? false : true}
         >
-            <p>Edit Product</p>
             <Button onClick={(evt)=> navigate("/admin/")}>
                 Back to Dashboard
             </Button>

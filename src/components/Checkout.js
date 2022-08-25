@@ -3,13 +3,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddressForm from './AddressForm';
@@ -97,11 +95,7 @@ export default function Checkout(props) {
       case 2:
         return <ReviewOrder 
           isLoggedIn={isLoggedIn}
-          // setIsLoggedIn={setIsLoggedIn}
           user={user}
-          // isAdmin={isAdmin}
-          // guestCart={guestCart}
-          // setGuestCart={setGuestCart}
           myCart={myCart}
           setMyCart={setMyCart}
           address={address}
@@ -112,8 +106,6 @@ export default function Checkout(props) {
         throw new Error('Unknown step');
     }
   }
-
-
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -130,6 +122,7 @@ export default function Checkout(props) {
       <AppBar
         position="absolute"
         // color="default"
+        fontFamily='inherit'
         elevation={0}
         sx={{
           position: 'relative',
@@ -137,7 +130,10 @@ export default function Checkout(props) {
         }}
       >
       </AppBar>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" theme={theme} 
+        
+        sx={{ mb: 4}}
+        maxWidth="sm" >
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
       <Typography 
         component="h1" 
@@ -147,7 +143,7 @@ export default function Checkout(props) {
         theme={theme}
         sx={{ 
           variant: 'h1',
-          marginTop: '8px',
+          // marginTop: '8px',
           fontFamily: 'Sofia',
           fontSize: '48px',
           fontWeight: '900'
@@ -169,9 +165,6 @@ export default function Checkout(props) {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  {/* Your order number is {myCart.id}! We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped. */}
                   {
                     isLoggedIn ? `Your order number is ${myCart.id}! We have emailed your order
                     confirmation, and will send you an update when your order has

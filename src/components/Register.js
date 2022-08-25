@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { registerUser } from '../axios-services/users';
 import { createUserCart } from "../axios-services/cart";
+
 
 const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
     const [email, setEmail] = useState('');
@@ -13,7 +15,8 @@ const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
     const [newPw1, setNewPw1] = useState('');
     const [newPw2, setNewPw2] = useState('');
     const [myCart, setMyCart] = useState({})
-
+    
+    const navigate = useNavigate();
     
 
     const handleSubmit = async (event) => {
@@ -33,10 +36,7 @@ const Register = ({ isLoggedIn, user,  guestCart, setGuestCart }) => {
             user_id: data.user.id,
             order_status: "active"
         })
-        .then((myCart) => {
-
-            setMyCart(myCart)
-        })
+        navigate("/login");
     }
 
     return (
