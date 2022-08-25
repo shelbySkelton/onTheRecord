@@ -19,7 +19,6 @@
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
 *</b> Image(s) Insert Here* </b> - here is where you can place images of your project, a demo gif, and link to a deployed site - visuals matter!
 <p align=‘center’/>
-<p align='center'><a href="https://www.loom.com/share/04d6c8482c7341fb9b423d10f0bea30b"> <img style="max-width:300px" src="https://cdn.loom.com/sessions/thumbnails/04d6c8482c7341fb9b423d10f0bea30b-with-play.gif"> </br> <p align='center'> Watch Video</p> </a> </p>
 
 ## Deployed Site: On The Record:
 
@@ -47,9 +46,6 @@ Linux and macOS:
 * Type npm run db:build to build the database
 * and type npm run start:dev to run it!
 
-## Using <project_name>:
-
-
 ## Contributing to <project_name>:
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
 To contribute to <project_name>, follow these steps:
@@ -76,10 +72,5 @@ If you have ideas for releases in the future, it is a good idea to list them in 
 
 ## Contact:
 <!--- You can add in your linkedin, medium, stack overflow, dev.to account, etc. here --->
-If you want to contact me you can reach me at <nicole.drummond@fullstackacademy.com>.
-
-Connect with me on <a href="/linkedin.com/in/nicoleraedrummond">LinkedIN</a>
-
-Connect with me on <a href="/https://dev.to/nicolerae">Dev.to</a>
 
 
