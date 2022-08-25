@@ -56,13 +56,13 @@ const Orders = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }) => 
         <div>
             {!isAdmin ? "You must be an Administrator to view this page" :
 
-                <TableContainer>
+                <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell>
                                     {
-                                        orders == [] ? `User ${userId} Orders` : `User ${userId} Has Not Placed Any Orders Yet`
+                                        orders ? `User ${userId} Orders` : `User ${userId} Has Not Placed Any Orders Yet`
                                     }
                                     
                                 </TableCell>
