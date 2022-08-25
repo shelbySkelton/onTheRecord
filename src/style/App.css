@@ -72,7 +72,6 @@ h1 {
   font-size: 24px;
   background-color: rgb(239, 181, 105);
   border-bottom: solid #AE69FF 3px;
-  /* height: 30px; */
 }
 
 .header-nav a:visited {color: black;}
@@ -115,15 +114,10 @@ h1 {
 .products-nav a:hover {font-size:125%;}
 
 .modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
   position: absolute;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400;
   background-color: rgb(239, 181, 105);
   border: 2px solid #000;
   box-shadow: 24;
@@ -171,8 +165,6 @@ button {
   border: solid black 2px;
   margin: 10px;
 }
-
-
 
 button {
   transition-duration: 0.3s;
