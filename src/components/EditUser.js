@@ -51,7 +51,7 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
                 Back to Dashboard
             </Button>
             <Table
-                sx={{ minWidth: 900 }}
+                sx={{ maxWidth: 900 }}
                 aria-label="simple table"
             >
                 <TableHead>
