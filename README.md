@@ -18,7 +18,8 @@
 
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
 *</b> Image(s) Insert Here* </b> - here is where you can place images of your project, a demo gif, and link to a deployed site - visuals matter!
-<p align=‘center’/>
+<p align=‘center’/><img width="1512" alt="Screen Shot 2022-08-26 at 10 27 00 AM" src="https://user-images.githubusercontent.com/12868179/186926692-094e3d9a-e46e-4090-ac66-51e49baf4cd2.png">
+
 
 ## Deployed Site: On The Record:
 
@@ -46,9 +47,9 @@ Linux and macOS:
 * Type npm run db:build to build the database
 * and type npm run start:dev to run it!
 
-## Contributing to <project_name>:
+## Contributing to On The Record:
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
-To contribute to <project_name>, follow these steps:
+To contribute to On The Record, follow these steps:
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
@@ -62,8 +63,10 @@ Alternatively see the GitHub documentation on [creating a pull request](https://
 
 Thanks to the following people who have contributed to this project:
 
-Shelby Skelton
-Olapeju Omoseni
+Shelby Skelton: https://github.com/shelbySkelton
+Olapeju Omoseni: https://github.com/obomoseni
+Dusty Ferioli: https://github.com/dustinferioli
+
 
 ## Roadmap:
 
