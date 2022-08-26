@@ -20,7 +20,7 @@
 <p align=‘center’/><img width="1512" alt="Screen Shot 2022-08-26 at 10 27 00 AM" src="https://user-images.githubusercontent.com/12868179/186926692-094e3d9a-e46e-4090-ac66-51e49baf4cd2.png">
 
 
-
+## Guest User Checkout Process:
 https://user-images.githubusercontent.com/12868179/186927519-0d3dc30a-1b45-448d-8627-0d4d1024ef08.mov
 
 
