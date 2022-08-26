@@ -17,7 +17,6 @@
 
 
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
-*</b> Image(s) Insert Here* </b> - here is where you can place images of your project, a demo gif, and link to a deployed site - visuals matter!
 <p align=‘center’/><img width="1512" alt="Screen Shot 2022-08-26 at 10 27 00 AM" src="https://user-images.githubusercontent.com/12868179/186926692-094e3d9a-e46e-4090-ac66-51e49baf4cd2.png">
 
 
@@ -70,7 +69,9 @@ Dusty Ferioli: https://github.com/dustinferioli
 
 ## Roadmap:
 
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+* Integrating Stripe as a Payment Method
+* Emailing customers after an order is placed
+* Full integration with MUI with a custom theme that matches the theme of our website
 <!--- This is also a place to share any edge cases you're working on, any current limitations of the project currently and future rollouts  --->
 
 ## Contact:
