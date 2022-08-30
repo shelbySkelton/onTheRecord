@@ -2,12 +2,13 @@ import axios from "axios"
 
 // Log In
 export async function loginUser({ email, password }) {
+  console.log("email: ", email, "password: ", password)
   try {
     const { data } = await axios.post('/api/users/login', {
       email,
       password
     })
-
+    console.log("data in from axios: ", data)
     return data;
   } catch (error) {
     console.log("Error in loginUser")
