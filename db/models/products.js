@@ -110,6 +110,7 @@ async function getAllProducts() {
 
 
 async function updateProduct({ id, ...fields }) {
+    console.log("fields", fields)
     const setString = Object.keys(fields).map(
         (key, index) => `"${key}" = $${index + 1}`
     ).join(', ');

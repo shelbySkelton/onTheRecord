@@ -116,7 +116,6 @@ usersRouter.post('/login', async (req, res, next) => {
 
   try {
     const user = await getUser({ email, password });
-
     if (user) {
       const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
       res.send({ success: true, user, message: "you're logged in!", token });

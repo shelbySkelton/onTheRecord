@@ -113,42 +113,19 @@ adminRouter.patch('/products/:productId', requireAdmin, async (req, res, next) =
             description, 
             genre,
             status } = req.body;
+
+      const refObj = {
+        name, price, category, quantity, img_url, condition, album_name, artist, description, genre, status
+      }
+
       const updateFields = {};
 
       updateFields.id = Number(productId)
 
-      if (name) {
-        updateFields.name = name;
-      }
-      if (price) {
-        updateFields.price = price;
-      }
-      if (category) {
-        updateFields.category= category;
-      }
-      if (quantity) {
-        updateFields.quantity= quantity;
-      }
-      if (img_url) {
-        updateFields.img_url = img_url;
-      }
-      if (condition) {
-        updateFields.condition = condition;
-      }
-      if (album_name) {
-        updateFields.album_name = album_name
-      }
-      if (artist) {
-        updateFields.artist = artist
-      }
-      if (description) {
-        updateFields.description = description
-      }
-      if (genre) {
-        updateFields.genre = genre
-      }
-      if (status) {
-        updateFields.status = status
+      for (detail in refObj) {
+        if (refObj[detail]) {
+          updateFields[detail] = refObj[detail];
+        }
       }
 
       try {
