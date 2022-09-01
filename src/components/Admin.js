@@ -64,7 +64,7 @@ const Admin = ({ setIsLoggedIn, isLoggedIn, setUser, user, isAdmin, setIsAdmin }
     return (
         <div className='admin'>
             <p>{(isLoggedIn) ? `You're Logged In as ${user.first_name}` : `You are not logged in`}</p>
-            <p>{(isAdmin) ? `Welcome to the Admin Dashboard` : `Only Website Administrators should have access to this page`}</p>
+            <p>{(isAdmin) ? `Admin Dashboard` : `Only Website Administrators should have access to this page`}</p>
             <div hidden={isAdmin ? false : true}>
                 <button className='admin-view-button'
                     onClick={(showProducts)}>

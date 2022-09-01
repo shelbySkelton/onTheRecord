@@ -43,6 +43,7 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
     }, [])
 
     return (
+        <div id="edit-user-dash">
         <TableContainer
             component={Paper}
             hidden={!isAdmin}
@@ -113,6 +114,7 @@ const EditUser = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsAdmi
                 </TableBody>
             </Table>
         </TableContainer>
+        </div>
     )
 
 

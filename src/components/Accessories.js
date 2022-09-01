@@ -89,7 +89,7 @@ const Accessories = ({ user, isLoggedIn, guestCart, setGuestCart }) => {
       
 
 
-      <h1 className='font-effect-shadow-multiple'>Accessories</h1>
+      <h1>Accessories</h1>
       <input
           className='text-box'
           id='search-words'

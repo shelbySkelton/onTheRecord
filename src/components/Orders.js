@@ -29,6 +29,7 @@ const Orders = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }) => 
     const { userId } = useParams();
     const [orders, setOrders] = useState([])
     const [status, setStatus] = useState('')
+    const navigate = useNavigate();
 
     useEffect(() => {
         testMe()
@@ -53,18 +54,21 @@ const Orders = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }) => 
 
 
     return (
-        <div>
+        <div id="orders-container">
             {!isAdmin ? "You must be an Administrator to view this page" :
 
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} id="orders-dash">
                     <Table>
                         <TableHead>
+                            <Button onClick={(evt) => navigate("/admin/")}>
+                                Back to Dashboard
+                            </Button>
                             <TableRow>
                                 <TableCell>
                                     {
                                         orders ? `User ${userId} Orders` : `User ${userId} Has Not Placed Any Orders Yet`
                                     }
-                                    
+
                                 </TableCell>
                             </TableRow>
                         </TableHead>

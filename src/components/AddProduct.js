@@ -83,7 +83,7 @@ const AddProduct = ({ setIsLoggedIn, isLoggedIn, user, setUser, isAdmin, setIsAd
         <div hidden={isAdmin ? false : true} 
             id="product-add-container"
              >
-            <h1 className="font-effect-shadow-multiple">Add a Product</h1>
+            <h1>Add a Product</h1>
             <Box
                 id='add-product-box'
                 components="form"

@@ -120,6 +120,7 @@ const EditProduct = ({ setIsLoggedIn, isLoggedIn, setUser, isAdmin, setIsAdmin }
     return (
         <TableContainer
             component={Paper}
+            id="edit-user-dash"
             hidden={isAdmin ? false : true}
         >
             <Button onClick={(evt)=> navigate("/admin/")}>

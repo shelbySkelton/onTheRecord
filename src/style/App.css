@@ -1,22 +1,36 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
 
 html, body {
   margin:0;
   padding:0;
-  background-color: rgb(234, 208, 174);
+  background-color:white;
 }
 
+#banner {
+  background-image: url("https://i.imgur.com/vJNZEVc.jpeg");
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: contain;
+  background-color: rgba(242, 233, 246, 0.75); /* Tint color */
+  background-blend-mode: multiply;
+}
 
 .app-container {
-  background-color: rgb(234, 208, 174);
+  background-color: white;
   width: 100%;
   height: 100%;
 }
 
 h1 {
-  font-family: Sofia, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   text-align: center;
+  margin-top: 50px;
   font-size: 50px;
-  color: #AE69FF;
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 #header-singleProduct {
@@ -33,7 +47,8 @@ h1 {
 }
 
 .admin,
-.cart-container {
+.cart-container,
+#orders-container {
 
   height: 100%;
 
@@ -42,7 +57,12 @@ h1 {
   align-items: center;
 
   justify-content: center;
-  /* margin: 50px; */
+}
+
+#orders-dash, #edit-user-dash, #user-dash {
+  margin: 30px auto;
+  width: 60%;
+  
 }
 
 .cart-container{
@@ -77,8 +97,7 @@ h1 {
   align-items: center;
   justify-content: space-evenly;
   transition: transform 200ms ease-in-out;
-  border: solid #AE69FF 3px;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: white;
   color: black;
 
@@ -106,17 +125,14 @@ h1 {
 .header-nav {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: flex-end;
-  height: 60px;
+  text-transform: uppercase;
+  height: 50px;
   padding: 12px;
   font-size: 24px;
-  background-color: rgb(239, 181, 105);
-  border-bottom: solid #AE69FF 3px;
 }
 
-.header-nav a:visited {
-  color: black;
-}
 
 .header-nav a:hover {
   transition: 0.3s;
@@ -128,7 +144,7 @@ h1 {
 
   /* padding: 6px; */
   text-decoration: none;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin-left: 32px;
   margin-right: 6px;
 
@@ -140,9 +156,6 @@ h1 {
 .products-nav {
   display: flex;
   justify-content: center;
-  
-  align-items: center;
-
   font-size: 24px;
   height: 1rem;
   margin-bottom: 12px;
@@ -150,19 +163,17 @@ h1 {
 
 .products-nav a {
   display: flex;
+  text-transform: lowercase;
+  font-family: 'Montserrat', sans-serif;
   flex-direction: row;
-  /* justify-content: space-between; */
   justify-content: center;
   padding: 5px;
   text-decoration: none;
-  font-family: sans-serif;
-  /* background-color: black; */
-  /* border-top: solid white 2px;
-  border-bottom: solid white 2px; */
   width: 100vw;
-  /* color: black; */
-
+  background-color: ;
 }
+
+
 
 
 .products-nav a:hover {
@@ -188,20 +199,23 @@ h1 {
 .logo-image {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 10px;
+  margin: 10px;
 }
 
 
 button {
-  border: solid black;
-  padding: 10px;
+  /* border: 2px solid black; */
+  background-color: #dfc4fe;
+  font-family: 'Montserrat', sans-serif;
+  padding: 7px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 15px;
+  font-size: 13px;
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 #login {
@@ -235,14 +249,15 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 
 
 
 .product-view {
-  flex-basis: 200px;
+  margin: 10px 5px;
+  flex-basis: 100px;
   flex-grow: 1;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
   /* margin: 5px 10px; */
@@ -252,32 +267,33 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: solid #AE69FF 3px;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: white;
   color: black;
 }
 
-
+#stock-note {
+  font-size: 12px;
+}
 .product-details {
-  flex-basis: 200px;
+  flex-basis: 100px;
   flex-grow: 1;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
-  margin: 5px 10px;
+  margin: 10px 5px;
   padding: 10px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   text-align: left;
   justify-content: space-evenly;
-  border: solid #AE69FF 3px;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: white;
   color: black;
 }
 
 .detail-label {
-  font-weight: bold;
+  font-weight: bolder;
+  text-shadow: 1px 0.5px  black;
 }
 
 .product-reviews {
@@ -286,8 +302,7 @@ button:hover {
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
-  border: solid #AE69FF 3px;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background-color: white;
   color: black;
   /* display: flex;
@@ -295,16 +310,19 @@ button:hover {
   text-align: left;
   justify-content: space-evenly; */
 }
+.product-reviews h3 {
+  text-transform: uppercase;
+  text-align: center;
+}
 
 
 
 
 .logo,
 .logo-secret {
-  width: 20%;
+  width: 30%;
   height: 20%;
   margin: 8px;
-  padding: 8px;
 }
 
 .logo-secret {
@@ -327,7 +345,7 @@ button:hover {
 
 #product-add-container {
   display: flex;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -366,4 +384,6 @@ button:hover {
 
 .product-link {
   text-decoration: none;
+  text-align: center;
+  margin-top: 10px;
 }

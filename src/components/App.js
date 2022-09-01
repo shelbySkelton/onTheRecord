@@ -93,7 +93,7 @@ const App = () => {
           myCart={myCart}
           setMyCart={setMyCart}
         />
-
+        <div id="banner">
         {hoverCount === 3 ? (
           <div className="logo-image">
             <img
@@ -113,18 +113,19 @@ const App = () => {
             />
           </div>
         )}
-        <div className="products-nav">
-          <Link to="/home">Home</Link>
+         </div>
+          <div className="products-nav">
+            <Link className="nav-link" to="/home">Home</Link>
+            <Link className="nav-link" to="/products/records">Records</Link>
+            <Link className="nav-link" to="/products/Accessories">Accessories</Link>
+            {
+              isAdmin ? <Link to="/admin" hidden={isAdmin ? false : true}>
+              Admin Dashboard
+            </Link> : null
+            }
 
-          <Link to="/products/records">Records</Link>
-          <Link to="/products/Accessories">Accessories</Link>
-          {
-            isAdmin ? <Link to="/admin" hidden={isAdmin ? false : true}>
-            Admin Dashboard
-          </Link> : null
-          }
-
-        </div>
+          </div>
+         
         <Routes>
 
           <Route path="/login" element={<Login

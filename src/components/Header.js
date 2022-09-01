@@ -68,6 +68,7 @@ const Header = (props) => {
                 }
                 <Link to="/cart">My Cart </Link>
             </div>
+
         </div>
     )
 }

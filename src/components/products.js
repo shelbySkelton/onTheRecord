@@ -89,7 +89,7 @@ const Products = ({ isLoggedIn, user }) => {
         message="Item has been added to your cart"
         action={action}
       />
-      <h1 className='font-effect-shadow-multiple'>All Products</h1>
+      <h1>All Products</h1>
 
       <input
         id='search-words'

@@ -58,6 +58,7 @@ const UserAccount = ({ isLoggedIn, setIsLoggedIn, user, setUser, isAdmin, setIsA
 
         <TableContainer
             component={Paper}
+            id="user-dash"
         >
             <Table
                 sx={{ minWidth: 900 }}

@@ -98,7 +98,7 @@ const Records = ({ user, isLoggedIn }) => {
         action={action}
       />
 
-      <h1 className='font-effect-shadow-multiple' >Vinyl Records</h1>
+      <h1>Vinyl Records</h1>
 
         <input
           id='search-words'
