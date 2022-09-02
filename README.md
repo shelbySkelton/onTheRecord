@@ -17,7 +17,7 @@
 
 
 <!-- PROJECT DEMO GIF, AND IMAGES SHOULD BE PUT HERE -->
-<p align=‘center’/><img width="1512" alt="Screen Shot 2022-08-26 at 10 27 00 AM" src="https://user-images.githubusercontent.com/12868179/186926692-094e3d9a-e46e-4090-ac66-51e49baf4cd2.png">
+<p align=‘center’/><img width="1512" src="./ontherecord.png">
 
 
 ## Guest User Checkout Process:
