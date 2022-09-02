@@ -24,7 +24,7 @@ adminRouter.get('/', requireAdmin, (req, res, next) => {
 })
 
 
-adminRouter.get('/users/:userId', requireAdmin, async (req, res, next) => {
+adminRouter.get('/users/:userId', async (req, res, next) => {
   const {userId} = req.params;
   try {
     const user = await getUserById(userId)

@@ -115,7 +115,7 @@ const App = () => {
         )}
          </div>
           <div className="products-nav">
-            <Link className="nav-link" to="/home">Home</Link>
+            <Link className="nav-link" to="/">Home</Link>
             <Link className="nav-link" to="/products/records">Records</Link>
             <Link className="nav-link" to="/products/Accessories">Accessories</Link>
             {
@@ -154,7 +154,7 @@ const App = () => {
             guestCart={guestCart}
             setGuestCart={setGuestCart}
           />} /> */}
-          <Route path="/home" element={<Products
+          <Route path="/" element={<Products
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             setUser={setUser}

@@ -85,6 +85,8 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
     }
 
+
+
     return (
 
         <div>
@@ -124,23 +126,29 @@ const SingleProduct = ({ isLoggedIn, user, guestCart, setGuestCart }) => {
 
                 <h3>Reviews</h3>
 
-                {allReviewsProduct.map((review, idx) => {
+                {allReviewsProduct.map((review, idx)  =>  {
+
+                    
                     return (
-                        <span key={idx}>
-                                <Rating name="read-only" value={review.rating} readOnly />
+                        <div>
+                            <span key={idx}>
+                                    <Rating name="read-only" value={review.rating} readOnly />
                             <p> {review.content} </p> <br></br>
                             <hr></hr>
-                        </span>
+                            </span>
+                        </div>
                     )
 
                 })}
             </div>
             <div>
-                <button onClick={() => setIsModal(true)}>Add a Review</button>
+                <button
+                    onClick={() => setIsModal(true)}>Add a Review</button>
             </div>
             <div>
                 {
                     isModal && <Modal
+                        isLoggedIn= {isLoggedIn}
                         setIsModal={setIsModal}
                         productDetails={productDetails}
                         createReview={createReview}

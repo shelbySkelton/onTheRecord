@@ -6,7 +6,7 @@ import { createNewReview, getReviewsProductId } from '../axios-services/reviews'
 const Modal = (props) => {
 
 
-    const { setIsModal, productDetails, createReview, setCreateReview, rating, setRating, user, allReviewsProduct, setAllReviewsProduct } = props;
+    const { isLoggedIn, setIsModal, productDetails, createReview, setCreateReview, rating, setRating, user, allReviewsProduct, setAllReviewsProduct } = props;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -31,6 +31,7 @@ const Modal = (props) => {
     return (
         <div className='modal-container'>
             <div className='modal'>
+
                 <div>
                     <h3>We would love to hear your feedback on {productDetails.name}!</h3>
                 </div>
@@ -43,16 +44,24 @@ const Modal = (props) => {
                         <option value="2">2</option>
                         <option value="1">1</option>
                     </select> /5
-                    <textarea className='review-input' input="text" rows="10" cols="50"
+                    <textarea className='review-input'
+                        input="text" rows="10" cols="50"
                         onChange={(event) => setCreateReview(event.target.value)}
+                        placeholder={!isLoggedIn ?
+                            'Please log in to write a review' : 'Tell us what you thought!'
+                        }
 
                     >
-                        Enter text here...
+
                     </textarea>
                     <button onClick={() => setIsModal(false)}>Exit</button>
-                    <button onClick={(event) =>
-                        handleSubmit(event)
-                    }
+                    <button
+                        disabled={!isLoggedIn ?
+                                true : false
+                        }
+                        onClick={(event) =>
+                            handleSubmit(event)
+                        }
                     >Submit</button>
                 </form>
             </div>
