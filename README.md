@@ -20,23 +20,19 @@
 <p align=‘center’/><img width="1512" src="./ontherecord.png">
 
 
-## Guest User Checkout Process:
-https://user-images.githubusercontent.com/12868179/186927519-0d3dc30a-1b45-448d-8627-0d4d1024ef08.mov
+## User Demo:
+
+https://user-images.githubusercontent.com/106750549/188232513-d80c3162-31ce-4b02-ac90-ddf3c15c1609.mp4
+
 
 
 ## Deployed Site: On The Record:
 
 Check out On The Record here! 
 <!--- You can link to the deployed site, or a link to the demo recording, or etc. here --->
-https://graceshopper-ontherecord.herokuapp.com/
+https://on-the-record-capstone.herokuapp.com/
 
-## Prerequisites:
 
-Before you begin, ensure you have met the following requirements:
-<!--- These are just example requirements. Add, duplicate or remove as required --->
-* You have installed the latest version of VSCode
-* You have PostgresQL installed
-* You have created a databse via PSQL called 'OnTheRecord'
 
 ## Installing On The Record:
 
@@ -80,5 +76,5 @@ Dusty Ferioli: https://github.com/dustinferioli
 
 ## Contact:
 <!--- You can add in your linkedin, medium, stack overflow, dev.to account, etc. here --->
-
+shelbyskelton09@gmail.com
 
